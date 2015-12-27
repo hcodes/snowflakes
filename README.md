@@ -24,7 +24,7 @@ or
 <html>
 <body>
 ...
-<div id="my-container" style="width: 600px; height: 600px; overflow: hidden;"></div>
+<div id="my-container" style="width: 600px; height: 600px; overflow: hidden; position: relative;"></div>
 <script src="snowflakes.js"></script>
 <script>
     var sf = new Snowflakes({
