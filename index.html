@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Falling snowflakes</title>
+</head>
+<body>
+    <p style="padding:1em 0 1em 1em; margin: 0;"><a href="#" onclick="day(); return false;">Day</a> or <a href="#" onclick="night(); return false;">night</a></p>
+    <p style="padding:0 0 0 1em; margin: 0;">Falling snowflakes:</p>
+    <ul style="margin-top:0; padding-top:0;">
+        <li>Fullscreen</li>
+        <li><a href="index_layer.html">Layer</a></li>
+    </ul>
+
+    <script src="./snowflakes.js"></script>
+    <script>
+        var body = document.getElementsByTagName('body')[0];
+        function day() {
+            body.style.backgroundColor = '#fff';
+            body.style.color = '#000';
+        }
+
+        function night() {
+            body.style.backgroundColor = '#000';
+            body.style.color = '#fff';
+        }
+
+        Snowflakes();
+    </script>
+</body>
+</html>
