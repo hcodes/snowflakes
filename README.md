@@ -31,6 +31,11 @@ or
         container: document.getElementById('my-container'),
         count: 100
     });
+    
+    //...
+    sf.stop();
+    //...
+    sf.start();
 </script>
 </body>
 </html>
