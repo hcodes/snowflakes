@@ -6,6 +6,8 @@ Falling snowflakes
 - [Layer](https://hcodes.github.io/snowflakes/index_layer.html)
 
 ## Using
+
+### Fullscreen
 ```html
 <html>
 <body>
@@ -18,24 +20,28 @@ Falling snowflakes
 </html>
 ```
 
-or
+### Layer
 
 ```html
 <html>
+<head>
+    <style>
+        #my-layer {
+            width: 600px;
+            height: 600px;
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+</head>
 <body>
 ...
-<div id="my-container" style="width: 600px; height: 600px; overflow: hidden; position: relative;"></div>
+<div id="my-layer"></div>
 <script src="snowflakes.js"></script>
 <script>
     var sf = new Snowflakes({
-        container: document.getElementById('my-container'),
-        count: 100
-    });
-    
-    //...
-    sf.stop();
-    //...
-    sf.start();
+        container: document.getElementById('my-layer')
+    }); 
 </script>
 </body>
 </html>
