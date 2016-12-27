@@ -11,11 +11,11 @@ Falling snowflakes
 ```html
 <html>
 <body>
-...
-<script src="snowflakes.js"></script>
-<script>
-    Snowflakes();
-</script>
+    ...
+    <script src="snowflakes.js"></script>
+    <script>
+        Snowflakes();
+    </script>
 </body>
 </html>
 ```
@@ -35,14 +35,40 @@ Falling snowflakes
     </style>
 </head>
 <body>
-...
-<div id="my-layer"></div>
-<script src="snowflakes.js"></script>
-<script>
-    var sf = new Snowflakes({
-        container: document.getElementById('my-layer')
-    }); 
-</script>
+    ...
+    <div id="my-layer"></div>
+    <script src="snowflakes.js"></script>
+    <script>
+        var sf = new Snowflakes({
+            container: document.getElementById('my-layer')
+        });
+    </script>
+</body>
+</html>
+```
+
+### Advanced settings
+```html
+<html>
+<head>
+    <style>
+        .snowflake {
+            /* Set your own z-index for snowflakes */
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <script src="snowflakes.js"></script>
+    <script>
+        var sf = new Snowflakes({
+            container: document.body,
+            count: 50, // 50 snowflakes. Default: 30
+            delay: 30, // The property affects the speed of falling, ms. Default: 20
+            width: 500, // Default: width of container
+            height: 2000 // Default: height of container
+        });
+    </script>
 </body>
 </html>
 ```

@@ -60,7 +60,9 @@ var Snowflakes = (function(document, window, Math) {
             this.params = {
                 container: params.container || document.body,
                 count: params.count || 30,
-                delay: params.delay || 20
+                delay: params.delay || 20,
+                width: params.width,
+                height: params.height
             };
         },
         _initValues: function() {
@@ -103,12 +105,16 @@ var Snowflakes = (function(document, window, Math) {
             return el === document.body;
         },
         _width: function() {
-            var c = this.params.container;
-            return this._isBody(c) ? this._winWidth() : c.offsetWidth;
+            var p = this.params;
+
+            return p.width ||
+                (this._isBody(p.container) ? this._winWidth() : p.container.offsetWidth);
         },
         _height: function() {
-            var c = this.params.container;
-            return this._isBody(c) ? this._winHeight() : c.offsetHeight;
+            var p = this.params;
+
+            return p.height ||
+                (this._isBody(p.container) ? this._winHeight() : p.container.offsetHeight);
         },
         _winWidth: function() {
             return window.innerWidth || document.body.clientWidth;
