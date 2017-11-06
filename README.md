@@ -2,8 +2,8 @@ Falling snowflakes
 ==================
 
 ## Examples
-- [Fullscreen](https://hcodes.github.io/snowflakes/index.html)
-- [Layer](https://hcodes.github.io/snowflakes/index_layer.html)
+- [Fullscreen](https://hcodes.github.io/snowflakes/example/fullscreen.html)
+- [Layer](https://hcodes.github.io/snowflakes/example/layer.html)
 
 ## Using
 
@@ -63,8 +63,10 @@ Falling snowflakes
     <script>
         var sf = new Snowflakes({
             container: document.body,
-            count: 50, // 50 snowflakes. Default: 30
-            delay: 30, // The property affects the speed of falling, ms. Default: 20
+            count: 100, // 100 snowflakes. Default: 50
+            speed: 2, // The property affects the speed of falling. Default: 1
+            useRotate: true, // Default: true
+            useScale: true, // Default: true
             width: 500, // Default: width of container
             height: 2000 // Default: height of container
         });

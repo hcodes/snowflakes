@@ -7,7 +7,7 @@
         body {
             background: #f0f0f0;
         }
-        
+
         #snowflakes-layer {
             position: absolute;
             left: 50%;
@@ -26,11 +26,11 @@
     <p style="padding:1em 0 1em 1em; margin: 0;"><a href="#" onclick="day(); return false;">Day</a> or <a href="#" onclick="night(); return false;">night</a></p>
     <p style="padding:0 0 0 1em; margin: 0;">Falling snowflakes:</p>
     <ul style="margin-top:0; padding-top:0;">
-        <li><a href="index.html">Fullscreen</a></li>
+        <li><a href="fullscreen.html">Fullscreen</a></li>
         <li>Layer</li>
     </ul>
-    
-    <script src="./snowflakes.js"></script>
+
+    <script src="../snowflakes.js"></script>
     <div id="snowflakes-layer"></div>
     <script>
         var body = document.getElementsByTagName('body')[0];
@@ -38,12 +38,12 @@
             body.style.backgroundColor = '#ddd';
             body.style.color = '#000';
         }
-        
+
         function night() {
             body.style.backgroundColor = '#000';
             body.style.color = '#fff';
         }
-        
+
         Snowflakes({
             container: document.getElementById('snowflakes-layer')
         });
