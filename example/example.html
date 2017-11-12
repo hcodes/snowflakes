@@ -11,20 +11,27 @@
     <div id="layer"></div>
     <div class="controls">
       <div class="controls__title">Falling snowflakes</div>
+
+      <div class="controls__group">
+        Count: <input type="number" style="width: 3em" oninput="App.setCount(this.value)" autocomplete="off" value="50" min="1" max="300" /><br/>
+        Speed: <input type="number" style="width: 3em" oninput="App.setSpeed(this.value)" autocomplete="off" value="1" min="0.1" max="100" />
+      </div>
+
+      <div class="controls__group">
+        <label><input name="rotate" type="checkbox" checked onclick="App.setRotate(this.checked);" autocomplete="off" /> Use rotate</label>
+        <label><input name="scale" type="checkbox" checked onclick="App.setScale(this.checked);" autocomplete="off" /> Use scale</label>
+      </div>
+
       <div class="controls__group">
         Background:<br/>
         <label><input name="bg" type="radio" value="white" checked onclick="App.setBg('white');" autocomplete="off" /> White</label>
         <label><input name="bg" type="radio" value="black" onclick="App.setBg('black');" autocomplete="off" /> Black</label>
       </div>
+
       <div class="controls__group">
         Size:<br/>
         <label><input name="size" type="radio" value="fullscreen" checked onclick="App.setSize('fullscreen');" autocomplete="off" /> Fullscreen</label>
         <label><input name="size" type="radio" value="layer" onclick="App.setSize('layer');"autocomplete="off" /> Layer</label>
-      </div>
-
-      <div class="controls__group">
-        <label><input name="rotate" type="checkbox" checked onclick="App.setRotate(this.checked);" autocomplete="off" /> Use rotate</label>
-        <label><input name="scale" type="checkbox" checked onclick="App.setScale(this.checked);"autocomplete="off" /> Use scale</label>
       </div>
     </div>
     <script src="../snowflakes.js"></script>

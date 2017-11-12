@@ -23,10 +23,13 @@ html, body {
     background: rgba(255, 255, 255, .5);
     border: 1px solid #f0f0f0;
     border-radius: 4px;
+    line-height: 1.6;
+
+    transition: .5s border-color ease;
 }
 
 .bg_black .controls {
-    border: 1px #333 solid;
+    border-color: #666;
 }
 
 .controls__title {
