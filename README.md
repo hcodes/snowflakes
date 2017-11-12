@@ -1,5 +1,7 @@
 Falling snowflakes
 ==================
+<img width="304" height="304" src="./images/promo.gif" />
+
 
 ## Details
 - Only one JavaScript file
@@ -10,17 +12,30 @@ Falling snowflakes
 
 ## Using
 
+```
+npm i magic-snowflakes --save-dev
+```
+
 ### Fullscreen
 ```html
 <html>
 <body>
     ...
-    <script src="snowflakes.js"></script>
+    <script src="./node_modules/magic-snowflakes/snowflakes.js"></script>
     <script>
         Snowflakes();
     </script>
 </body>
 </html>
+```
+
+or
+
+```js
+'use strict';
+
+const SnowFlakes = require('magic-snowflakes');
+SnowFlakes();
 ```
 
 ### Layer
@@ -40,7 +55,7 @@ Falling snowflakes
 <body>
     ...
     <div id="my-layer"></div>
-    <script src="snowflakes.js"></script>
+    <script src="./node_modules/magic-snowflakes/snowflakes.js"></script>
     <script>
         var sf = new Snowflakes({
             container: document.getElementById('my-layer')
@@ -62,7 +77,7 @@ Falling snowflakes
     </style>
 </head>
 <body>
-    <script src="snowflakes.js"></script>
+    <script src="./node_modules/magic-snowflakes/snowflakes.js"></script>
     <script>
         var sf = new Snowflakes({
             container: document.body,

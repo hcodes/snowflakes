@@ -1,6 +1,16 @@
 /*! Snowflakes | © 2017 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
 
-var Snowflakes = (function(document, window, Math) {
+(function (global, factory) {
+    if (typeof exports === 'object' && typeof module !== 'undefined') {
+        module.exports = factory();
+    } else if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else {
+        global.Snowflakes = factory();
+    }
+}(this, function() {
+    'use strict';
+
     var lastTime = 0,
         vendors = ['Moz', 'Webkit', 'O', 'ms', ''],
         requestAnimationFrame = window.requestAnimationFrame,
@@ -240,4 +250,4 @@ var Snowflakes = (function(document, window, Math) {
     });
 
     return Flakes;
-})(document, window, Math);
+});
