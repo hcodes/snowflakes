@@ -2,7 +2,7 @@ Falling snowflakes
 ==================
 
 ## Details
-- Only one javaScript file
+- Only one JavaScript file
 - CSS transformation
 - RequestAnimationFrame
 
