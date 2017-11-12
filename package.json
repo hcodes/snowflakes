@@ -1,0 +1,38 @@
+{
+  "name": "magic-snowflakes",
+  "description": "Falling snowflakes",
+  "version": "1.0.0",
+  "author": {
+    "name": "Denis Seleznev",
+    "email": "hcodes@yandex.ru",
+    "url": "https://github.com/hcodes/snowflakes"
+  },
+  "main": "snowflakes.js",
+  "homepage": "https://github.com/hcodes/snowflakes",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hcodes/snowflakes.git"
+  },
+  "keywords": [
+    "snow",
+    "snowflakes",
+    "snowflake",
+    "flake",
+    "newyear",
+    "christmas",
+    "falling"
+  ],
+  "engines": {
+    "node": ">= 4"
+  },
+  "files": [
+    "snowflakes.js"
+  ],
+  "devDependencies": {
+    "eslint": "4.x"
+  },
+  "scripts": {
+    "test": "eslint ."
+  }
+}

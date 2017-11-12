@@ -1,6 +1,6 @@
 /*! Snowflakes | © 2017 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
 
-(function (global, factory) {
+(function(global, factory) {
     if (typeof exports === 'object' && typeof module !== 'undefined') {
         module.exports = factory();
     } else if (typeof define === 'function' && define.amd) {
@@ -11,8 +11,7 @@
 }(this, function() {
     'use strict';
 
-    var lastTime = 0,
-        vendors = ['Moz', 'Webkit', 'O', 'ms', ''],
+    var vendors = ['Moz', 'Webkit', 'O', 'ms', ''],
         requestAnimationFrame = window.requestAnimationFrame,
         cancelAnimationFrame = window.cancelAnimationFrame;
 
@@ -132,7 +131,7 @@
                 this._y[i] = -Math.random() * height;
             }
         },
-        _resetValues: function(i, width, height) {
+        _resetValues: function(i, width) {
             var flake = this._flakes[i],
                 scale = this._scale[i];
 
