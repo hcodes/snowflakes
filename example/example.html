@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <link rel="stylesheet" href="example.css" />
+    <meta name="format-detection" content="telephone=no"/>
+    <title>Falling snowflakes</title>
+</head>
+<body class="bg_white size_fullscreen">
+    <div id="layer"></div>
+    <div class="controls">
+      <div class="controls__title">Falling snowflakes</div>
+      <div class="controls__group">
+        Background:<br/>
+        <label><input name="bg" type="radio" value="white" checked onclick="App.setBg('white');" autocomplete="off" /> White</label>
+        <label><input name="bg" type="radio" value="black" onclick="App.setBg('black');" autocomplete="off" /> Black</label>
+      </div>
+      <div class="controls__group">
+        Size:<br/>
+        <label><input name="size" type="radio" value="fullscreen" checked onclick="App.setSize('fullscreen');" autocomplete="off" /> Fullscreen</label>
+        <label><input name="size" type="radio" value="layer" onclick="App.setSize('layer');"autocomplete="off" /> Layer</label>
+      </div>
+
+      <div class="controls__group">
+        <label><input name="rotate" type="checkbox" checked onclick="App.setRotate(this.checked);" autocomplete="off" /> Use rotate</label>
+        <label><input name="scale" type="checkbox" checked onclick="App.setScale(this.checked);"autocomplete="off" /> Use scale</label>
+      </div>
+    </div>
+    <script src="../snowflakes.js"></script>
+    <script src="example.js"></script>
+</body>
+</html>

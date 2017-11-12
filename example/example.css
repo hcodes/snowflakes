@@ -1,0 +1,64 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    border: 0;
+
+    transition: .5s background-color ease;
+}
+
+.bg_white {
+    background: #fff;
+}
+
+.bg_black {
+    background: #000;
+}
+
+.controls {
+    position: absolute;
+    z-index: 20;
+    padding: 10px;
+    left: 30px;
+    top: 30px;
+    background: rgba(255, 255, 255, .5);
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+}
+
+.bg_black .controls {
+    border: 1px #333 solid;
+}
+
+.controls__title {
+    font-weight: bold;
+    text-align: center;
+}
+
+.controls__group {
+    margin-top: 10px;
+}
+
+.controls label {
+    display: block;
+}
+
+.size_layer #layer {
+    display: block;
+}
+
+#layer {
+    display: none;
+
+    position: fixed;
+    z-index: 10;
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+    width: 50%;
+    height: 50%;
+
+    overflow: hidden;
+    border: 1px solid rgba(200, 200, 200, .5);
+    border-radius: 10px;
+}

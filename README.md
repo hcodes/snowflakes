@@ -1,9 +1,12 @@
 Falling snowflakes
 ==================
 
-## Examples
-- [Fullscreen](https://hcodes.github.io/snowflakes/example/fullscreen.html)
-- [Layer](https://hcodes.github.io/snowflakes/example/layer.html)
+## Details
+- Only one javaScript file
+- CSS transformation
+- RequestAnimationFrame
+
+## [Example](https://hcodes.github.io/snowflakes/example/example.html)
 
 ## Using
 

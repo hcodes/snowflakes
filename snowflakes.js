@@ -111,7 +111,7 @@ var Snowflakes = (function(document, window, Math) {
                 height = this._height();
 
             for (var i = 0; i < this.params.count; i++) {
-                this._scale[i] = 0.5 + 0.5 * Math.random();
+                this._scale[i] = this.params.useScale ? (0.5 + 0.5 * Math.random()) : 1;
 
                 this._flakes.push(new Flake(this.params.container, {
                     scale: this._scale[i],
