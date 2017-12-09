@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
     <link rel="stylesheet" href="example.css" />
+    <link rel="stylesheet" href="../src/snowflakes.css" />
     <meta name="format-detection" content="telephone=no"/>
     <title>Falling snowflakes</title>
 </head>
@@ -33,8 +34,13 @@
         <label><input name="size" type="radio" value="fullscreen" checked onclick="App.setSize('fullscreen');" autocomplete="off" /> Fullscreen</label>
         <label><input name="size" type="radio" value="layer" onclick="App.setSize('layer');"autocomplete="off" /> Layer</label>
       </div>
+
+      <div class="controls__group">
+        <label><input name="paused" type="checkbox" onclick="App.setPause(this.checked);" autocomplete="off" /> Pause</label>
+        <label><input name="fps" type="button" onclick="App.loadFPS(this.checked);" autocomplete="off" / value="Show FPS"/></label>
+      </div>
     </div>
-    <script src="../snowflakes.js"></script>
+    <script src="../src/snowflakes.js"></script>
     <script src="example.js"></script>
 </body>
 </html>
