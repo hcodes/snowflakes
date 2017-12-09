@@ -18,7 +18,7 @@ html, body {
     position: absolute;
     z-index: 20;
     padding: 10px;
-    left: 30px;
+    right: 30px;
     top: 30px;
     background: rgba(255, 255, 255, .5);
     border: 1px solid #f0f0f0;

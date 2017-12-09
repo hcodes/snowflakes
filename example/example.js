@@ -7,6 +7,32 @@ var App = {
         useRotate: true,
         useScale: true
     },
+    setPause: function(value) {
+        if (value) {
+            this._snow.stop();
+        } else {
+            this._snow.start();
+        }
+    },
+    loadFPS: function() {
+        if (this._stats) {
+            return;
+        }
+
+        var script = document.createElement('script');
+        script.onload = function() {
+            var stats = new window.Stats();
+            this._stats = stats;
+            document.body.appendChild(stats.dom);
+            stats.dom.style.right = '0';
+            requestAnimationFrame(function loop() {
+                stats.update();
+                requestAnimationFrame(loop);
+            });
+        };
+        script.src = 'https://rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
+        document.head.appendChild(script);
+    },
     setBg: function(value) {
         this.params.bg = value;
         this.updateSettings();
