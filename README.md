@@ -74,14 +74,6 @@ SnowFlakes();
 ### Advanced settings
 ```html
 <html>
-<head>
-    <style>
-        .snowflakes {
-            /* Set your own z-index for snowflakes */
-            z-index: 9999;
-        }
-    </style>
-</head>
 <body>
     <script src="./node_modules/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script>
@@ -91,6 +83,7 @@ SnowFlakes();
             speed: 2, // The property affects the speed of falling. Default: 1
             useRotate: true, // Default: true
             useScale: true, // Default: true
+            zIndex: 100, // Default: 9999
             width: 500, // Default: width of container
             height: 2000 // Default: height of container
         });
