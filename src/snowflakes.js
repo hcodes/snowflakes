@@ -74,24 +74,28 @@
             var flake = document.createElement('div'),
                 innerFlake = document.createElement('div'),
                 useScale = this.params.useScale,
-                size = (useScale ? this.getRandom(this.flakeMinSize, this.flakeSize) : this.flakeSize) + 'px';
-
-            flake.classList.add('snowflake');
-            this.setStyle(flake, {
-                animationDelay: (Math.random() * 10) + 's',
-                left: (Math.random() * 100) + '%',
-                zIndex: this.params.zIndex + (size * 10),
-                opacity: useScale ?
+                size = (useScale ? this.getRandom(this.flakeMinSize, this.flakeSize) : this.flakeSize),
+                props = {
+                    animationDelay: (Math.random() * 10) + 's',
+                    left: (Math.random() * 100) + '%',
+                    width: size + 'px',
+                    height: size + 'px'
+                };
+                
+            if (useScale) {
+                props.zIndex = this.params.zIndex + size * 10;
+                props.opacity = useScale ?
                     this.interpolation(
                         size,
                         this.flakeMinSize,
                         this.flakeSize,
                         this.flakeMinOpacity,
                         1) :
-                    1,
-                width: size,
-                height: size
-            });
+                    1;
+            }
+
+            flake.classList.add('snowflake');
+            this.setStyle(flake, props);
             
             innerFlake.classList.add('snowflake__inner');
             innerFlake.classList.add('snowflake__inner_num_' + this.getRandom(0, this.flakeCount));
