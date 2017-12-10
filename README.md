@@ -8,9 +8,11 @@ Falling snowflakes
 
 
 ## Details
+- Only CSS Animation with optimization
+- Rubber design
 - Only one JavaScript file
-- CSS transformation
-- RequestAnimationFrame
+- Flexible settings
+- Small size (10 KB, gzip)
 
 ## [Example](https://hcodes.github.io/snowflakes/example/example.html)
 
@@ -25,7 +27,7 @@ npm i magic-snowflakes --save-dev
 <html>
 <body>
     ...
-    <script src="./node_modules/magic-snowflakes/snowflakes.js"></script>
+    <script src="./node_modules/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script>
         Snowflakes();
     </script>
@@ -59,7 +61,7 @@ SnowFlakes();
 <body>
     ...
     <div id="my-layer"></div>
-    <script src="./node_modules/magic-snowflakes/snowflakes.js"></script>
+    <script src="./node_modules/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script>
         var sf = new Snowflakes({
             container: document.getElementById('my-layer')
@@ -74,17 +76,17 @@ SnowFlakes();
 <html>
 <head>
     <style>
-        .snowflake {
+        .snowflakes {
             /* Set your own z-index for snowflakes */
             z-index: 9999;
         }
     </style>
 </head>
 <body>
-    <script src="./node_modules/magic-snowflakes/snowflakes.js"></script>
+    <script src="./node_modules/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script>
         var sf = new Snowflakes({
-            container: document.body,
+            container: document.body, // Default: document.body
             count: 100, // 100 snowflakes. Default: 50
             speed: 2, // The property affects the speed of falling. Default: 1
             useRotate: true, // Default: true
