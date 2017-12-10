@@ -1,8 +1,10 @@
 .snowflakes {
-    &_paused,
-    &_paused .snowflake__inner,
-    &_paused .snowflake__inner:before {
-        animation-play-state: paused;
+    &_paused .snowflake {
+        &,
+        &__inner,
+        &__inner:before {
+            animation-play-state: paused;
+        }
     }
 
     &_body {
