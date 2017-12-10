@@ -1,0 +1,130 @@
+.snowflakes {
+    &_paused,
+    &_paused .snowflake__inner,
+    &_paused .snowflake__inner:before {
+        animation-play-state: paused;
+    }
+
+    &_body {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+
+.snowflake {
+    position: absolute;
+    margin: -21px 0 0 0;
+    width: 18px;
+    height: 18px;
+    animation: snowflake_y 10s infinite linear;
+    will-change: transform;
+    
+    &__inner {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        animation: snowflake_x 1s infinite ease-in-out;
+        animation-direction: alternate;
+        will-change: transform;
+        
+        &:before {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            content: '';
+            background-size: 100% 100%;
+            animation: snowflake_rotate 2s infinite linear;
+            will-change: transform;
+        }
+
+        &_use-rotate:before {
+            animation-name: snowflake_rotate;
+        }
+
+        &_use-rotate-reverse:before {
+            animation-name: snowflake_rotate-reverse;
+        }
+
+        &_num_0:before {
+            background-image: data-uri('0.png');
+        }
+
+        &_num_1:before {
+            background-image: data-uri('1.png');
+        }
+
+        &_num_2:before {
+            background-image: data-uri('2.png');
+        }
+
+        &_num_3:before {
+            background-image: data-uri('3.png');
+        }
+
+        &_num_4:before {
+            background-image: data-uri('4.png');
+        }
+
+        &_num_5:before {
+            background-image: data-uri('5.png');
+        }
+
+        &_num_6:before {
+            background-image: data-uri('6.png');
+        }
+
+        &_num_7:before {
+            background-image: data-uri('7.png');
+        }
+
+        &_num_8:before {
+            background-image: url('8.png');
+        }
+    }
+}
+
+@keyframes snowflake_y {
+    from {
+       transform: translateY(0px);
+    }
+
+    to {
+       transform: translateY(103vh);
+    }
+}
+
+@keyframes snowflake_x {
+    from {
+       transform: translateX(0px);
+    }
+
+    to {
+       transform: translateX(50px);
+    }
+}
+
+@keyframes snowflake_rotate {
+    from {
+       transform: rotate(0deg);
+    }
+
+    to {
+       transform: rotate(360deg);
+    }
+}
+
+@keyframes snowflake_rotate-reverse {
+    from {
+       transform: rotate(0deg);
+    }
+
+    to {
+       transform: rotate(-360deg);
+    }
+}
