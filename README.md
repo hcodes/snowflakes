@@ -12,7 +12,7 @@ Falling snowflakes
 - Rubber design
 - Only one JavaScript file
 - Flexible settings
-- Small size (10 KB, gzip)
+- Small size (7 KB, gzip)
 
 ## [Example](https://hcodes.github.io/snowflakes/example/example.html)
 
