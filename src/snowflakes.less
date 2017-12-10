@@ -29,8 +29,7 @@
         right: 0;
         top: 0;
         bottom: 0;
-        animation: snowflake_x 1s infinite ease-in-out;
-        animation-direction: alternate;
+        animation: snowflake_x 1s infinite alternate ease-in-out;
         will-change: transform;
         
         &:before {
@@ -41,16 +40,16 @@
             bottom: 0;
             content: '';
             background-size: 100% 100%;
+        }
+
+        &_use-rotate:before {
             animation: snowflake_rotate 2s infinite linear;
             will-change: transform;
         }
 
-        &_use-rotate:before {
-            animation-name: snowflake_rotate;
-        }
-
         &_use-rotate-reverse:before {
-            animation-name: snowflake_rotate-reverse;
+            animation: snowflake_rotate-reverse 2s infinite linear;
+            will-change: transform;
         }
 
         &_num_0:before {
