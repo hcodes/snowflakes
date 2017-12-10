@@ -21,6 +21,7 @@
                 container: params.container || document.body,
                 count: params.count || 50,
                 speed: params.speed || 1,
+                zIndex: params.zIndex || 9999,
                 useRotate: typeof params.useRotate === 'undefined' ? true : params.useRotate,
                 useScale: typeof params.useScale === 'undefined' ? true : params.useScale,
                 width: params.width,
@@ -32,6 +33,8 @@
 
             var container = document.createElement('div');
             container.classList.add('snowflakes');
+            this.setStyle(container, { zIndex: this.params.zIndex });
+
             this._isBody && container.classList.add('snowflakes_body');
 
             this.params.container.appendChild(container);
@@ -48,29 +51,48 @@
     Flakes.prototype = {
         flakeSize: 18,
         flakeMinSize: 8,
+        flakeMinOpacity: 0.6,
         flakeCount: 8,
+        /**
+         * Start CSS animation.
+         */
         start: function() {
             this._container.classList.remove('snowflakes_paused');
         },
+        /**
+         * Stop CSS animation.
+         */
         stop: function() {
             this._container.classList.add('snowflakes_paused');
         },
-        getRandom: function(from, max) {
-            return from + Math.floor(Math.random() * (max - from));
-        },
+        /**
+         * Create flake.
+         *
+         * @returns {DOMElement}}
+         */
         createFlake: function() {
             var flake = document.createElement('div'),
                 innerFlake = document.createElement('div'),
-                size = (this.params.useScale ? this.getRandom(this.flakeMinSize, this.flakeSize) : this.flakeSize) + 'px';
+                useScale = this.params.useScale,
+                size = (useScale ? this.getRandom(this.flakeMinSize, this.flakeSize) : this.flakeSize) + 'px';
 
             flake.classList.add('snowflake');
             this.setStyle(flake, {
                 animationDelay: (Math.random() * 10) + 's',
                 left: (Math.random() * 100) + '%',
+                zIndex: this.params.zIndex + (size * 10),
+                opacity: useScale ?
+                    this.interpolation(
+                        size,
+                        this.flakeMinSize,
+                        this.flakeSize,
+                        this.flakeMinOpacity,
+                        1) :
+                    1,
                 width: size,
                 height: size
             });
-
+            
             innerFlake.classList.add('snowflake__inner');
             innerFlake.classList.add('snowflake__inner_num_' + this.getRandom(0, this.flakeCount));
 
@@ -87,13 +109,49 @@
 
             return flake;
         },
-        setStyle: function(elem, props) {
+        /**
+         * Get random number.
+         *
+         * @param {number} from
+         * @param {number} max
+         * 
+         * @returns {number}
+         */
+        getRandom: function(from, max) {
+            return from + Math.floor(Math.random() * (max - from));
+        },
+        /**
+         * Linear interpolation.
+         *
+         * @param {number} x
+         * @param {number} x1
+         * @param {number} x2
+         * @param {number} y1
+         * @param {number} y2
+         *
+         * @returns {number}
+         */
+        interpolation: function(x, x1, x2, y1, y2) {
+            return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
+        },
+        /**
+         * Set inline style.
+         *
+         * @param {DOMElement} dom
+         * @param {Object} props
+         *
+         * @returns {this}
+         */
+        setStyle: function(dom, props) {
             Object.keys(props).forEach(function(key) {
-                elem.style[key] = props[key];
+                dom.style[key] = props[key];
             }, this);
 
             return this;
         },
+        /**
+         * Destroy flakes.
+         */
         destroy: function() {
             this._flakes.forEach(function(flake) {
                 flake.parentNode && flake.parentNode.removeChild(flake);
