@@ -13,7 +13,7 @@
     var CSS = '{CSS}';
 
     function Flakes(params) {
-        this._injectStyle();
+        this._addStyle();
 
         if (this instanceof Flakes) {
             params = params || {};
@@ -81,7 +81,7 @@
                     width: size + 'px',
                     height: size + 'px'
                 };
-                
+
             if (useScale) {
                 props.zIndex = this.params.zIndex + size * 10;
                 props.opacity = useScale ?
@@ -96,7 +96,7 @@
 
             flake.classList.add('snowflake');
             this.setStyle(flake, props);
-            
+
             innerFlake.classList.add('snowflake__inner');
             innerFlake.classList.add('snowflake__inner_num_' + this.getRandom(0, this.flakeCount));
 
@@ -118,7 +118,7 @@
          *
          * @param {number} from
          * @param {number} max
-         * 
+         *
          * @returns {number}
          */
         getRandom: function(from, max) {
@@ -157,22 +157,31 @@
          * Destroy flakes.
          */
         destroy: function() {
-            this._flakes.forEach(function(flake) {
-                flake.parentNode && flake.parentNode.removeChild(flake);
-            });
-
+            this._container && this._container.parentNode.removeChild(this._container);
+            delete this._container;
             delete this._flakes;
 
             this._removeStyle();
         },
-        _injectStyle: function() {
+        _addStyle: function() {
             if (!Flakes._styleNode) {
-                var styleNode = document.createElement('style');
-                styleNode.innerText = CSS;
-                document.body.appendChild(styleNode);
-                Flakes._styleNode = styleNode;
+                Flakes._styleNode = this._injectStyle(CSS);
                 Flakes._count = (Flakes._count || 0) + 1;
             }
+        },
+        _injectStyle: function(style) {
+            var styleNode = document.createElement('style');
+            document.body.appendChild(styleNode);
+
+            if (styleNode.styleSheet) { // IE
+                styleNode.styleSheet.cssText = style;
+            } else if ('textContent' in styleNode) {
+                styleNode.textContent = style;
+            } else {
+                styleNode.innerHTML = style;
+            }
+
+            return styleNode;
         },
         _removeStyle: function() {
             Flakes._count--;
