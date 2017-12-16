@@ -22,16 +22,15 @@
     height: 18px;
     animation: snowflake_y 10s infinite linear;
     will-change: transform;
-    
+
     &__inner {
         position: absolute;
         left: 0;
         right: 0;
         top: 0;
         bottom: 0;
-        animation: snowflake_x 1s infinite alternate ease-in-out;
-        will-change: transform;
-        
+        animation: snowflake_x_8 1s infinite alternate ease-in-out;
+
         &:before {
             position: absolute;
             left: 0;
@@ -44,12 +43,10 @@
 
         &_use-rotate:before {
             animation: snowflake_rotate 2s infinite linear;
-            will-change: transform;
         }
 
         &_use-rotate-reverse:before {
             animation: snowflake_rotate-reverse 2s infinite linear;
-            will-change: transform;
         }
 
         &_num_0:before {
@@ -85,28 +82,8 @@
         }
 
         &_num_8:before {
-            background-image: url('8.png');
+            background-image: data-url('8.png');
         }
-    }
-}
-
-@keyframes snowflake_y {
-    from {
-       transform: translateY(0px);
-    }
-
-    to {
-       transform: translateY(103vh);
-    }
-}
-
-@keyframes snowflake_x {
-    from {
-       transform: translateX(0px);
-    }
-
-    to {
-       transform: translateX(50px);
     }
 }
 
