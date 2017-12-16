@@ -10,9 +10,6 @@
 }(this, function() {
     'use strict';
 
-    var CSS = '{CSS}';
-    var styles = window.getComputedStyle(document.documentElement, '');
-
     function Flakes(params) {
         if (this instanceof Flakes) {
             this.init(params);
@@ -25,7 +22,67 @@
         flakeSize: 18,
         flakeMinSize: 8,
         flakeMinOpacity: 0.6,
-        flakeCount: 8,
+        flakeCount: 9,
+        mainStyle: '{CSS}',
+        /**
+         * Init.
+         *
+         * @param {Object|undefined} params
+         */
+        init: function(params) {
+            this._setParams(params);
+
+            this._flakes = [];
+            this._isBody = this.params.container === document.body;
+
+            var hasWebkitAnimation = (Array.prototype.slice
+                .call(window.getComputedStyle(document.documentElement, ''))
+                .join('')
+                .match(/-webkit-animation/)
+            );
+
+            if (hasWebkitAnimation) {
+                this._animationPrefix = 'Webkit';
+            }
+
+            var container = document.createElement('div');
+            container.classList.add('snowflakes');
+            this._isBody && container.classList.add('snowflakes_body');
+            this.setStyle(container, { zIndex: this.params.zIndex });
+
+            this.params.container.appendChild(container);
+            this._container = container;
+
+            this._onResize = function() {
+                this._winHeight = this._getWindowHeight();
+                this._updateAnimationStyle();
+            }.bind(this);
+            this._addAnimationStyle();
+            this._onResize();
+            window.addEventListener('resize', this._onResize, false);
+
+            for (var i = 0; i < this.params.count; i++) {
+                this._flakes.push(this.createFlake());
+            }
+
+            if (!Flakes._mainStyleNode) {
+                Flakes._mainStyleNode = this._injectStyle(this.mainStyle);
+                Flakes._count = (Flakes._count || 0) + 1;
+            }
+        },
+        /**
+         * Destroy flakes.
+         */
+        destroy: function() {
+            this._removeStyle();
+
+            this._container && this._container.parentNode.removeChild(this._container);
+
+            window.removeEventListener('resize', this._onResize, false);
+
+            delete this._container;
+            delete this._flakes;
+        },
         /**
          * Start CSS animation.
          */
@@ -130,58 +187,14 @@
          */
         setStyle: function(dom, props) {
             Object.keys(props).forEach(function(key) {
+                if (this._animationPrefix && key.search('animation') > -1) {
+                    key = this._animationPrefix + key[0].toUpperCase() + key.substr(1);
+                }
+
                 dom.style[key] = props[key];
             }, this);
 
             return this;
-        },
-        /**
-         * Init.
-         *
-         * @param {Object|undefined} params
-         */
-        init: function(params) {
-            this._setParams(params);
-            this._flakes = [];
-            this._isBody = this.params.container === document.body;
-
-            var container = document.createElement('div');
-            container.classList.add('snowflakes');
-            this._isBody && container.classList.add('snowflakes_body');
-            this.setStyle(container, { zIndex: this.params.zIndex });
-
-            this.params.container.appendChild(container);
-            this._container = container;
-
-            this._onResize = function() {
-                this._winHeight = this._getWindowHeight();
-                this._updateAnimation();
-            }.bind(this);
-            this._addAnimation();
-            this._onResize();
-            window.addEventListener('resize', this._onResize, false);
-
-            for (var i = 0; i < this.params.count; i++) {
-                this._flakes.push(this.createFlake());
-            }
-
-            if (!Flakes._mainStyleNode) {
-                Flakes._mainStyleNode = this._injectStyle(CSS);
-                Flakes._count = (Flakes._count || 0) + 1;
-            }
-        },
-        /**
-         * Destroy flakes.
-         */
-        destroy: function() {
-            this._removeStyle();
-
-            this._container && this._container.parentNode.removeChild(this._container);
-
-            window.removeEventListener('resize', this._onResize, false);
-
-            delete this._container;
-            delete this._flakes;
         },
         _setParams: function(params) {
             params = params || {};
@@ -197,8 +210,8 @@
                 height: params.height
             };
         },
-        _getAnimation: function() {
-            var height = this._height() + 'px',
+        _getAnimationStyle: function() {
+            var height = (this._height() + this.flakeSize) + 'px',
                 css = '@-webkit-keyframes snowflake_y{from{-webkit-transform:translateY(0px)}to{-webkit-transform:translateY(' + height + ');}}' +
                     '@keyframes snowflake_y{from{transform:translateY(0px)}to{transform:translateY(' + height + ')}}';
 
@@ -210,11 +223,11 @@
 
             return css;
         },
-        _addAnimation: function() {
-            this._animationStyleNode = this._injectStyle(this._getAnimation());
+        _addAnimationStyle: function() {
+            this._animationStyleNode = this._injectStyle(this._getAnimationStyle());
         },
-        _updateAnimation: function() {
-            this._injectStyle(this._getAnimation(), this._animationStyleNode);
+        _updateAnimationStyle: function() {
+            this._injectStyle(this._getAnimationStyle(), this._animationStyleNode);
         },
         _injectStyle: function(style, styleNode) {
             if (!styleNode) {
@@ -242,8 +255,8 @@
                 }
             }
 
-            Flakes._animationStyleNode.parentNode.removeChild(Flakes._animationStyleNode);
-            delete Flakes._animationStyleNode;
+            this._animationStyleNode.parentNode.removeChild(this._animationStyleNode);
+            delete this._animationStyleNode;
         },
         _height: function() {
             var p = this.params;
