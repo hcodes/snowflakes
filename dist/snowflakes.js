@@ -35,13 +35,13 @@
             this._flakes = [];
             this._isBody = this.params.container === document.body;
 
-            var hasWebkitAnimation = (Array.prototype.slice
+            var hasAnimation = (Array.prototype.slice
                 .call(window.getComputedStyle(document.documentElement, ''))
-                .join('')
-                .match(/-webkit-animation/)
+                .join('|')
+                .match(/|animation-/)
             );
 
-            if (hasWebkitAnimation) {
+            if (!hasAnimation) {
                 this._animationPrefix = 'Webkit';
             }
 
@@ -53,6 +53,11 @@
             this.params.container.appendChild(container);
             this._container = container;
 
+            if (!Flakes._mainStyleNode) {
+                Flakes._mainStyleNode = this._injectStyle(this.mainStyle);
+                Flakes._count = (Flakes._count || 0) + 1;
+            }
+
             this._onResize = function() {
                 this._winHeight = this._getWindowHeight();
                 this._updateAnimationStyle();
@@ -63,11 +68,6 @@
 
             for (var i = 0; i < this.params.count; i++) {
                 this._flakes.push(this.createFlake());
-            }
-
-            if (!Flakes._mainStyleNode) {
-                Flakes._mainStyleNode = this._injectStyle(this.mainStyle);
-                Flakes._count = (Flakes._count || 0) + 1;
             }
         },
         /**
@@ -186,11 +186,11 @@
          * @returns {this}
          */
         setStyle: function(dom, props) {
-            Object.keys(props).forEach(function(key) {
-                if (this._animationPrefix && key.search('animation') > -1) {
-                    key = this._animationPrefix + key[0].toUpperCase() + key.substr(1);
+            Object.keys(props).forEach(function(originalKey) {
+                var key = originalKey;
+                if (this._animationPrefix && originalKey.search('animation') > -1) {
+                    key = this._animationPrefix + originalKey[0].toUpperCase() + originalKey.substr(1);
                 }
-
                 dom.style[key] = props[key];
             }, this);
 
