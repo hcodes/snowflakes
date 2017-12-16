@@ -11,38 +11,11 @@
     'use strict';
 
     var CSS = '{CSS}';
+    var styles = window.getComputedStyle(document.documentElement, '');
 
     function Flakes(params) {
-        this._addStyle();
-
         if (this instanceof Flakes) {
-            params = params || {};
-            this.params = {
-                container: params.container || document.body,
-                count: params.count || 50,
-                speed: params.speed || 1,
-                zIndex: params.zIndex || 9999,
-                useRotate: typeof params.useRotate === 'undefined' ? true : params.useRotate,
-                useScale: typeof params.useScale === 'undefined' ? true : params.useScale,
-                width: params.width,
-                height: params.height
-            };
-
-            this._flakes = [];
-            this._isBody = this.params.container === document.body;
-
-            var container = document.createElement('div');
-            container.classList.add('snowflakes');
-            this.setStyle(container, { zIndex: this.params.zIndex });
-
-            this._isBody && container.classList.add('snowflakes_body');
-
-            this.params.container.appendChild(container);
-            this._container = container;
-
-            for (var i = 0; i < this.params.count; i++) {
-                this._flakes.push(this.createFlake());
-            }
+            this.init(params);
         } else {
             return new Flakes(params);
         }
@@ -75,8 +48,16 @@
                 innerFlake = document.createElement('div'),
                 useScale = this.params.useScale,
                 size = (useScale ? this.getRandom(this.flakeMinSize, this.flakeSize) : this.flakeSize),
+                speedMax = this._height() / (50 * this.params.speed),
+                speedMin = speedMax / 3,
                 props = {
-                    animationDelay: (Math.random() * 10) + 's',
+                    animationDelay: (Math.random() * speedMax) + 's',
+                    animationDuration: this.interpolation(
+                        size,
+                        this.flakeMinSize,
+                        this.flakeSize,
+                        speedMax,
+                        speedMin) + 's',
                     left: (Math.random() * 100) + '%',
                     width: size + 'px',
                     height: size + 'px'
@@ -105,6 +86,7 @@
             }
 
             this.setStyle(innerFlake, {
+                animationName: 'snowflake_x_' + size,
                 animationDelay: Math.random() + 's'
             });
 
@@ -154,24 +136,91 @@
             return this;
         },
         /**
-         * Destroy flakes.
+         * Init.
+         *
+         * @param {Object|undefined} params
          */
-        destroy: function() {
-            this._container && this._container.parentNode.removeChild(this._container);
-            delete this._container;
-            delete this._flakes;
+        init: function(params) {
+            this._setParams(params);
+            this._flakes = [];
+            this._isBody = this.params.container === document.body;
 
-            this._removeStyle();
-        },
-        _addStyle: function() {
-            if (!Flakes._styleNode) {
-                Flakes._styleNode = this._injectStyle(CSS);
+            var container = document.createElement('div');
+            container.classList.add('snowflakes');
+            this._isBody && container.classList.add('snowflakes_body');
+            this.setStyle(container, { zIndex: this.params.zIndex });
+
+            this.params.container.appendChild(container);
+            this._container = container;
+
+            this._onResize = function() {
+                this._winHeight = this._getWindowHeight();
+                this._updateAnimation();
+            }.bind(this);
+            this._addAnimation();
+            this._onResize();
+            window.addEventListener('resize', this._onResize, false);
+
+            for (var i = 0; i < this.params.count; i++) {
+                this._flakes.push(this.createFlake());
+            }
+
+            if (!Flakes._mainStyleNode) {
+                Flakes._mainStyleNode = this._injectStyle(CSS);
                 Flakes._count = (Flakes._count || 0) + 1;
             }
         },
-        _injectStyle: function(style) {
-            var styleNode = document.createElement('style');
-            document.body.appendChild(styleNode);
+        /**
+         * Destroy flakes.
+         */
+        destroy: function() {
+            this._removeStyle();
+
+            this._container && this._container.parentNode.removeChild(this._container);
+
+            window.removeEventListener('resize', this._onResize, false);
+
+            delete this._container;
+            delete this._flakes;
+        },
+        _setParams: function(params) {
+            params = params || {};
+
+            this.params = {
+                container: params.container || document.body,
+                count: params.count || 50,
+                speed: params.speed || 1,
+                zIndex: params.zIndex || 9999,
+                useRotate: typeof params.useRotate === 'undefined' ? true : params.useRotate,
+                useScale: typeof params.useScale === 'undefined' ? true : params.useScale,
+                width: params.width,
+                height: params.height
+            };
+        },
+        _getAnimation: function() {
+            var height = this._height() + 'px',
+                css = '@-webkit-keyframes snowflake_y{from{-webkit-transform:translateY(0px)}to{-webkit-transform:translateY(' + height + ');}}' +
+                    '@keyframes snowflake_y{from{transform:translateY(0px)}to{transform:translateY(' + height + ')}}';
+
+            for (var i = this.flakeMinSize; i <= this.flakeSize; i++) {
+                var left = (i - this.flakeMinSize) * 4 + 'px';
+                css += '@-webkit-keyframes snowflake_x_' + i + '{from{-webkit-transform:translateX(0px)}to{-webkit-transform:translateX(' + left + ');}}' +
+                  '@keyframes snowflake_x_' + i + '{from{transform:translateX(0px)}to{transform:translateX(' + left + ')}}';
+            }
+
+            return css;
+        },
+        _addAnimation: function() {
+            this._animationStyleNode = this._injectStyle(this._getAnimation());
+        },
+        _updateAnimation: function() {
+            this._injectStyle(this._getAnimation(), this._animationStyleNode);
+        },
+        _injectStyle: function(style, styleNode) {
+            if (!styleNode) {
+                styleNode = document.createElement('style');
+                document.body.appendChild(styleNode);
+            }
 
             if (styleNode.styleSheet) { // IE
                 styleNode.styleSheet.cssText = style;
@@ -187,18 +236,21 @@
             Flakes._count--;
             if (Flakes._count <= 0) {
                 Flakes._count = 0;
-                if (Flakes._styleNode && Flakes._styleNode.parentNode) {
-                    Flakes._styleNode.parentNode.removeChild(Flakes._styleNode);
-                    delete Flakes._styleNode;
+                if (Flakes._mainStyleNode) {
+                    Flakes._mainStyleNode.parentNode.removeChild(Flakes._mainStyleNode);
+                    delete Flakes._mainStyleNode;
                 }
             }
+
+            Flakes._animationStyleNode.parentNode.removeChild(Flakes._animationStyleNode);
+            delete Flakes._animationStyleNode;
         },
         _height: function() {
             var p = this.params;
 
-            return p.height || (this._isBody ? this._winHeight() : p.container.offsetHeight + this.flakeSize);
+            return p.height || (this._isBody ? this._winHeight : p.container.offsetHeight + this.flakeSize);
         },
-        _winHeight: function() {
+        _getWindowHeight: function() {
             var height,
                 body = document.body,
                 docElement = document.documentElement;
