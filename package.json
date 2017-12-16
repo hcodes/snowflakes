@@ -1,13 +1,13 @@
 {
   "name": "magic-snowflakes",
   "description": "Falling snowflakes",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": {
     "name": "Denis Seleznev",
     "email": "hcodes@yandex.ru",
     "url": "https://github.com/hcodes/snowflakes"
   },
-  "main": "snowflakes.js",
+  "main": "dist/snowflakes.js",
   "homepage": "https://github.com/hcodes/snowflakes",
   "license": "MIT",
   "repository": {
@@ -27,10 +27,19 @@
     "node": ">= 4"
   },
   "files": [
-    "snowflakes.js"
+    "dist/snowflakes.js",
+    "dist/snowflakes.min.js"
   ],
   "devDependencies": {
-    "eslint": "4.x"
+    "del": "^3.0.0",
+    "eslint": "^4.13.0",
+    "gulp": "~3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-cleancss": "^0.2.2",
+    "gulp-less": "^3.3.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.6.1",
+    "gulp-uglify": "~3.0.0"
   },
   "scripts": {
     "test": "eslint ."
