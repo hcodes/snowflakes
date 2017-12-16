@@ -8,11 +8,10 @@ Falling snowflakes
 
 
 ## Details
-- Only CSS Animation with optimization
+- Only one JavaScript file (8 KB, GZIP)
+- CSS Animation
 - Rubber design
-- Only one JavaScript file
 - Flexible settings
-- Small size (7 KB, gzip)
 
 ## [Example](https://hcodes.github.io/snowflakes/example/example.html)
 
