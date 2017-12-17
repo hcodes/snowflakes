@@ -20,7 +20,6 @@ function setStyle(dom, props) {
             key = animationPrefix + originalKey[0].toUpperCase() + originalKey.substr(1);
         }
 
-        console.log(key, originalKey, props[originalKey]);
         dom.style[key] = props[originalKey];
     });
 }
