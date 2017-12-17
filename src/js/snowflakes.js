@@ -3,7 +3,7 @@ import {setStyle} from './utils';
 
 const mainStyle = '{CSS}';
 
-export default class Snowflakes {
+class Snowflakes {
     /**
      * @constructor
      *
@@ -21,19 +21,6 @@ export default class Snowflakes {
      * @returns {this}
      */
     constructor(params) {
-        if (new.target) {
-            this.init(params);
-        } else {
-            return new Snowflakes(params);
-        }
-    }
-
-    /**
-     * Init.
-     *
-     * @param {Object|undefined} params
-     */
-    init(params) {
         this.params = this._setParams(params);
 
         this._flakes = [];
@@ -195,3 +182,7 @@ export default class Snowflakes {
         return height;
     }
 }
+
+export default function(params) {
+    return new Snowflakes(params);
+};
