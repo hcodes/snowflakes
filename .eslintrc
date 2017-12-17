@@ -1,8 +1,10 @@
 {
-    "parserOptions": {
-        "ecmaVersion": 6
-    },
+    "parser": "babel-eslint",
+    "plugins": [
+        "class-property"
+    ],
     "rules": {
+         "class-property/class-property-semicolon": ["error", "always"],
         "semi": [2, "always"],
         "quotes": [2, "single"],
         "curly": [
