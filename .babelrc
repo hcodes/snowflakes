@@ -1,0 +1,9 @@
+{
+    "presets": [
+      ["env", { "modules": false, "loose": true }]
+    ],
+    "plugins": [
+        "transform-class-properties",
+        "transform-new-target"      
+    ]
+}
