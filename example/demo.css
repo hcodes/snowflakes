@@ -20,7 +20,7 @@ html, body {
 .controls {
     position: absolute;
     z-index: 20;
-    padding: 10px;
+    padding: 5px 10px 10px 10px;
     right: 30px;
     top: 30px;
     background: rgba(255, 255, 255, .5);
