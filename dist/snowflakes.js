@@ -177,28 +177,11 @@ var Snowflakes = function () {
      * @param {number} [params.zIndex=9999]
      * @param {number} [params.width=width of container]
      * @param {number} [params.height=height of container]
-     *
-     * @returns {this}
      */
     function Snowflakes(params) {
-        _classCallCheck(this, Snowflakes);
-
-        if (this instanceof Snowflakes ? this.constructor : void 0) {
-            this.init(params);
-        } else {
-            return new Snowflakes(params);
-        }
-    }
-
-    /**
-     * Init.
-     *
-     * @param {Object|undefined} params
-     */
-
-
-    Snowflakes.prototype.init = function init(params) {
         var _this = this;
+
+        _classCallCheck(this, Snowflakes);
 
         this.params = this._setParams(params);
 
@@ -235,7 +218,7 @@ var Snowflakes = function () {
         for (var i = 0; i < this.params.count; i++) {
             this._flakes.push(new Flake(container, this._height(), this.params));
         }
-    };
+    }
 
     /**
      * Destroy flakes.
@@ -370,6 +353,10 @@ var Snowflakes = function () {
     return Snowflakes;
 }();
 
-return Snowflakes;
+var snowflakes = function (params) {
+    return new Snowflakes(params);
+};
+
+return snowflakes;
 
 })));

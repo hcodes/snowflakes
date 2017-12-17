@@ -17,8 +17,6 @@ class Snowflakes {
      * @param {number} [params.zIndex=9999]
      * @param {number} [params.width=width of container]
      * @param {number} [params.height=height of container]
-     *
-     * @returns {this}
      */
     constructor(params) {
         this.params = this._setParams(params);
@@ -185,4 +183,4 @@ class Snowflakes {
 
 export default function(params) {
     return new Snowflakes(params);
-};
+}

@@ -1,3 +1,7 @@
+## v2.1.0
+- Added examples.
+- Fixes for constructor.
+
 ## v2.0.1
 Removed console.log.
 
