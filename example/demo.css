@@ -2,6 +2,9 @@ html, body {
     padding: 0;
     margin: 0;
     border: 0;
+    
+    font-family: Arial, sans-serif;
+    font-size: 14px;
 
     transition: .5s background-color ease;
 }

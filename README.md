@@ -14,7 +14,10 @@ Falling snowflakes
 - Rubber design
 - Flexible settings
 
-## [Example](https://hcodes.github.io/snowflakes/example/example.html)
+## [Examples](https://hcodes.github.io/snowflakes/example/demo.html)
+- [Demo](https://hcodes.github.io/snowflakes/example/demo.html)
+- [Simple](https://hcodes.github.io/snowflakes/example/simple.html)
+- [Advanced](https://hcodes.github.io/snowflakes/example/advanced.html)
 
 ## Using
 

@@ -36,7 +36,7 @@
 
       <div class="controls__group">
         <label><input name="paused" type="checkbox" onclick="App.setPause(this.checked);" /> Pause</label>
-        <label><input name="fps" type="button" onclick="App.loadFPS(this.checked);" value="Show FPS"/></label>
+        <label><input name="fps" type="button" onclick="App.loadFPS(this.checked); this.disabled = true;" value="Show FPS"/></label>
       </div>
     </form>
     <script src="../dist/snowflakes.js"></script>
