@@ -5,8 +5,6 @@
 	(global.Snowflakes = factory());
 }(this, (function () { 'use strict';
 
-var animationPrefix = Array.prototype.slice.call(window.getComputedStyle(document.documentElement, '')).join(',').search(/,animation/) > -1 ? '' : 'Webkit';
-
 /**
  * Set inline style.
  *
@@ -14,6 +12,9 @@ var animationPrefix = Array.prototype.slice.call(window.getComputedStyle(documen
  * @param {Object} props
  */
 function setStyle(dom, props) {
+
+    var animationPrefix = Array.prototype.slice.call(window.getComputedStyle(document.documentElement, '')).join(',').search(/,animation/) > -1 ? '' : 'Webkit';
+
     Object.keys(props).forEach(function (originalKey) {
         var key = originalKey;
         if (animationPrefix && originalKey.search('animation') > -1) {
