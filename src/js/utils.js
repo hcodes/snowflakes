@@ -1,9 +1,3 @@
-const animationPrefix = (Array.prototype.slice
-    .call(window.getComputedStyle(document.documentElement, ''))
-    .join(',')
-    .search(/,animation/) > -1
-) ? '' : 'Webkit';
-
 /**
  * Set inline style.
  *
@@ -11,6 +5,13 @@ const animationPrefix = (Array.prototype.slice
  * @param {Object} props
  */
 export function setStyle(dom, props) {
+
+    const animationPrefix = (Array.prototype.slice
+            .call(window.getComputedStyle(document.documentElement, ''))
+            .join(',')
+            .search(/,animation/) > -1
+    ) ? '' : 'Webkit';
+
     Object.keys(props).forEach(function(originalKey) {
         let key = originalKey;
         if (animationPrefix && originalKey.search('animation') > -1) {
@@ -19,6 +20,7 @@ export function setStyle(dom, props) {
         
         dom.style[key] = props[originalKey];
     });
+
 }
 
 /**
