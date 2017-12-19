@@ -5,7 +5,10 @@
 	(global.Snowflakes = factory());
 }(this, (function () { 'use strict';
 
-var animationPrefix = Array.prototype.slice.call(window.getComputedStyle(document.documentElement, '')).join(',').search(/,animation/) > -1 ? '' : 'Webkit';
+var animationPrefix = '';
+if (typeof window !== 'undefined') {
+    animationPrefix = Array.prototype.slice.call(window.getComputedStyle(document.documentElement, '')).join(',').search(/,animation/) > -1 ? '' : 'Webkit';
+}
 
 /**
  * Set inline style.
