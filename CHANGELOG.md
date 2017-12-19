@@ -1,3 +1,6 @@
+## v2.1.1
+- Small fix for server side #7.
+
 ## v2.1.0
 - Added examples.
 - Fixes for constructor.
