@@ -1,8 +1,11 @@
-const animationPrefix = (Array.prototype.slice
-    .call(window.getComputedStyle(document.documentElement, ''))
-    .join(',')
-    .search(/,animation/) > -1
-) ? '' : 'Webkit';
+let animationPrefix = '';
+if (typeof window !== 'undefined') {
+    animationPrefix = (Array.prototype.slice
+        .call(window.getComputedStyle(document.documentElement, ''))
+        .join(',')
+        .search(/,animation/) > -1
+    ) ? '' : 'Webkit';
+}
 
 /**
  * Set inline style.
@@ -16,7 +19,7 @@ export function setStyle(dom, props) {
         if (animationPrefix && originalKey.search('animation') > -1) {
             key = animationPrefix + originalKey[0].toUpperCase() + originalKey.substr(1);
         }
-        
+
         dom.style[key] = props[originalKey];
     });
 }
