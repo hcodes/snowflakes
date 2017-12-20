@@ -1,3 +1,6 @@
+## v2.2.0
+Removed `dist/`.
+
 ## v2.1.1
 - Small fix for server side #7.
 

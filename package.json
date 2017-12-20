@@ -1,7 +1,7 @@
 {
   "name": "magic-snowflakes",
   "description": "Falling snowflakes",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "author": {
     "name": "Denis Seleznev",
     "email": "hcodes@yandex.ru",
@@ -49,7 +49,8 @@
     "rollup-plugin-babel": "^3.0.2"
   },
   "scripts": {
-    "test": "eslint ."
+    "test": "eslint .",
+    "build": "gulp"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0"
