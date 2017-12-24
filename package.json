@@ -1,7 +1,7 @@
 {
   "name": "magic-snowflakes",
   "description": "Falling snowflakes",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "author": {
     "name": "Denis Seleznev",
     "email": "hcodes@yandex.ru",
@@ -32,11 +32,13 @@
   ],
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.3",
+    "babel-eslint": "^8.1.0",
+    "babel-helpers": "^6.24.1",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "del": "^3.0.0",
-    "eslint": "^4.13.1",
+    "eslint": "^4.14.0",
     "gulp": "~3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-cleancss": "^0.2.2",
@@ -46,13 +48,10 @@
     "gulp-replace": "^0.6.1",
     "gulp-rollup": "^2.15.0",
     "gulp-uglify": "~3.0.0",
-    "rollup-plugin-babel": "^3.0.2"
+    "rollup-plugin-babel": "^3.0.3"
   },
   "scripts": {
     "test": "eslint .",
     "build": "gulp"
-  },
-  "dependencies": {
-    "babel-runtime": "^6.26.0"
   }
 }

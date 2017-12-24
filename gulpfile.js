@@ -6,6 +6,7 @@ const
     del = require('del'),
     fs = require('fs'),
     babel = require('rollup-plugin-babel'),
+    babelHelpersList = require('babel-helpers').list,
     uglifyOptions = {output: {comments: /^!/}},
     copyright = '/*! Snowflakes | © 2018 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */\n';
 
@@ -18,7 +19,9 @@ gulp.task('js', ['css'], function() {
             input: 'src/js/snowflakes.js',
             format: 'umd',
             name: 'Snowflakes',
-            plugins: [babel()]
+            plugins: [babel({
+                externalHelpersWhitelist: babelHelpersList.filter(helperName => helperName !== 'asyncGenerator')
+            })]
         }))
         .pipe($.replace('{CSS}', css.replace(/'/g, '\\\'')))
         .pipe($.replace(/^/, copyright))

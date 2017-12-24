@@ -1,3 +1,6 @@
+## v2.2.1
+Fixed Babel dependencies #10.
+
 ## v2.2.0
 Removed `dist/`.
 
