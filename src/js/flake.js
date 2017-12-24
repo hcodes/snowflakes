@@ -5,7 +5,7 @@ export default class Flake {
     static maxSize = 18;
     static minOpacity = 0.6;
     static maxOpacity = 1;
-    static count = 9;
+    static count = 6;
 
     /**
      * @constructor
@@ -13,11 +13,12 @@ export default class Flake {
      * @param {DOMElement} container
      * @param {number} containerHeight
      * @param {Object} params
-     * @param {number} [params.count=50]
-     * @param {number} [params.speed=1]
-     * @param {boolean} [useRotate=true]
-     * @param {boolean} [useScale=true]
-     * @param {number} [params.zIndex=9999]
+     * @param {number} [params.count]
+     * @param {number} [params.speed]
+     * @param {boolean} [params.useRotate]
+     * @param {boolean} [params.useScale]
+     * @param {number} [params.wind]
+     * @param {number} [params.zIndex]
      */
     constructor(container, containerHeight, params) {
         this.size = params.useScale ? getRandom(Flake.minSize, Flake.maxSize) : Flake.maxSize;
@@ -29,7 +30,8 @@ export default class Flake {
             styleProps = {
                 animationDelay: animationProps.animationDelay,
                 animationDuration: animationProps.animationDuration,
-                left: (Math.random() * 100) + '%',
+                left: (Math.random() * 99) + '%',
+                marginTop: -Math.sqrt(2) * this.size + 'px',
                 width: this.size + 'px',
                 height: this.size + 'px'
             };
@@ -50,6 +52,11 @@ export default class Flake {
 
         innerFlake.classList.add('snowflake__inner');
         innerFlake.classList.add('snowflake__inner_num_' + getRandom(0, Flake.count));
+
+        if (params.wind) {
+            innerFlake.classList.add('snowflake__inner_wind');
+        }
+
         if (params.useRotate) {
             innerFlake.classList.add('snowflake__inner_use-rotate' + (Math.random() > 0.5 ? '' : '-reverse'));
         }

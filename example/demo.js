@@ -1,18 +1,25 @@
 var App = {
     params: {
-        size: 'fullscreen',
         bg: 'white',
+        area: 'fullscreen',
         count: 50,
         speed: 1,
         useRotate: true,
-        useScale: true
+        useScale: true,
+        wind: true,
+        stop: false
     },
-    setPause: function(value) {
-        if (value) {
-            this._snow.stop();
-        } else {
+    setStop: function() {
+        var elem = document.querySelector('input[name="stop"]');
+        if (this.params.stop) {
             this._snow.start();
+            elem.value = 'Stop';
+        } else {
+            this._snow.stop();
+            elem.value = 'Start';
         }
+
+        this.params.stop = !this.params.stop;
     },
     loadFPS: function() {
         if (this._stats) {
@@ -33,9 +40,17 @@ var App = {
         script.src = 'https://rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
         document.head.appendChild(script);
     },
+    setColor: function(value) {
+        this.params.color = value;
+        this.redraw();
+    },
     setBg: function(value) {
         this.params.bg = value;
         this.updateSettings();
+    },
+    setWind: function(value) {
+        this.params.wind = value;
+        this.redraw();
     },
     setCount: function(value) {
         this.params.count = parseInt(value, 10);
@@ -45,8 +60,9 @@ var App = {
         this.params.speed = parseFloat(value);
         this.redraw();
     },
-    setSize: function(value) {
-        this.params.size = value;
+    setArea: function(value) {
+        this.params.container = value === 'fullscreen' ? document.body : document.querySelector('#layer');
+        this.params.area = value;
         this.updateSettings();
         this.redraw();
     },
@@ -59,20 +75,14 @@ var App = {
         this.redraw();
     },
     updateSettings: function() {
-        document.body.className = 'bg_' + this.params.bg + ' size_' + this.params.size;
+        document.body.className = 'bg_' + this.params.bg + ' area_' + this.params.area;
     },
     redraw: function() {
         if (this._snow) {
             this._snow.destroy();
         }
 
-        this._snow = new Snowflakes({
-            container: this.params.size === 'fullscreen' ? document.body : document.getElementById('layer'),
-            count: this.params.count,
-            speed: this.params.speed,
-            useRotate: this.params.useRotate,
-            useScale: this.params.useScale
-        });
+        this._snow = new Snowflakes(this.params);
     },
     start: function() {
         this.updateSettings();

@@ -1,3 +1,8 @@
+## v3.0.0
++ Now snowflakes in SVG format.
++ You can change the color of snowflakes. The property `color: "red"`. Default: `"#5ECDEF"`.
++ Snowflakes can fly without wind. The property `wind: false`. Default: `true`.
+
 ## v2.2.1
 Fixed Babel dependencies #10.
 
