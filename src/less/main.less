@@ -17,9 +17,6 @@
 
 .snowflake {
     position: absolute;
-    margin: -21px 0 0 0;
-    width: 18px;
-    height: 18px;
     animation: snowflake_y 10s infinite linear;
     will-change: transform;
 
@@ -29,7 +26,6 @@
         right: 0;
         top: 0;
         bottom: 0;
-        animation: snowflake_x_8 1s infinite alternate ease-in-out;
 
         &:before {
             position: absolute;
@@ -41,48 +37,16 @@
             background-size: 100% 100%;
         }
 
+        &_wind {
+            animation: snowflake_x_8 1s infinite alternate ease-in-out;
+        }
+
         &_use-rotate:before {
             animation: snowflake_rotate 2s infinite linear;
         }
 
         &_use-rotate-reverse:before {
             animation: snowflake_rotate-reverse 2s infinite linear;
-        }
-
-        &_num_0:before {
-            background-image: data-uri('0.png');
-        }
-
-        &_num_1:before {
-            background-image: data-uri('1.png');
-        }
-
-        &_num_2:before {
-            background-image: data-uri('2.png');
-        }
-
-        &_num_3:before {
-            background-image: data-uri('3.png');
-        }
-
-        &_num_4:before {
-            background-image: data-uri('4.png');
-        }
-
-        &_num_5:before {
-            background-image: data-uri('5.png');
-        }
-
-        &_num_6:before {
-            background-image: data-uri('6.png');
-        }
-
-        &_num_7:before {
-            background-image: data-uri('7.png');
-        }
-
-        &_num_8:before {
-            background-image: data-uri('8.png');
         }
     }
 }

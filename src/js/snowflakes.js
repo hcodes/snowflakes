@@ -1,7 +1,9 @@
 import Flake from './flake';
 import {setStyle} from './utils';
 
-const mainStyle = '{CSS}';
+const
+    mainStyle = '{MAIN_STYLE}',
+    imagesStyle = '{IMAGES_STYLE}';
 
 class Snowflakes {
     /**
@@ -11,12 +13,15 @@ class Snowflakes {
      *
      * @param {DOMElem} [params.container=document.body]
      * @param {number} [params.count=50]
+     * @param {number} [params.color="#5ECDEF"]
+     * @param {number} [params.height=height of container]
      * @param {number} [params.speed=1]
+     * @param {number} [params.stop=false]
      * @param {boolean} [useRotate=true]
      * @param {boolean} [useScale=true]
-     * @param {number} [params.zIndex=9999]
      * @param {number} [params.width=width of container]
-     * @param {number} [params.height=height of container]
+     * @param {boolean} [params.wind=true]
+     * @param {number} [params.zIndex=9999]
      */
     constructor(params) {
         this.params = this._setParams(params);
@@ -32,6 +37,10 @@ class Snowflakes {
         this.params.container.appendChild(container);
         this._container = container;
 
+        if (this.params.stop) {
+            this.stop();
+        }
+
         if (!Snowflakes._mainStyleNode) {
             Snowflakes._mainStyleNode = this._injectStyle(mainStyle);
             Snowflakes._count = (Snowflakes._count || 0) + 1;
@@ -46,7 +55,10 @@ class Snowflakes {
             this._updateAnimationStyle();
             setStyle(this._container, {display: 'block'});
         };
-        this._addAnimationStyle();
+
+        this._imagesStyleNode = this._injectStyle(imagesStyle.replace(/%7Bcolor%7D/g, encodeURIComponent(this.params.color)));
+        this._animationStyleNode = this._injectStyle(this._getAnimationStyle());
+
         window.addEventListener('resize', this._onResize, false);
 
         for (let i = 0; i < this.params.count; i++) {
@@ -88,16 +100,30 @@ class Snowflakes {
     _setParams(params) {
         params = params || {};
 
-        return {
-            container: params.container || document.body,
-            count: params.count || 50,
-            speed: params.speed || 1,
-            zIndex: params.zIndex || 9999,
-            useRotate: 'useRotate' in params ? params.useRotate : true,
-            useScale: 'useScale' in params ? params.useScale : true,
-            width: params.width,
-            height: params.height
-        };
+        const result = {};
+
+        [
+            ['color', '#5ECDEF'],
+            ['container', document.body],
+            ['count', 50],
+            ['height'],
+            ['speed', 1],
+            ['stop', false],
+            ['useRotate', true],
+            ['useScale',  true],
+            ['width'],
+            ['wind', true],
+            ['zIndex', 9999]
+        ].forEach(function(item) {
+            const [name, defaultValue] = item;
+            if (typeof defaultValue === 'boolean') {
+                result[name] = name in params ? params[name] : defaultValue;
+            } else {
+                result[name] = params[name] || defaultValue;
+            }
+        });
+
+        return result;
     }
 
     _getAnimationStyle() {
@@ -116,10 +142,6 @@ class Snowflakes {
         }
 
         return css;
-    }
-
-    _addAnimationStyle() {
-        this._animationStyleNode = this._injectStyle(this._getAnimationStyle());
     }
 
     _updateAnimationStyle() {
@@ -147,14 +169,15 @@ class Snowflakes {
         Snowflakes._count--;
         if (Snowflakes._count <= 0) {
             Snowflakes._count = 0;
-            if (Snowflakes._mainStyleNode) {
-                Snowflakes._mainStyleNode.parentNode.removeChild(Snowflakes._mainStyleNode);
-                delete Snowflakes._mainStyleNode;
-            }
+            Snowflakes._mainStyleNode.parentNode.removeChild(Snowflakes._mainStyleNode);
+            delete Snowflakes._mainStyleNode;
         }
 
         this._animationStyleNode.parentNode.removeChild(this._animationStyleNode);
         delete this._animationStyleNode;
+
+        this._imagesStyleNode.parentNode.removeChild(this._imagesStyleNode);
+        delete this._imagesStyleNode;
     }
 
     _height() {

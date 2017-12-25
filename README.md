@@ -81,18 +81,27 @@ SnowFlakes();
     <script src="./node_modules/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script>
         var sf = new Snowflakes({
-            container: document.body, // Default: document.body
+            color: '#f00', // Default: "#5ECDEF"
+            container: document.body, // Default: document.body            
             count: 100, // 100 snowflakes. Default: 50
             speed: 2, // The property affects the speed of falling. Default: 1
             useRotate: true, // Default: true
             useScale: true, // Default: true
             zIndex: 100, // Default: 9999
+            wind: false, // Without wind. Default: true
             width: 500, // Default: width of container
             height: 2000 // Default: height of container
         });
     </script>
 </body>
 </html>
+```
+
+## Development
+```
+npm i
+npm run build
+npm test
 ```
 
 ## [License](LICENSE)

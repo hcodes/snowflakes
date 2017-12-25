@@ -2,11 +2,22 @@ html, body {
     padding: 0;
     margin: 0;
     border: 0;
-    
-    font-family: Arial, sans-serif;
-    font-size: 14px;
 
     transition: .5s background-color ease;
+}
+
+body,
+input {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+input {
+    margin-left: 0;
+}
+
+label {
+    margin-right: 5px;
 }
 
 .bg_white {
@@ -20,15 +31,20 @@ html, body {
 .controls {
     position: absolute;
     z-index: 20;
-    padding: 5px 10px 10px 10px;
     right: 30px;
     top: 30px;
-    background: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, .8);
     border: 1px solid #f0f0f0;
     border-radius: 4px;
     line-height: 1.6;
+    white-space: nowrap;
 
     transition: .5s border-color ease;
+    border-radius: 10px;
+}
+
+.controls__field {
+    margin-left: 10px;
 }
 
 .bg_black .controls {
@@ -38,17 +54,25 @@ html, body {
 .controls__title {
     font-weight: bold;
     text-align: center;
+    padding: 5px;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .controls__group {
     margin-top: 10px;
 }
 
-.controls label {
-    display: block;
+.controls__body {
+    padding: 5px 10px 10px 10px;
 }
 
-.size_layer #layer {
+.controls__bottom {
+    padding: 5px;
+    text-align: center;
+    background: #eee;
+}
+
+.area_layer #layer {
     display: block;
 }
 
