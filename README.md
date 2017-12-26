@@ -43,8 +43,8 @@ or
 ```js
 'use strict';
 
-const SnowFlakes = require('magic-snowflakes');
-SnowFlakes();
+const Snowflakes = require('magic-snowflakes');
+Snowflakes();
 ```
 
 ### Layer
