@@ -15,7 +15,7 @@ Falling snowflakes
 - Flexible settings
 
 ## [Examples](https://hcodes.github.io/snowflakes/example/demo.html)
-- [Demo](https://hcodes.github.io/snowflakes/example/demo.html)
+- [Demo](https://hcodes.github.io/demo-snowflakes/)
 - [Simple](https://hcodes.github.io/snowflakes/example/simple.html)
 - [Advanced](https://hcodes.github.io/snowflakes/example/advanced.html)
 
