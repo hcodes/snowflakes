@@ -99,6 +99,8 @@ SnowFlakes();
 
 ## Development
 ```
+git clone git@github.com:hcodes/snowflakes.git ./snowflakes
+cd ./snowflakes
 npm i
 npm run build
 npm test
