@@ -169,15 +169,21 @@ class Snowflakes {
         Snowflakes._count--;
         if (Snowflakes._count <= 0) {
             Snowflakes._count = 0;
-            Snowflakes._mainStyleNode.parentNode.removeChild(Snowflakes._mainStyleNode);
-            delete Snowflakes._mainStyleNode;
+            if (Snowflakes._mainStyleNode) {
+                Snowflakes._mainStyleNode.parentNode.removeChild(Snowflakes._mainStyleNode);
+                delete Snowflakes._mainStyleNode;
+            }
         }
 
-        this._animationStyleNode.parentNode.removeChild(this._animationStyleNode);
-        delete this._animationStyleNode;
+        if (this._animationStyleNode) {
+            this._animationStyleNode.parentNode.removeChild(this._animationStyleNode);
+            delete this._animationStyleNode;
+        }
 
-        this._imagesStyleNode.parentNode.removeChild(this._imagesStyleNode);
-        delete this._imagesStyleNode;
+        if (this._imagesStyleNode) {
+            this._imagesStyleNode.parentNode.removeChild(this._imagesStyleNode);
+            delete this._imagesStyleNode;
+        }
     }
 
     _height() {
