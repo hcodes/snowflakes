@@ -14,15 +14,21 @@ Falling snowflakes
 - Rubber design
 - Flexible settings
 
-## [Examples](https://hcodes.github.io/snowflakes/example/demo.html)
+## Examples
 - [Demo](https://hcodes.github.io/demo-snowflakes/)
-- [Simple](https://hcodes.github.io/snowflakes/example/simple.html)
-- [Advanced](https://hcodes.github.io/snowflakes/example/advanced.html)
+- [Simple](https://hcodes.github.io/snowflakes/examples/simple.html)
+- [Advanced](https://hcodes.github.io/snowflakes/examples/advanced.html)
+
+[See details](https://github.com/hcodes/snowflakes/tree/master/examples)
 
 ## Using
 
 ```
 npm i magic-snowflakes --save-dev
+```
+or
+```
+yarn add magic-snowflakes
 ```
 
 ### Fullscreen
