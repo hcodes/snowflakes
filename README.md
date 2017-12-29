@@ -17,7 +17,12 @@ Falling snowflakes
 ## Examples
 - [Demo](https://hcodes.github.io/demo-snowflakes/)
 - [Simple](https://hcodes.github.io/snowflakes/examples/simple.html)
-- [Advanced](https://hcodes.github.io/snowflakes/examples/advanced.html)
+- [Increased speed](https://hcodes.github.io/snowflakes/examples/increased_speed.html)
+- [Layer](https://hcodes.github.io/snowflakes/examples/layer.html)
+- [Own color](https://hcodes.github.io/snowflakes/examples/color.html)
+- [Own z-index](https://hcodes.github.io/snowflakes/examples/z-index.html)
+- [start() and stop()](https://hcodes.github.io/snowflakes/examples/start_stop.html)
+- [Without wind](https://hcodes.github.io/snowflakes/examples/without_wind.html)
 
 [See details](https://github.com/hcodes/snowflakes/tree/master/examples)
 
@@ -31,7 +36,7 @@ or
 yarn add magic-snowflakes
 ```
 
-### Fullscreen
+### Without settings
 ```html
 <html>
 <body>
@@ -51,33 +56,6 @@ or
 
 const Snowflakes = require('magic-snowflakes');
 Snowflakes();
-```
-
-### Layer
-
-```html
-<html>
-<head>
-    <style>
-        #my-layer {
-            width: 600px;
-            height: 600px;
-            overflow: hidden;
-            position: relative;
-        }
-    </style>
-</head>
-<body>
-    ...
-    <div id="my-layer"></div>
-    <script src="./node_modules/magic-snowflakes/dist/snowflakes.min.js"></script>
-    <script>
-        var sf = new Snowflakes({
-            container: document.getElementById('my-layer')
-        });
-    </script>
-</body>
-</html>
 ```
 
 ### Advanced settings

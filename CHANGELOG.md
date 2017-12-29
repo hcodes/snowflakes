@@ -1,7 +1,8 @@
 ## v3.1.0
-+ `demo.html` moved to `https://github.com/hcodes/demo-snowflakes`.
-+ `example/` → `examples/`.
-+ Small refactoring.
++ `demo.html` moved to `https://github.com/hcodes/demo-snowflakes`
++ `example/` → `examples/`
++ Added new examples
++ Small refactoring
 
 ## v3.0.0
 + Now snowflakes in SVG format.
