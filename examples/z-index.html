@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title>Own z-index</title>
+    <style>
+        #top-layer,
+        #bottom-layer {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            width: 300px;
+            height: 300px;
+            vertical-align: middle;
+            line-height: 300px;
+            text-align: center;
+        }
+
+        #top-layer {
+            z-index: 100000;
+            background: rgb(255, 100, 100);
+            margin-top: -150px;
+        }
+
+        #bottom-layer {
+            z-index: 10;
+            background: rgb(100, 100, 255);
+            margin-top: -150px;
+            margin-left: -300px;
+        }
+    </style>
+</head>
+<body>
+    z-index for snowflakes: 90000
+    <div id="top-layer">z-index: 100000</div>
+    <div id="bottom-layer">z-index: 10</div>
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.js"></script>
+    <script>
+        new Snowflakes({ zIndex: 90000 });
+    </script>
+</body>
+</html>

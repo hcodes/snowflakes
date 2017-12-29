@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title>Methods: start() and stop()</title>
+    <style>
+        #toggle {
+            position: fixed;
+            left: 50%;
+            bottom: 2em;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.js"></script>
+    <button id="toggle">Stop</button>
+    <script>
+        (function() {
+            var isStart = true,
+                button = document.querySelector('#toggle'),
+                sf = new Snowflakes();
+
+            button.onclick = function() {
+                if (isStart) {
+                    sf.stop();
+                    button.innerHTML = 'Start';
+                } else {
+                    sf.start();
+                    button.innerHTML = 'Stop';
+                }
+
+                isStart = !isStart;
+            };
+        })();
+    </script>
+</body>
+</html>

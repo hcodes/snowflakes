@@ -1,3 +1,9 @@
+## v3.1.0
++ `demo.html` moved to `https://github.com/hcodes/demo-snowflakes`
++ `example/` → `examples/`
++ Added new examples
++ Small refactoring
+
 ## v3.0.0
 + Now snowflakes in SVG format.
 + You can change the color of snowflakes. The property `color: "red"`. Default: `"#5ECDEF"`.

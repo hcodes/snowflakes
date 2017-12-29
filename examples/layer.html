@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title>Layer</title>
+    <style>
+        #layer {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            margin-top: -150px;
+            margin-left: -150px;
+            width: 300px;
+            height: 300px;
+            border: 1px solid #eee;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.js"></script>
+    <div id="layer"></div>
+    <script>
+        Snowflakes({ container: document.querySelector('#layer') });
+    </script>
+</body>
+</html>

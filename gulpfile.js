@@ -52,21 +52,21 @@ gulp.task('clean', function() {
     return del('dist/*');
 });
 
-gulp.task('dev-example-copy', function() {
+gulp.task('dev-examples-copy', function() {
     return gulp
-        .src('example/*')
-        .pipe(gulp.dest('dev-example/'));
+        .src('examples/*')
+        .pipe(gulp.dest('dev-examples/'));
 });
 
-gulp.task('dev-example', ['dev-example-copy'], function() {
+gulp.task('dev-examples', ['dev-examples-copy'], function() {
     return gulp
-        .src('dev-example/*.html')
+        .src('dev-examples/*.html')
         .pipe($.replace(/https:\/\/unpkg\.com\/magic-snowflakes\//g, '../'))
-        .pipe(gulp.dest('dev-example/'));
+        .pipe(gulp.dest('dev-examples/'));
 });
 
 gulp.task('watch', function() {
     gulp.watch('src/**/*', ['default']);
 });
 
-gulp.task('default', ['js.min', 'dev-example']);
+gulp.task('default', ['js.min', 'dev-examples']);
