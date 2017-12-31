@@ -1,12 +1,7 @@
 import {interpolation, getRandom, setStyle} from './utils';
 
 export default class Flake {
-    static minSize = 8;
-    static maxSize = 18;
-    static minOpacity = 0.6;
-    static maxOpacity = 1;
-    static count = 6;
-
+    static maxInnerSize = 20;
     /**
      * @constructor
      *
@@ -15,18 +10,24 @@ export default class Flake {
      * @param {Object} params
      * @param {number} [params.count]
      * @param {number} [params.speed]
-     * @param {boolean} [params.useRotate]
-     * @param {boolean} [params.useScale]
+     * @param {boolean} [params.rotation]
+     * @param {number} [params.minOpacity]
+     * @param {number} [params.maxOpacity]
+     * @param {number} [params.minSize]
+     * @param {number} [params.maxSize]
+     * @param {number} [params.types]
      * @param {number} [params.wind]
      * @param {number} [params.zIndex]
      */
     constructor(container, containerHeight, params) {
-        this.size = params.useScale ? getRandom(Flake.minSize, Flake.maxSize) : Flake.maxSize;
+        const isEqual = params.minSize === params.maxSize;
+        this.innerSize = isEqual ? 0 : getRandom(0, Flake.maxInnerSize);
+        this.size = Flake.calcSize(this.innerSize, params);
 
         const
             flake = document.createElement('div'),
             innerFlake = document.createElement('div'),
-            animationProps = this.getAnimationProps(containerHeight, params.speed),
+            animationProps = this.getAnimationProps(containerHeight, params),
             styleProps = {
                 animationDelay: animationProps.animationDelay,
                 animationDuration: animationProps.animationDuration,
@@ -36,35 +37,38 @@ export default class Flake {
                 height: this.size + 'px'
             };
 
-        if (params.useScale) {
+        if (!isEqual) {
             styleProps.zIndex = params.zIndex + this.size * 10;
             styleProps.opacity = interpolation(
                 this.size,
-                Flake.minSize,
-                Flake.maxSize,
-                Flake.minOpacity,
-                Flake.maxOpacity
+                params.minSize,
+                params.maxSize,
+                params.minOpacity,
+                params.maxOpacity
             );
         }
 
         setStyle(flake, styleProps);
+        setStyle(innerFlake, {
+            animationName: 'snowflake_x_' + this.innerSize,
+            animationDelay: Math.random() + 's'
+        });
+
         flake.classList.add('snowflake');
 
         innerFlake.classList.add('snowflake__inner');
-        innerFlake.classList.add('snowflake__inner_num_' + getRandom(0, Flake.count));
+
+        if (params.types) {
+            innerFlake.classList.add('snowflake__inner_type_' + getRandom(0, params.types));
+        }
 
         if (params.wind) {
             innerFlake.classList.add('snowflake__inner_wind');
         }
 
-        if (params.useRotate) {
-            innerFlake.classList.add('snowflake__inner_use-rotate' + (Math.random() > 0.5 ? '' : '-reverse'));
+        if (params.rotation) {
+            innerFlake.classList.add('snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse'));
         }
-
-        setStyle(innerFlake, {
-            animationName: 'snowflake_x_' + this.size,
-            animationDelay: Math.random() + 's'
-        });
 
         flake.appendChild(innerFlake);
         this._elem = flake;
@@ -73,24 +77,36 @@ export default class Flake {
     }
 
     /**
+     * Calc size.
+     *
+     * @param {number} innerSize
+     * @param {Object} params
+     *
+     * @returns {number}
+     */
+    static calcSize(innerSize, params) {
+        return Math.floor(interpolation(innerSize, 0, Flake.maxInnerSize, params.minSize, params.maxSize));
+    }
+
+    /**
      * Get animation properties.
      *
      * @param {number} containerHeight
-     * @param {number} speed
+     * @param {Object} params
      *
      * @returns {Object}
      */
-    getAnimationProps(containerHeight, speed) {
+    getAnimationProps(containerHeight, params) {
         const
-            speedMax = containerHeight / 50 / speed,
+            speedMax = containerHeight / 50 / params.speed,
             speedMin = speedMax / 3;
 
         return {
             animationDelay: (Math.random() * speedMax) + 's',
             animationDuration: interpolation(
                 this.size,
-                Flake.minSize,
-                Flake.maxSize,
+                params.minSize,
+                params.maxSize,
                 speedMax,
                 speedMin
             ) + 's'
@@ -101,10 +117,10 @@ export default class Flake {
      * Resize a flake.
      *
      * @param {number} containerHeight
-     * @param {number} speed
+     * @param {Object} params
      */
-    resize(containerHeight, speed) {
-        var props = this.getAnimationProps(containerHeight, speed);
+    resize(containerHeight, params) {
+        var props = this.getAnimationProps(containerHeight, params);
         setStyle(this._elem, props);
     }
 
