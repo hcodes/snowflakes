@@ -25,6 +25,24 @@ export function setStyle(dom, props) {
 }
 
 /**
+ * Show DOM element.
+ *
+ * @param {DOMElement} dom
+ */
+export function showElement(dom) {
+    setStyle(dom, {display: 'block'});
+}
+
+/**
+ * Hide DOM element.
+ *
+ * @param {DOMElement} dom
+ */
+export function hideElement(dom) {
+    setStyle(dom, {display: 'none'});
+}
+
+/**
  * Get random number.
  *
  * @param {number} from

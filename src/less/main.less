@@ -41,17 +41,17 @@
             animation: snowflake_x_8 1s infinite alternate ease-in-out;
         }
 
-        &_use-rotate:before {
-            animation: snowflake_rotate 2s infinite linear;
+        &_rotation:before {
+            animation: snowflake_rotation 2s infinite linear;
         }
 
-        &_use-rotate-reverse:before {
-            animation: snowflake_rotate-reverse 2s infinite linear;
+        &_rotation_reverse:before {
+            animation: snowflake_rotation_reverse 2s infinite linear;
         }
     }
 }
 
-@keyframes snowflake_rotate {
+@keyframes snowflake_rotation {
     from {
        transform: rotate(0deg);
     }
@@ -61,7 +61,7 @@
     }
 }
 
-@keyframes snowflake_rotate-reverse {
+@keyframes snowflake_rotation_reverse {
     from {
        transform: rotate(0deg);
     }

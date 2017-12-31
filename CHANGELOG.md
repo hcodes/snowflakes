@@ -1,3 +1,10 @@
+## v4.0.0
++ Added `minSize` and `maxSize` properties. You can set the size of snowflakes. [Example](https://hcodes.github.io/snowflakes/examples/big.html).
++ Added `minOpacity` and `maxOpacity` properties.
++ Removed `useScale` property.
++ `useRotate` property renamed to `rotation`.
++ Added light version without SVG images: `dist/snowflakes.light.js` and `dist/snowflakes.light.min.js`. You can set your own kind of snowflakes. [Example](https://hcodes.github.io/snowflakes/examples/balls.html).
+
 ## v3.1.0
 + `demo.html` moved to `https://github.com/hcodes/demo-snowflakes`
 + `example/` → `examples/`
