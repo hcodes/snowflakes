@@ -20,8 +20,10 @@ function js(imagesStyle, outputFile) {
         .pipe($.rollup({
             allowRealFiles: true,
             input: 'src/js/snowflakes.js',
-            format: 'umd',
-            name: 'Snowflakes',
+            output: {
+                format: 'umd',
+                name: 'Snowflakes',
+            },
             plugins: [babel({
                 externalHelpersWhitelist: babelHelpersList.filter(helperName => helperName !== 'asyncGenerator')
             })]
