@@ -41,7 +41,7 @@
     "babel-preset-env": "^1.6.1",
     "del": "^3.0.0",
     "eslint": "^4.19.1",
-    "gulp": "~3.9.1",
+    "gulp": "~4.0.0",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-cleancss": "^0.2.2",
     "gulp-less": "^4.0.0",
