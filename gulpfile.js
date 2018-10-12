@@ -6,7 +6,6 @@ const
     del = require('del'),
     fs = require('fs'),
     babel = require('rollup-plugin-babel'),
-    babelHelpersList = require('babel-helpers').list,
     uglifyOptions = {output: {comments: /^!/}},
     browsers = ['ie >= 10', 'Firefox >= 24', 'Chrome >= 26', 'iOS >= 6', 'Safari >= 6', 'Android > 4.0'],
     copyright = '/*! Snowflakes | © 2018 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */\n';
@@ -24,9 +23,7 @@ function js(imagesStyle, outputFile) {
                 format: 'umd',
                 name: 'Snowflakes',
             },
-            plugins: [babel({
-                externalHelpersWhitelist: babelHelpersList.filter(helperName => helperName !== 'asyncGenerator')
-            })]
+            plugins: [babel()]
         }))
         .pipe(replaceStyle('{MAIN_STYLE}', 'dist/main.css'))
         .pipe(replaceStyle('{IMAGES_STYLE}', imagesStyle))
@@ -39,35 +36,35 @@ gulp.task('clean', function() {
     return del('dist/*');
 });
 
-gulp.task('css', gulp.series('clean', function() {
+gulp.task('css', function() {
     return gulp.src('src/less/*.less')
         .pipe($.less())
         .pipe($.cleancss())
         .pipe($.autoprefixer({ browsers }))
         .pipe(gulp.dest('dist/'));
-}));
+});
 
-gulp.task('js', gulp.series('css', function() {
+gulp.task('js', function() {
     return js('dist/images.css', 'snowflakes.js');
-}));
+});
 
-gulp.task('js.min', gulp.series('js', function() {
+gulp.task('js.min', function() {
     return gulp.src('dist/snowflakes.js')
         .pipe($.rename('snowflakes.min.js'))
         .pipe($.uglify(uglifyOptions))
         .pipe(gulp.dest('dist/'));
-}));
+});
 
-gulp.task('js.light', gulp.series('css', function() {
+gulp.task('js.light', function() {
     return js('', 'snowflakes.light.js');
-}));
+});
 
-gulp.task('js.light.min', gulp.series('js.light', function() {
+gulp.task('js.light.min', function() {
     return gulp.src('dist/snowflakes.light.js')
         .pipe($.rename('snowflakes.light.min.js'))
         .pipe($.uglify(uglifyOptions))
         .pipe(gulp.dest('dist/'));
-}));
+});
 
 gulp.task('dev-examples-copy', function() {
     return gulp
@@ -75,15 +72,24 @@ gulp.task('dev-examples-copy', function() {
         .pipe(gulp.dest('dev-examples/'));
 });
 
-gulp.task('dev-examples', gulp.series('dev-examples-copy', function() {
+gulp.task('dev-examples', function() {
     return gulp
         .src('dev-examples/*.html')
         .pipe($.replace(/https:\/\/unpkg\.com\/magic-snowflakes\//g, '../'))
         .pipe(gulp.dest('dev-examples/'));
-}));
+});
 
 gulp.task('watch', function() {
     gulp.watch(['src/**/*', 'examples/**/*']);
 });
 
-gulp.task('default', gulp.series('css', 'js.min', 'js.light.min', 'dev-examples'));
+gulp.task('default', gulp.series(
+    'clean',
+    'css',
+    'js',
+    'js.min',
+    'js.light',
+    'js.light.min',
+    'dev-examples-copy',
+    'dev-examples'
+));
