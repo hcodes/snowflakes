@@ -1,7 +1,7 @@
 {
   "name": "magic-snowflakes",
   "description": "Falling snowflakes",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "author": {
     "name": "Denis Seleznev",
     "email": "hcodes@yandex.ru",
@@ -33,28 +33,26 @@
     "dist/snowflakes.light.min.js"
   ],
   "devDependencies": {
-    "babel-core": "^6.26.2",
-    "babel-eslint": "^8.2.3",
-    "babel-helpers": "^6.24.1",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-env": "^1.6.1",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-eslint": "^10.0.1",
     "del": "^3.0.0",
-    "eslint": "^4.19.1",
+    "eslint": "^5.7.0",
     "gulp": "~4.0.0",
-    "gulp-autoprefixer": "^5.0.0",
+    "gulp-autoprefixer": "^6.0.0",
     "gulp-cleancss": "^0.2.2",
-    "gulp-less": "^4.0.0",
+    "gulp-less": "^4.0.1",
     "gulp-load-plugins": "^1.5.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.6.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.0.0",
     "gulp-rollup": "^2.16.2",
-    "gulp-uglify": "~3.0.0",
-    "rollup-plugin-babel": "^3.0.4"
+    "gulp-uglify": "^3.0.1",
+    "rollup-plugin-babel": "^4.0.3"
   },
   "scripts": {
     "test": "eslint .",
     "build": "gulp",
-    "prepublish": "gulp"
+    "prepare": "gulp"
   }
 }

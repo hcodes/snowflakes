@@ -1,5 +1,8 @@
+## v4.0.2
++ Updated dev deps in package.json.
+
 ## v4.0.1
-+ Updated deps in package.json.
++ Updated dev deps in package.json.
 
 ## v4.0.0
 + Added `minSize` and `maxSize` properties. You can set the size of snowflakes. [Example](https://hcodes.github.io/snowflakes/examples/big.html).
