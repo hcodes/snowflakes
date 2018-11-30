@@ -15,9 +15,8 @@ function replaceStyle(tag, filename) {
 }
 
 function js(imagesStyle, outputFile) {
-    return gulp.src('src/js/snowflakes.js')
+    return gulp.src(['src/js/*.js'])
         .pipe($.rollup({
-            allowRealFiles: true,
             input: 'src/js/snowflakes.js',
             output: {
                 format: 'umd',

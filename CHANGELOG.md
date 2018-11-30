@@ -1,3 +1,6 @@
+## v4.1.0
++ Added CSS `user-select: none` and `pointer-events: none` for snowflakes.
+
 ## v4.0.2
 + Updated dev deps in package.json.
 
