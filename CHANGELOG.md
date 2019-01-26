@@ -1,3 +1,6 @@
+## v4.1.1
++ Fixed Safari scroll problem #21.
+
 ## v4.1.0
 + Added CSS `user-select: none` and `pointer-events: none` for snowflakes.
 
