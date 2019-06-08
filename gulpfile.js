@@ -3,12 +3,14 @@
 const
     gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
+    postcss = require('gulp-postcss'),
+    autoprefixer = require('autoprefixer'),
+    cssnano = require('cssnano'),
     del = require('del'),
     fs = require('fs'),
     babel = require('rollup-plugin-babel'),
     uglifyOptions = {output: {comments: /^!/}},
-    browsers = ['ie >= 10', 'Firefox >= 24', 'Chrome >= 26', 'iOS >= 6', 'Safari >= 6', 'Android > 4.0'],
-    copyright = '/*! Snowflakes | © 2018 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */\n';
+    copyright = '/*! Snowflakes | © 2019 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */\n';
 
 function replaceStyle(tag, filename) {
     return $.replace(tag, filename ? fs.readFileSync(filename, 'utf-8').replace(/'/g, '\\\'') : '');
@@ -38,8 +40,10 @@ gulp.task('clean', function() {
 gulp.task('css', function() {
     return gulp.src('src/less/*.less')
         .pipe($.less())
-        .pipe($.cleancss())
-        .pipe($.autoprefixer({ browsers }))
+        .pipe(postcss([
+            autoprefixer(),
+            cssnano()
+        ]))
         .pipe(gulp.dest('dist/'));
 });
 

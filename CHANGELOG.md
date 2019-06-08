@@ -1,3 +1,6 @@
+## v4.1.2
++ Update dev deps in package.json.
+
 ## v4.1.1
 + Fixed Safari scroll problem #21.
 
