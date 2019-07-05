@@ -54,7 +54,8 @@
   "scripts": {
     "test": "eslint .",
     "build": "gulp",
-    "prepare": "gulp"
+    "prepare": "npm run snyk-protect; gulp",
+    "snyk-protect": "snyk protect"
   },
   "browserslist": [
     "ie >= 10",
@@ -63,5 +64,9 @@
     "iOS >= 6",
     "Safari >= 6",
     "Android > 4.0"
-  ]
+  ],
+  "snyk": true,
+  "dependencies": {
+    "snyk": "^1.192.0"
+  }
 }
