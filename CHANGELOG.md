@@ -1,3 +1,7 @@
+## v4.1.3
++ Fix color #25.
++ Update dev deps in package.json.
+
 ## v4.1.2
 + Update dev deps in package.json.
 
