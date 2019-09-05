@@ -61,7 +61,7 @@ class Snowflakes {
         };
 
         if (imagesStyle) {
-            this._imagesStyleNode = this._injectStyle(imagesStyle.replace(/%7Bcolor%7D/g, encodeURIComponent(this.params.color)));
+            this._imagesStyleNode = this._injectStyle(imagesStyle.replace(/\{color\}/g, encodeURIComponent(this.params.color)));
         }
 
         this._animationStyleNode = this._injectStyle(this._getAnimationStyle());
