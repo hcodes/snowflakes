@@ -19,7 +19,7 @@ function replaceStyle(tag, filename) {
 function js(imagesStyle, outputFile) {
     return gulp.src(['src/js/*.js'])
         .pipe($.rollup({
-            input: 'src/js/snowflakes.js',
+            input: 'src/js/index.js',
             output: {
                 format: 'umd',
                 name: 'Snowflakes',
@@ -48,7 +48,7 @@ gulp.task('css', function() {
 });
 
 gulp.task('js', function() {
-    return js('dist/images.css', 'snowflakes.js');
+    return js('dist/images.css', 'index.js');
 });
 
 gulp.task('js.min', function() {

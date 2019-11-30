@@ -1,4 +1,5 @@
-import {interpolation, getRandom, setStyle} from './utils';
+import { addClass, setStyle } from './helpers/dom';
+import { getRandom, interpolation } from './helpers/number';
 
 export default class Flake {
     static maxInnerSize = 20;
@@ -54,20 +55,20 @@ export default class Flake {
             animationDelay: Math.random() + 's'
         });
 
-        flake.classList.add('snowflake');
+        addClass(flake, 'snowflake');
 
-        innerFlake.classList.add('snowflake__inner');
+        addClass(innerFlake, 'snowflake__inner');
 
         if (params.types) {
-            innerFlake.classList.add('snowflake__inner_type_' + getRandom(0, params.types));
+            addClass(innerFlake, 'snowflake__inner_type_' + getRandom(0, params.types));
         }
 
         if (params.wind) {
-            innerFlake.classList.add('snowflake__inner_wind');
+            addClass(innerFlake, 'snowflake__inner_wind');
         }
 
         if (params.rotation) {
-            innerFlake.classList.add('snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse'));
+            addClass(innerFlake, 'snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse'));
         }
 
         flake.appendChild(innerFlake);

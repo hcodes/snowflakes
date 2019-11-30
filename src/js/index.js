@@ -1,5 +1,15 @@
 import Flake from './flake';
-import {setStyle, showElement, hideElement} from './utils';
+import {
+    isBody,
+    setStyle,
+    showElement,
+    hideElement,
+    getWindowHeight,
+    injectStyle,
+    removeNode,
+    addClass,
+    removeClass
+} from './helpers/dom';
 
 const
     mainStyle = '{MAIN_STYLE}',
@@ -31,12 +41,12 @@ class Snowflakes {
         this.params = this._setParams(params);
 
         this._flakes = [];
-        this._isBody = this.params.container === document.body;
+        this._isBody = isBody(this.params.container);
 
         const container = this._container = document.createElement('div');
 
-        container.classList.add('snowflakes');
-        this._isBody && container.classList.add('snowflakes_body');
+        addClass(container, 'snowflakes');
+        this._isBody && addClass(container, 'snowflakes_body');
         setStyle(container, { zIndex: this.params.zIndex });
 
         this.params.container.appendChild(container);
@@ -46,13 +56,13 @@ class Snowflakes {
         }
 
         if (!Snowflakes._mainStyleNode) {
-            Snowflakes._mainStyleNode = this._injectStyle(mainStyle);
+            Snowflakes._mainStyleNode = injectStyle(mainStyle);
             Snowflakes._count = (Snowflakes._count || 0) + 1;
         }
 
-        this._winHeight = this._getWindowHeight();
+        this._winHeight = getWindowHeight();
         this._onResize = () => {
-            this._winHeight = this._getWindowHeight();
+            this._winHeight = getWindowHeight();
             const height = this._height();
             hideElement(container);
             this._flakes.forEach(flake => flake.resize(height, this.params));
@@ -61,10 +71,10 @@ class Snowflakes {
         };
 
         if (imagesStyle) {
-            this._imagesStyleNode = this._injectStyle(imagesStyle.replace(/\{color\}/g, encodeURIComponent(this.params.color)));
+            this._imagesStyleNode = injectStyle(imagesStyle.replace(/\{color\}/g, encodeURIComponent(this.params.color)));
         }
 
-        this._animationStyleNode = this._injectStyle(this._getAnimationStyle());
+        this._animationStyleNode = injectStyle(this._getAnimationStyle());
 
         window.addEventListener('resize', this._onResize, false);
 
@@ -79,7 +89,7 @@ class Snowflakes {
     destroy() {
         this._removeStyle();
 
-        this._container && this._container.parentNode.removeChild(this._container);
+        removeNode(this._container);
         delete this._container;
 
         window.removeEventListener('resize', this._onResize, false);
@@ -94,14 +104,14 @@ class Snowflakes {
      * Start CSS animation.
      */
     start() {
-        this._container.classList.remove('snowflakes_paused');
+        removeClass(this._container, 'snowflakes_paused');
     }
 
     /**
      * Stop CSS animation.
      */
     stop() {
-        this._container.classList.add('snowflakes_paused');
+        addClass(this._container, 'snowflakes_paused');
     }
 
     _setParams(params) {
@@ -153,68 +163,28 @@ class Snowflakes {
     }
 
     _updateAnimationStyle() {
-        this._injectStyle(this._getAnimationStyle(), this._animationStyleNode);
-    }
-
-    _injectStyle(style, styleNode) {
-        if (!styleNode) {
-            styleNode = document.createElement('style');
-            document.body.appendChild(styleNode);
-        }
-
-        if (styleNode.styleSheet) { // IE
-            styleNode.styleSheet.cssText = style;
-        } else if ('textContent' in styleNode) {
-            styleNode.textContent = style;
-        } else {
-            styleNode.innerHTML = style;
-        }
-
-        return styleNode;
+        injectStyle(this._getAnimationStyle(), this._animationStyleNode);
     }
 
     _removeStyle() {
         Snowflakes._count--;
         if (Snowflakes._count <= 0) {
             Snowflakes._count = 0;
-            if (Snowflakes._mainStyleNode) {
-                Snowflakes._mainStyleNode.parentNode.removeChild(Snowflakes._mainStyleNode);
-                delete Snowflakes._mainStyleNode;
-            }
+
+            removeNode(Snowflakes._mainStyleNode);
+            delete Snowflakes._mainStyleNode;
         }
 
-        if (this._animationStyleNode) {
-            this._animationStyleNode.parentNode.removeChild(this._animationStyleNode);
-            delete this._animationStyleNode;
-        }
+        removeNode(this._animationStyleNode);
+        delete this._animationStyleNode;
 
-        if (this._imagesStyleNode) {
-            this._imagesStyleNode.parentNode.removeChild(this._imagesStyleNode);
-            delete this._imagesStyleNode;
-        }
+        removeNode(this._imagesStyleNode);
+        delete this._imagesStyleNode;
     }
 
     _height() {
         return this.params.height ||
             (this._isBody ? this._winHeight : this.params.container.offsetHeight + this.params.maxSize);
-    }
-
-    _getWindowHeight() {
-        const
-            body = document.body,
-            docElement = document.documentElement;
-
-        let height;
-
-        if (window.innerHeight) {
-            height = window.innerHeight;
-        } else if (docElement && docElement.clientHeight) {
-            height = docElement.clientHeight;
-        } else if (body) {
-            height = body.clientHeight;
-        }
-
-        return height;
     }
 }
 

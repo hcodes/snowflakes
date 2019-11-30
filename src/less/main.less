@@ -1,44 +1,28 @@
-.snowflakes {
-    pointer-events: none;
-
-    &_paused .snowflake {
-        &,
-        &__inner,
-        &__inner:before {
-            animation-play-state: paused;
-        }
-    }
-
-    &_body {
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 1px;
-    }
-}
-
 .snowflake {
     position: absolute;
-    animation: snowflake_y 10s infinite linear;
-    will-change: transform;
+
     user-select: none;
     pointer-events: none;
 
+    animation: snowflake_y 10s infinite linear;
+    will-change: transform;
+
     &__inner {
         position: absolute;
-        left: 0;
-        right: 0;
         top: 0;
+        right: 0;
         bottom: 0;
+        left: 0;
 
-        &:before {
+        &::before {
             position: absolute;
-            left: 0;
-            right: 0;
             top: 0;
+            right: 0;
             bottom: 0;
+            left: 0;
+
             content: '';
+
             background-size: 100% 100%;
         }
 
@@ -46,32 +30,53 @@
             animation: snowflake_x_8 1s infinite alternate ease-in-out;
         }
 
-        &_rotation:before {
+        &_rotation::before {
             animation: snowflake_rotation 2s infinite linear;
         }
 
-        &_rotation_reverse:before {
+        &_rotation_reverse::before {
             animation: snowflake_rotation_reverse 2s infinite linear;
         }
     }
 }
 
+.snowflakes {
+    pointer-events: none;
+
+    &_paused .snowflake {
+        &,
+        &__inner,
+        &__inner::before {
+            animation-play-state: paused;
+        }
+    }
+
+    &_body {
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 1px;
+    }
+}
+
 @keyframes snowflake_rotation {
     from {
-       transform: rotate(0deg);
+        transform: rotate(0deg);
     }
 
     to {
-       transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 }
 
 @keyframes snowflake_rotation_reverse {
     from {
-       transform: rotate(0deg);
+        transform: rotate(0deg);
     }
 
     to {
-       transform: rotate(-360deg);
+        transform: rotate(-360deg);
     }
 }
