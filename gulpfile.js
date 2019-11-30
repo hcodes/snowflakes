@@ -17,7 +17,7 @@ function replaceStyle(tag, filename) {
 }
 
 function js(imagesStyle, outputFile) {
-    return gulp.src(['src/js/*.js'])
+    return gulp.src(['src/**/*.js'])
         .pipe($.rollup({
             input: 'src/js/index.js',
             output: {
@@ -48,7 +48,7 @@ gulp.task('css', function() {
 });
 
 gulp.task('js', function() {
-    return js('dist/images.css', 'index.js');
+    return js('dist/images.css', 'snowflakes.js');
 });
 
 gulp.task('js.min', function() {
