@@ -92,12 +92,12 @@ Snowflakes();
 ## Different Builds
 In the `dist/` directory of [the NPM package](https://unpkg.com/magic-snowflakes/dist/) you will find many different builds of snowflakes.js.
 
-|Type              |Filename                 |Description       |
-|------------------|-------------------------|------------------|
-|Full              |`snowflakes.js`          |                  |
-|Full (production) |`snowflakes.min.js`      |                  |
-|Light             |`snowflakes.light.js`    |Without SVG images|
-|Light (production)|`snowflakes.light.min.js`|Without SVG images|
+|Type                   |Filename                 |Description       |
+|-----------------------|-------------------------|------------------|
+|Full (UMD)             |`snowflakes.js`          |                  |
+|Full (UMD, production) |`snowflakes.min.js`      |                  |
+|Light (UMD)            |`snowflakes.light.js`    |Without SVG images|
+|Light (UMD, production)|`snowflakes.light.min.js`|Without SVG images|
 
 
 ## Development
