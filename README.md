@@ -45,7 +45,7 @@ yarn add magic-snowflakes
 <html>
 <body>
     ...
-    <script src="./node_modules/magic-snowflakes/dist/snowflakes.min.js"></script>
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script>
         Snowflakes();
     </script>
@@ -67,7 +67,7 @@ Snowflakes();
 <html>
 <body>
     <div id="snowflakes-container" style="width: 1000px; height: 500px;"></div>
-    <script src="./node_modules/magic-snowflakes/dist/snowflakes.min.js"></script>
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script>
         var sf = new Snowflakes({
             color: '#f00', // Default: "#5ECDEF"
