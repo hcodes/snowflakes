@@ -1,3 +1,6 @@
+## v4.1.5
++ Updated dev deps.
+
 ## v4.1.4
 + Code refactoring.
 + Update dev deps in package.json.
