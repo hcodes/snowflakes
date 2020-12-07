@@ -10,7 +10,7 @@ const
     fs = require('fs'),
     babel = require('rollup-plugin-babel'),
     uglifyOptions = {output: {comments: /^!/}},
-    copyright = '/*! Snowflakes | © 2019 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */\n';
+    copyright = '/*! Snowflakes | © 2020 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */\n';
 
 function replaceStyle(tag, filename) {
     return $.replace(tag, filename ? fs.readFileSync(filename, 'utf-8').replace(/'/g, '\\\'') : '');
