@@ -21,7 +21,7 @@ class Snowflakes {
      *
      * @param {Object} params
      *
-     * @param {DOMElem} [params.container=document.body]
+     * @param {DOMElement} [params.container=document.body]
      * @param {number} [params.count=50]
      * @param {number} [params.color="#5ECDEF"]
      * @param {number} [params.minOpacity=0.6]
@@ -40,64 +40,36 @@ class Snowflakes {
     constructor(params) {
         this.params = this._setParams(params);
 
-        this._flakes = [];
         this._isBody = isBody(this.params.container);
-
-        const container = this._container = document.createElement('div');
-
-        addClass(container, 'snowflakes');
-        this._isBody && addClass(container, 'snowflakes_body');
-        setStyle(container, { zIndex: this.params.zIndex });
-
-        this.params.container.appendChild(container);
+        this._container = this._appendContainer();
+        this._winHeight = getWindowHeight();
 
         if (this.params.stop) {
             this.stop();
         }
 
-        if (!Snowflakes._mainStyleNode) {
-            Snowflakes._mainStyleNode = injectStyle(mainStyle);
-            Snowflakes._count = (Snowflakes._count || 0) + 1;
-        }
+        this._appendStyles();
+        this._appendFlakes();
 
-        this._winHeight = getWindowHeight();
-        this._onResize = () => {
-            this._winHeight = getWindowHeight();
-            const height = this._height();
-            hideElement(container);
-            this._flakes.forEach(flake => flake.resize(height, this.params));
-            this._updateAnimationStyle();
-            showElement(container);
-        };
-
-        if (imagesStyle) {
-            this._imagesStyleNode = injectStyle(imagesStyle.replace(/\{color\}/g, encodeURIComponent(this.params.color)));
-        }
-
-        this._animationStyleNode = injectStyle(this._getAnimationStyle());
-
-        window.addEventListener('resize', this._onResize, false);
-
-        for (let i = 0; i < this.params.count; i++) {
-            this._flakes.push(new Flake(container, this._height(), this.params));
-        }
+        this._handleResize = this._handleResize.bind(this);
+        window.addEventListener('resize', this._handleResize, false);
     }
 
     /**
      * Destroy flakes.
      */
     destroy() {
-        this._removeStyle();
+        this._removeStyles();
 
         removeNode(this._container);
         delete this._container;
 
-        window.removeEventListener('resize', this._onResize, false);
-
         this._flakes.forEach(flake => flake.destroy());
-        delete this._flakes;
 
+        delete this._flakes;
         delete this.params;
+
+        window.removeEventListener('resize', this._handleResize, false);
     }
 
     /**
@@ -112,6 +84,56 @@ class Snowflakes {
      */
     stop() {
         addClass(this._container, 'snowflakes_paused');
+    }
+
+    _handleResize() {
+        this._winHeight = getWindowHeight();
+        const height = this._height();
+        hideElement(this._container);
+        this._flakes.forEach(flake => flake.resize(height, this.params));
+        this._updateAnimationStyle();
+        showElement(this._container);
+    }
+
+    _appendContainer() {
+        const container = document.createElement('div');
+
+        addClass(container, 'snowflakes');
+        this._isBody && addClass(container, 'snowflakes_body');
+        setStyle(container, { zIndex: this.params.zIndex });
+
+        this.params.container.appendChild(container);
+
+        return container;
+    }
+
+    _appendStyles() {
+        if (!Snowflakes._mainStyleNode) {
+            Snowflakes._mainStyleNode = injectStyle(mainStyle);
+        }
+
+        Snowflakes._count = (Snowflakes._count || 0) + 1;
+
+        if (imagesStyle) {
+            this._imagesStyleNode = injectStyle(imagesStyle.replace(/\{color\}/g, encodeURIComponent(this.params.color)));
+        }
+
+        this._animationStyleNode = injectStyle(this._getAnimationStyle());
+
+    }
+
+    _appendFlakes() {
+        this._flakes = [];
+        for (let i = 0; i < this.params.count; i++) {
+            this._flakes.push(new Flake(this._height(), this.params));
+        }
+
+        // For correct z-index
+        this._flakes.sort((a, b) => a.size - b.size);
+
+        this._flakes.forEach(flake => {
+            flake.appendTo(this._container);
+        });
     }
 
     _setParams(params) {
@@ -137,6 +159,7 @@ class Snowflakes {
             ['zIndex', 9999]
         ].forEach(function(item) {
             const [name, defaultValue] = item;
+
             if (typeof defaultValue === 'boolean') {
                 result[name] = name in params ? params[name] : defaultValue;
             } else {
@@ -167,7 +190,7 @@ class Snowflakes {
         injectStyle(this._getAnimationStyle(), this._animationStyleNode);
     }
 
-    _removeStyle() {
+    _removeStyles() {
         Snowflakes._count--;
         if (Snowflakes._count <= 0) {
             Snowflakes._count = 0;

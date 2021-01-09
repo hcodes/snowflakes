@@ -6,7 +6,6 @@ export default class Flake {
     /**
      * @constructor
      *
-     * @param {DOMElement} container
      * @param {number} containerHeight
      * @param {Object} params
      * @param {number} [params.count]
@@ -18,9 +17,8 @@ export default class Flake {
      * @param {number} [params.maxSize]
      * @param {number} [params.types]
      * @param {number} [params.wind]
-     * @param {number} [params.zIndex]
      */
-    constructor(container, containerHeight, params) {
+    constructor(containerHeight, params) {
         const isEqual = params.minSize === params.maxSize;
         this.innerSize = isEqual ? 0 : getRandom(0, Flake.maxInnerSize);
         this.size = Flake.calcSize(this.innerSize, params);
@@ -39,7 +37,6 @@ export default class Flake {
             };
 
         if (!isEqual) {
-            styleProps.zIndex = params.zIndex + this.size * 10;
             styleProps.opacity = interpolation(
                 this.size,
                 params.minSize,
@@ -73,8 +70,6 @@ export default class Flake {
 
         flake.appendChild(innerFlake);
         this._elem = flake;
-
-        container.appendChild(flake);
     }
 
     /**
@@ -123,6 +118,15 @@ export default class Flake {
     resize(containerHeight, params) {
         var props = this.getAnimationProps(containerHeight, params);
         setStyle(this._elem, props);
+    }
+
+    /**
+     * Append flake to container.
+     *
+     * @param {DOMElement} container
+     */
+    appendTo(container) {
+        container.appendChild(this._elem);
     }
 
     /**
