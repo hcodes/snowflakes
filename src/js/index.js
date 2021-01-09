@@ -128,8 +128,8 @@ class Snowflakes {
             ['rotation', true],
             ['minOpacity', 0.6],
             ['maxOpacity', 1],
-            ['minSize', 8],
-            ['maxSize', 18],
+            ['minSize', 10],
+            ['maxSize', 25],
             ['types', 6],
             ['width'],
             ['height'],
@@ -148,13 +148,14 @@ class Snowflakes {
     }
 
     _getAnimationStyle() {
-        const height = (this._height() + this.params.maxSize) + 'px';
+        const fromY = '0px';
+        const toY = (this._height() + this.params.maxSize * Math.sqrt(2)) + 'px';
 
-        let css = `@-webkit-keyframes snowflake_y{from{-webkit-transform:translateY(0px)}to{-webkit-transform:translateY(${height});}}
-@keyframes snowflake_y{from{transform:translateY(0px)}to{transform:translateY(${height})}}`;
+        let css = `@-webkit-keyframes snowflake_y{from{-webkit-transform:translateY(${fromY})}to{-webkit-transform:translateY(${toY});}}
+@keyframes snowflake_y{from{transform:translateY(${fromY})}to{transform:translateY(${toY})}}`;
 
         for (let i = 0; i <= Flake.maxInnerSize; i++) {
-            let left = (Flake.calcSize(i, this.params) - this.params.minSize) * 4 + 'px';
+            const left = (Flake.calcSize(i, this.params) - this.params.minSize) * 4 + 'px';
             css += `@-webkit-keyframes snowflake_x_${i}{from{-webkit-transform:translateX(0px)}to{-webkit-transform:translateX(${left});}}
 @keyframes snowflake_x_${i}{from{transform:translateX(0px)}to{transform:translateX(${left})}}`;
         }

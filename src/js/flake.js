@@ -33,7 +33,7 @@ export default class Flake {
                 animationDelay: animationProps.animationDelay,
                 animationDuration: animationProps.animationDuration,
                 left: (Math.random() * 99) + '%',
-                marginTop: -Math.sqrt(2) * this.size + 'px',
+                top: -Math.sqrt(2) * this.size + 'px',
                 width: this.size + 'px',
                 height: this.size + 'px'
             };
@@ -52,7 +52,7 @@ export default class Flake {
         setStyle(flake, styleProps);
         setStyle(innerFlake, {
             animationName: 'snowflake_x_' + this.innerSize,
-            animationDelay: Math.random() + 's'
+            animationDelay: (Math.random() * 4) + 's'
         });
 
         addClass(flake, 'snowflake');
