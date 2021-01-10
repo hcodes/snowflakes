@@ -42,7 +42,6 @@ class Snowflakes {
 
         this._isBody = isBody(this.params.container);
         this._container = this._appendContainer();
-        this._winHeight = getWindowHeight();
 
         if (this.params.stop) {
             this.stop();
@@ -87,7 +86,6 @@ class Snowflakes {
     }
 
     _handleResize() {
-        this._winHeight = getWindowHeight();
         const height = this._height();
         hideElement(this._container);
         this._flakes.forEach(flake => flake.resize(height, this.params));
@@ -123,17 +121,17 @@ class Snowflakes {
     }
 
     _appendFlakes() {
+        const height = this._height();
         this._flakes = [];
         for (let i = 0; i < this.params.count; i++) {
-            this._flakes.push(new Flake(this._height(), this.params));
+            this._flakes.push(new Flake(height, this.params));
         }
 
-        // For correct z-index
-        this._flakes.sort((a, b) => a.size - b.size);
-
-        this._flakes.forEach(flake => {
-            flake.appendTo(this._container);
-        });
+        this._flakes
+            .sort((a, b) => a.size - b.size) // For correct z-index
+            .forEach(flake => {
+                flake.appendTo(this._container);
+            });
     }
 
     _setParams(params) {
@@ -157,7 +155,7 @@ class Snowflakes {
             ['height'],
             ['wind', true],
             ['zIndex', 9999]
-        ].forEach(function(item) {
+        ].forEach(item => {
             const [name, defaultValue] = item;
 
             if (typeof defaultValue === 'boolean') {
@@ -178,7 +176,7 @@ class Snowflakes {
 @keyframes snowflake_y{from{transform:translateY(${fromY})}to{transform:translateY(${toY})}}`;
 
         for (let i = 0; i <= Flake.maxInnerSize; i++) {
-            const left = (Flake.calcSize(i, this.params) - this.params.minSize) * 4 + 'px';
+            const left = Flake.calcSize(i, this.params) + 'px';
             css += `@-webkit-keyframes snowflake_x_${i}{from{-webkit-transform:translateX(0px)}to{-webkit-transform:translateX(${left});}}
 @keyframes snowflake_x_${i}{from{transform:translateX(0px)}to{transform:translateX(${left})}}`;
         }
@@ -208,7 +206,7 @@ class Snowflakes {
 
     _height() {
         return this.params.height ||
-            (this._isBody ? this._winHeight : this.params.container.offsetHeight + this.params.maxSize);
+            (this._isBody ? getWindowHeight() : this.params.container.offsetHeight + this.params.maxSize);
     }
 }
 

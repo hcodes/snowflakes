@@ -114,21 +114,21 @@ export function isBody(node) {
 }
 
 /**
- * Add classname for a node.
+ * Add className for a node.
  *
  * @param {DOMNode} node
- * @param {string} classname
+ * @param {string} className
  */
-export function addClass(node, classname) {
-    node.classList.add(classname);
+export function addClass(node, className) {
+    node.classList.add(className);
 }
 
 /**
- * Remove classname for a node.
+ * Remove className for a node.
  *
  * @param {DOMNode} node
- * @param {string} classname
+ * @param {string} className
  */
-export function removeClass(node, classname) {
-    node.classList.remove(classname);
+export function removeClass(node, className) {
+    node.classList.remove(className);
 }
