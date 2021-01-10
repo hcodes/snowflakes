@@ -11,7 +11,7 @@
 
 
 ## Details
-- Only one JavaScript file (8 KB, GZIP)
+- Only one JavaScript file
 - CSS Animation
 - Rubber design
 - Flexible settings
@@ -75,8 +75,8 @@ Snowflakes();
             count: 100, // 100 snowflakes. Default: 50
             minOpacity: 0.1, // From 0 to 1. Default: 0.6
             maxOpacity: 0.95, // From 0 to 1. Default: 1
-            minSize: 20, // Default: 8
-            maxSize: 50, // Default: 18
+            minSize: 20, // Default: 10
+            maxSize: 50, // Default: 25
             rotation: true, // Default: true
             speed: 2, // The property affects the speed of falling. Default: 1
             wind: false, // Without wind. Default: true
