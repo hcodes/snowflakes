@@ -34,7 +34,7 @@ function js(imagesStyle, outputFile) {
 }
 
 gulp.task('clean', function() {
-    return del('dist/*');
+    return del(['dist/*', 'dev-examples/*']);
 });
 
 gulp.task('css', function() {
@@ -89,10 +89,9 @@ gulp.task('watch', function() {
 gulp.task('default', gulp.series(
     'clean',
     'css',
-    'js',
-    'js.min',
-    'js.light',
-    'js.light.min',
-    'dev-examples-copy',
-    'dev-examples'
+    gulp.parallel(
+        gulp.series('js', 'js.min'),
+        gulp.series('js.light', 'js.light.min'),
+        gulp.series('dev-examples-copy', 'dev-examples'),
+    )
 ));
