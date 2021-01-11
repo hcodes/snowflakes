@@ -35,10 +35,6 @@
 ```
 npm i magic-snowflakes --save-dev
 ```
-or
-```
-yarn add magic-snowflakes
-```
 
 ### Without settings
 ```html
