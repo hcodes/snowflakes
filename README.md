@@ -3,7 +3,6 @@
 [![NPM version](https://img.shields.io/npm/v/magic-snowflakes.svg)](https://www.npmjs.com/package/magic-snowflakes)
 [![NPM Downloads](https://img.shields.io/npm/dm/magic-snowflakes.svg?style=flat)](https://www.npmjs.org/package/magic-snowflakes)
 [![Dependency Status](https://img.shields.io/david/hcodes/snowflakes.svg)](https://david-dm.org/hcodes/snowflakes)
-[![Build Status](https://img.shields.io/travis/hcodes/snowflakes.svg?style=flat)](https://travis-ci.org/hcodes/snowflakes)
 [![Bundlephobia](https://badgen.net/bundlephobia/minzip/magic-snowflakes)](https://bundlephobia.com/result?p=magic-snowflakes)
 
 
