@@ -48,9 +48,8 @@ export function hideElement(dom) {
  * @returns {number}
  */
 export function getWindowHeight() {
-    const
-        body = document.body,
-        docElement = document.documentElement;
+    const body = document.body;
+    const docElement = document.documentElement;
 
     let height;
 

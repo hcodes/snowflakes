@@ -6,8 +6,9 @@ export default class Flake {
     /**
      * @constructor
      *
-     * @param {number} containerHeight
      * @param {Object} params
+     * @param {number} params.containerHeight
+     * @param {number} params.gid
      * @param {number} [params.count]
      * @param {number} [params.speed]
      * @param {boolean} [params.rotation]
@@ -18,23 +19,24 @@ export default class Flake {
      * @param {number} [params.types]
      * @param {number} [params.wind]
      */
-    constructor(containerHeight, params) {
+    constructor(params) {
         const isEqual = params.minSize === params.maxSize;
+
         this.innerSize = isEqual ? 0 : getRandom(0, Flake.maxInnerSize);
         this.size = Flake.calcSize(this.innerSize, params);
 
-        const
-            flake = document.createElement('div'),
-            innerFlake = document.createElement('div'),
-            animationProps = this.getAnimationProps(containerHeight, params),
-            styleProps = {
-                animationDelay: animationProps.animationDelay,
-                animationDuration: animationProps.animationDuration,
-                left: (Math.random() * 99) + '%',
-                top: -Math.sqrt(2) * this.size + 'px',
-                width: this.size + 'px',
-                height: this.size + 'px'
-            };
+        const flake = document.createElement('div');
+        const innerFlake = document.createElement('div');
+        const animationProps = this.getAnimationProps(params);
+        const styleProps = {
+            animationName: `snowflake_gid_${params.gid}_y`,
+            animationDelay: animationProps.animationDelay,
+            animationDuration: animationProps.animationDuration,
+            left: (Math.random() * 99) + '%',
+            top: -Math.sqrt(2) * this.size + 'px',
+            width: this.size + 'px',
+            height: this.size + 'px'
+        };
 
         if (!isEqual) {
             styleProps.opacity = interpolation(
@@ -48,7 +50,7 @@ export default class Flake {
 
         setStyle(flake, styleProps);
         setStyle(innerFlake, {
-            animationName: 'snowflake_x_' + this.innerSize,
+            animationName: `snowflake_gid_${params.gid}_x_${this.innerSize}`,
             animationDelay: (Math.random() * 4) + 's'
         });
 
@@ -87,15 +89,13 @@ export default class Flake {
     /**
      * Get animation properties.
      *
-     * @param {number} containerHeight
      * @param {Object} params
      *
      * @returns {Object}
      */
-    getAnimationProps(containerHeight, params) {
-        const
-            speedMax = containerHeight / 50 / params.speed,
-            speedMin = speedMax / 3;
+    getAnimationProps(params) {
+        const speedMax = params.containerHeight / 50 / params.speed;
+        const speedMin = speedMax / 3;
 
         return {
             animationDelay: (Math.random() * speedMax) + 's',
@@ -112,11 +112,11 @@ export default class Flake {
     /**
      * Resize a flake.
      *
-     * @param {number} containerHeight
      * @param {Object} params
      */
-    resize(containerHeight, params) {
-        var props = this.getAnimationProps(containerHeight, params);
+    resize(params) {
+        const props = this.getAnimationProps(params);
+
         setStyle(this._elem, props);
     }
 

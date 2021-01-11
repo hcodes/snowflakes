@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title>Some Layers</title>
+    <style>
+        html, body {
+            background-color: black;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        #layer1,
+        #layer2,
+        #layer3,
+        #layer4 {
+            position: fixed;
+            width: 50%;
+            height: 50%;
+            overflow: hidden;
+        }
+
+        #layer1 {
+            background-color: white;
+            left: 0;
+            top: 0;
+        }
+
+        #layer2 {
+            background-color: black;
+            left: 50%;
+            top: 0;
+        }
+
+        #layer3 {
+            background-color: #5ECDEF;
+            left: 0;
+            top: 50%;
+        }
+
+        #layer4 {
+            background-color: yellow;
+            left: 50%;
+            top: 50%;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.js"></script>
+    <div id="layer1"></div>
+    <div id="layer2"></div>
+    <div id="layer3"></div>
+    <div id="layer4"></div>
+    <script>
+        Snowflakes({
+            container: document.querySelector('#layer1'),
+            count: 15
+        });
+
+        Snowflakes({
+            container: document.querySelector('#layer2'),
+            color: 'yellow',
+            count: 15,
+            wind: false
+        });
+
+        Snowflakes({
+            container: document.querySelector('#layer3'),
+            color: '#FFFFFF',
+            count: 15,
+            speed: 3,
+            maxSize: 100
+        });
+
+        Snowflakes({
+            container: document.querySelector('#layer4'),
+            color: '#000000',
+            count: 15,
+            speed: 3,
+            maxSize: 100,
+            wind: false
+        });
+    </script>
+</body>
+</html>
