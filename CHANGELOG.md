@@ -1,3 +1,9 @@
+## v4.2.0
++ Slowed down rotation of snowflakes, changed default some properties #20.
++ Separate styles for multiple instances #29.
++ Removed z-index for every snowflake, only common z-index for container of snowflakes #27.
++ Updated dev deps.
+
 ## v4.1.5
 + Updated dev deps.
 
