@@ -1,0 +1,25 @@
+.snowflakes_gid_value .snowflake__inner_type {
+    &_0::before {
+        background-image: svg-load('../svg/flake0.svg');
+    }
+
+    &_1::before {
+        background-image: svg-load('../svg/flake1.svg');
+    }
+
+    &_2::before {
+        background-image: svg-load('../svg/flake2.svg');
+    }
+
+    &_3::before {
+        background-image: svg-load('../svg/flake3.svg');
+    }
+
+    &_4::before {
+        background-image: svg-load('../svg/flake4.svg');
+    }
+
+    &_5::before {
+        background-image: svg-load('../svg/flake5.svg');
+    }
+}
