@@ -1,4 +1,4 @@
-import Flake from './flake';
+import { Flake, maxInnerSize, calcSize }  from './flake';
 import {
     isBody,
     setStyle,
@@ -207,8 +207,8 @@ class Snowflakes {
         let css = `@-webkit-keyframes snowflake_gid_${gid}_y{from{-webkit-transform:translateY(${fromY})}to{-webkit-transform:translateY(${toY});}}
 @keyframes snowflake_gid_${gid}_y{from{transform:translateY(${fromY})}to{transform:translateY(${toY})}}`;
 
-        for (let i = 0; i <= Flake.maxInnerSize; i++) {
-            const left = Flake.calcSize(i, this.params) + 'px';
+        for (let i = 0; i <= maxInnerSize; i++) {
+            const left = calcSize(i, this.params) + 'px';
             css += `@-webkit-keyframes snowflake_gid_${gid}_x_${i}{from{-webkit-transform:translateX(0px)}to{-webkit-transform:translateX(${left});}}
 @keyframes snowflake_gid_${gid}_x_${i}{from{transform:translateX(0px)}to{transform:translateX(${left})}}`;
         }

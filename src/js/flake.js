@@ -1,8 +1,21 @@
 import { addClass, setStyle } from './helpers/dom';
 import { getRandom, interpolation } from './helpers/number';
 
-export default class Flake {
-    static maxInnerSize = 20;
+export const maxInnerSize = 20;
+
+/**
+ * Calc size.
+ *
+ * @param {number} innerSize
+ * @param {Object} params
+ *
+ * @returns {number}
+ */
+export function calcSize(innerSize, params) {
+    return Math.floor(interpolation(innerSize, 0, maxInnerSize, params.minSize, params.maxSize));
+}
+
+export class Flake {
     /**
      * @constructor
      *
@@ -22,8 +35,8 @@ export default class Flake {
     constructor(params) {
         const isEqual = params.minSize === params.maxSize;
 
-        this.innerSize = isEqual ? 0 : getRandom(0, Flake.maxInnerSize);
-        this.size = Flake.calcSize(this.innerSize, params);
+        this.innerSize = isEqual ? 0 : getRandom(0, maxInnerSize);
+        this.size = calcSize(this.innerSize, params);
 
         const flake = document.createElement('div');
         const innerFlake = document.createElement('div');
@@ -72,18 +85,6 @@ export default class Flake {
 
         flake.appendChild(innerFlake);
         this._elem = flake;
-    }
-
-    /**
-     * Calc size.
-     *
-     * @param {number} innerSize
-     * @param {Object} params
-     *
-     * @returns {number}
-     */
-    static calcSize(innerSize, params) {
-        return Math.floor(interpolation(innerSize, 0, Flake.maxInnerSize, params.minSize, params.maxSize));
     }
 
     /**
