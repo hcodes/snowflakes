@@ -20,6 +20,6 @@ gulp.task('default', gulp.series(
     gulp.parallel(
         gulp.series(js, jsMin),
         gulp.series(jsLight, jsLightMin),
-        gulp.series(devExamplesCopy, devExamples),
+        gulp.series(devExamplesCopy, devExamples)
     )
 ));
