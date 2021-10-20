@@ -259,7 +259,7 @@
                 this.mainStyleNode = this.injectStyle(mainStyle);
             }
             Snowflakes.count++;
-            this.imagesStyleNode = this.injectStyle(imagesStyle.replace(/\{color\}/g, encodeURIComponent(this.params.color)));
+            this.imagesStyleNode = this.injectStyle(imagesStyle.replace(/:color:/g, encodeURIComponent(this.params.color)));
             this.animationStyleNode = this.injectStyle(this.getAnimationStyle());
         };
         Snowflakes.prototype.injectStyle = function (style, container) {
