@@ -1,3 +1,8 @@
+## v5.0.0
++ Code rewritten on TypeScript.
++ Added TypeScript typings.
++ Support for es6 modules.
+
 ## v4.2.0
 + Slowed down rotation of snowflakes, changed default some properties #20.
 + Separate styles for multiple instances #29.
