@@ -1,13 +1,15 @@
 {
   "name": "magic-snowflakes",
   "description": "Falling snowflakes",
-  "version": "4.2.0",
+  "version": "5.0.0",
   "author": {
     "name": "Denis Seleznev",
     "email": "hcodes@yandex.ru",
     "url": "https://github.com/hcodes/snowflakes"
   },
   "main": "dist/snowflakes.js",
+  "typings": "dist/index.d.ts",
+  "module": "dist/snowflakes.esm.js",
   "homepage": "https://github.com/hcodes/snowflakes",
   "license": "MIT",
   "repository": {
@@ -27,35 +29,35 @@
     "node": ">=14"
   },
   "files": [
-    "dist/snowflakes.js",
-    "dist/snowflakes.min.js",
-    "dist/snowflakes.light.js",
-    "dist/snowflakes.light.min.js"
+    "dist/**/*.{js,css,ts}",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "devDependencies": {
-    "@babel/core": "^7.15.8",
-    "@babel/preset-env": "^7.15.8",
-    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-typescript": "^8.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
     "autoprefixer": "^10.3.7",
     "cssnano": "^5.0.8",
-    "del": "^6.0.0",
+    "del-cli": "^4.0.1",
     "eslint": "8.0.1",
-    "gulp": "^4.0.2",
-    "gulp-postcss": "^9.0.1",
-    "gulp-rename": "^2.0.0",
-    "gulp-replace": "^1.1.3",
-    "gulp-rollup": "^2.17.0",
-    "gulp-uglify": "^3.0.2",
     "postcss": "^8.3.9",
+    "postcss-cli": "^9.0.1",
     "postcss-inline-svg": "^5.0.0",
     "postcss-nested": "^5.0.6",
     "rollup": "^2.58.0",
-    "rollup-plugin-babel": "^4.4.0"
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.4"
   },
   "scripts": {
     "test": "eslint .",
-    "build": "gulp",
-    "prepare": "gulp"
+    "build": "npm run clean && npm run ts && npm run css && npm run inject-css",
+    "clean": "del dist/*",
+    "inject-css": "node tools/inject-css.js",
+    "ts": "rollup --config rollup.config.js",
+    "css": "postcss --no-map src/css/*.css --dir dist",
+    "prepare": "npm run build"
   },
   "browserslist": [
     "ie >= 11",

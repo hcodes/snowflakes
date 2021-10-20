@@ -5,43 +5,52 @@ export const maxInnerSize = 20;
 
 /**
  * Calc size.
- *
- * @param {number} innerSize
- * @param {Object} params
- *
- * @returns {number}
  */
-export function calcSize(innerSize, params) {
-    return Math.floor(interpolation(innerSize, 0, maxInnerSize, params.minSize, params.maxSize));
+export function calcSize(innerSize: number, minSize: number, maxSize: number) {
+    return Math.floor(interpolation(innerSize, 0, maxInnerSize, minSize, maxSize));
+}
+
+interface StyleProps extends Record<string, string | undefined> {
+    animationName: string;
+    animationDelay: string;
+    animationDuration: string;
+    left: string;
+    top: string;
+    width: string;
+    height: string;
+    opacity?: string;
+}
+
+export interface FlakeParams {
+    containerHeight: number;
+    gid: number;
+    count: number;
+    speed: number;
+    rotation: boolean;
+    minOpacity: number;
+    maxOpacity: number;
+    minSize: number;
+    maxSize: number;
+    types: number;
+    wind: boolean;
 }
 
 export class Flake {
-    /**
-     * @constructor
-     *
-     * @param {Object} params
-     * @param {number} params.containerHeight
-     * @param {number} params.gid
-     * @param {number} [params.count]
-     * @param {number} [params.speed]
-     * @param {boolean} [params.rotation]
-     * @param {number} [params.minOpacity]
-     * @param {number} [params.maxOpacity]
-     * @param {number} [params.minSize]
-     * @param {number} [params.maxSize]
-     * @param {number} [params.types]
-     * @param {number} [params.wind]
-     */
-    constructor(params) {
+    public size: number;
+
+    private innerSize: number;
+    private elem?: HTMLElement;
+
+    constructor(params: FlakeParams) {
         const isEqual = params.minSize === params.maxSize;
 
         this.innerSize = isEqual ? 0 : getRandom(0, maxInnerSize);
-        this.size = calcSize(this.innerSize, params);
+        this.size = calcSize(this.innerSize, params.minSize, params.maxSize);
 
         const flake = document.createElement('div');
         const innerFlake = document.createElement('div');
         const animationProps = this.getAnimationProps(params);
-        const styleProps = {
+        const styleProps: StyleProps = {
             animationName: `snowflake_gid_${params.gid}_y`,
             animationDelay: animationProps.animationDelay,
             animationDuration: animationProps.animationDuration,
@@ -52,13 +61,13 @@ export class Flake {
         };
 
         if (!isEqual) {
-            styleProps.opacity = interpolation(
+            styleProps.opacity = String(interpolation(
                 this.size,
                 params.minSize,
                 params.maxSize,
                 params.minOpacity,
                 params.maxOpacity
-            );
+            ));
         }
 
         setStyle(flake, styleProps);
@@ -68,7 +77,6 @@ export class Flake {
         });
 
         addClass(flake, 'snowflake');
-
         addClass(innerFlake, 'snowflake__inner');
 
         if (params.types) {
@@ -84,56 +92,52 @@ export class Flake {
         }
 
         flake.appendChild(innerFlake);
-        this._elem = flake;
-    }
-
-    /**
-     * Get animation properties.
-     *
-     * @param {Object} params
-     *
-     * @returns {Object}
-     */
-    getAnimationProps(params) {
-        const speedMax = params.containerHeight / 50 / params.speed;
-        const speedMin = speedMax / 3;
-
-        return {
-            animationDelay: (Math.random() * speedMax) + 's',
-            animationDuration: interpolation(
-                this.size,
-                params.minSize,
-                params.maxSize,
-                speedMax,
-                speedMin
-            ) + 's'
-        };
+        this.elem = flake;
     }
 
     /**
      * Resize a flake.
-     *
-     * @param {Object} params
      */
-    resize(params) {
+     public resize(params: FlakeParams) {
         const props = this.getAnimationProps(params);
 
-        setStyle(this._elem, props);
+        if (this.elem) {
+            setStyle(this.elem, props);
+        }
     }
 
     /**
      * Append flake to container.
-     *
-     * @param {DOMElement} container
      */
-    appendTo(container) {
-        container.appendChild(this._elem);
+    public appendTo(container: HTMLElement) {
+        if (this.elem) {
+            container.appendChild(this.elem);
+        }
     }
 
     /**
      * Destroy a flake.
      */
-    destroy() {
-        delete this._elem;
+    public destroy() {
+        delete this.elem;
+    }
+
+    /**
+     * Get animation properties.
+     */
+    private getAnimationProps(params: FlakeParams) {
+        const speedMax = params.containerHeight / 50 / params.speed;
+        const speedMin = speedMax / 3;
+
+        return {
+            animationDelay: (Math.random() * speedMax) + 's',
+            animationDuration: String(interpolation(
+                this.size,
+                params.minSize,
+                params.maxSize,
+                speedMax,
+                speedMin
+            ) + 's')
+        };
     }
 }

@@ -2,11 +2,8 @@
 ==================
 [![NPM version](https://img.shields.io/npm/v/magic-snowflakes.svg)](https://www.npmjs.com/package/magic-snowflakes)
 [![NPM Downloads](https://img.shields.io/npm/dm/magic-snowflakes.svg?style=flat)](https://www.npmjs.org/package/magic-snowflakes)
-[![magic-snowflakes](https://snyk.io/advisor/npm-package/magic-snowflakes/badge.svg)](https://snyk.io/advisor/npm-package/magic-snowflakes)
 [![Bundlephobia](https://badgen.net/bundlephobia/minzip/magic-snowflakes)](https://bundlephobia.com/result?p=magic-snowflakes)
-
-
-<img width="304" height="304" src="./promo/promo.gif" />
+[![magic-snowflakes](https://snyk.io/advisor/npm-package/magic-snowflakes/badge.svg)](https://snyk.io/advisor/npm-package/magic-snowflakes)
 
 
 ## Details
@@ -52,9 +49,7 @@ npm i magic-snowflakes --save-dev
 or
 
 ```js
-'use strict';
-
-const Snowflakes = require('magic-snowflakes');
+import Snowflakes from 'magic-snowflakes';
 Snowflakes();
 ```
 
@@ -91,9 +86,8 @@ In the `dist/` directory of [the NPM package](https://unpkg.com/magic-snowflakes
 |Type                   |Filename                 |Description       |
 |-----------------------|-------------------------|------------------|
 |Full (UMD)             |`snowflakes.js`          |                  |
-|Full (UMD, production) |`snowflakes.min.js`      |                  |
+|ES6                    |`snowflakes.esm.js`      |                  |
 |Light (UMD)            |`snowflakes.light.js`    |Without SVG images|
-|Light (UMD, production)|`snowflakes.light.min.js`|Without SVG images|
 
 
 ## Development
@@ -105,7 +99,7 @@ npm i
 npm run build
 npm test
 
-open ./dev-examples/
+open ./examples/
 ```
 
 ## [License](LICENSE)

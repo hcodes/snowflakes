@@ -40,6 +40,26 @@
     }
 }
 
+@keyframes snowflake_rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes snowflake_rotation_reverse {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
 .snowflakes {
     pointer-events: none;
 
@@ -58,25 +78,5 @@
 
         width: 100%;
         height: 1px;
-    }
-}
-
-@keyframes snowflake_rotation {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes snowflake_rotation_reverse {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(-360deg);
     }
 }
