@@ -10,7 +10,7 @@
         animationPrefix = (Array.prototype.slice
             .call(window.getComputedStyle(document.documentElement, ''))
             .join(',')
-            .search(/,animation/) > -1) ? '' : 'Webkit';
+            .search(/,animation/) > -1) ? '' : 'webkit';
     }
     /**
      * Set inline style.
@@ -21,7 +21,8 @@
             if (animationPrefix && originalKey.search('animation') > -1) {
                 key = animationPrefix + originalKey[0].toUpperCase() + originalKey.substr(1);
             }
-            // @ts-expect-error: todo
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             dom.style[key] = props[originalKey];
         });
     }
@@ -279,7 +280,7 @@
                 minSize: params.minSize,
                 maxSize: params.maxSize,
                 types: params.types,
-                wind: params.wind
+                wind: params.wind,
             };
         };
         Snowflakes.prototype.appendFlakes = function () {
@@ -313,7 +314,7 @@
                 width: undefined,
                 height: undefined,
                 wind: true,
-                zIndex: 9999
+                zIndex: 9999,
             };
             Object.keys(defaultParams).forEach(function (name) {
                 result[name] = typeof params[name] === 'undefined' ?
