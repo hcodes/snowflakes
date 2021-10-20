@@ -86,8 +86,10 @@ In the `dist/` directory of [the NPM package](https://unpkg.com/magic-snowflakes
 |Type                   |Filename                 |Description       |
 |-----------------------|-------------------------|------------------|
 |Full (UMD)             |`snowflakes.js`          |                  |
+|Full (UMD, production) |`snowflakes.min.js`      |                  |
 |ES6                    |`snowflakes.esm.js`      |                  |
 |Light (UMD)            |`snowflakes.light.js`    |Without SVG images|
+|Light (UMD, production)|`snowflakes.light.min.js`|Without SVG images|
 
 
 ## Development
