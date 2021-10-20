@@ -4,7 +4,7 @@ if (typeof window !== 'undefined') {
         .call(window.getComputedStyle(document.documentElement, ''))
         .join(',')
         .search(/,animation/) > -1
-    ) ? '' : 'Webkit';
+    ) ? '' : 'webkit';
 }
 
 /**
@@ -17,7 +17,8 @@ export function setStyle(dom: HTMLElement, props: Partial<CSSStyleDeclaration>) 
             key = animationPrefix + originalKey[0].toUpperCase() + originalKey.substr(1);
         }
 
-        // @ts-expect-error: todo
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         dom.style[key] = props[originalKey];
     });
 }

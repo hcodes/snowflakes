@@ -1,7 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
 
-const plugins = [typescript({ tsconfig: './tsconfig.json' })];
-
 export default [
   {
     input: 'src/ts/index.ts',
@@ -10,7 +8,7 @@ export default [
       name: 'Snowflakes',
       file: './dist/snowflakes.js'
     },
-    plugins,
+    plugins: [typescript({ tsconfig: './tsconfig.json' })]
   },
   {
     input: 'src/ts/index.ts',
@@ -18,6 +16,6 @@ export default [
       format: 'es',
       file: './dist/snowflakes.esm.js'
     },
-    plugins,
+    plugins: [typescript({ tsconfig: './tsconfig.esm.json' })]
   }
 ];

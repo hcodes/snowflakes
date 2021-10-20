@@ -13,7 +13,7 @@ export declare function hideElement(dom: HTMLElement): void;
 /**
  * Get window height.
  */
-export declare function getWindowHeight(): any;
+export declare function getWindowHeight(): number;
 /**
  * Get window height.
  */
