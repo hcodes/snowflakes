@@ -136,7 +136,7 @@ class Snowflakes {
         }
         Snowflakes.count++;
 
-        this.imagesStyleNode = this.injectStyle(imagesStyle.replace(/\{color\}/g, encodeURIComponent(this.params.color)));
+        this.imagesStyleNode = this.injectStyle(imagesStyle.replace(/:color:/g, encodeURIComponent(this.params.color)));
         this.animationStyleNode = this.injectStyle(this.getAnimationStyle());
     }
 
