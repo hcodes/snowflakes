@@ -34,23 +34,22 @@ export interface SnowflakesParams extends Record<string, boolean | HTMLElement |
     zIndex: number; // Default: 9999
 }
 
-class Snowflakes {
+export default class Snowflakes {
     private container: HTMLElement;
-    private params: SnowflakesParams;
+    private destroyed = false;
+    private flakes: Flake[] = [];
     private isBody = false;
     private gid: number;
-    private flakes: Flake[] = [];
+    private params: SnowflakesParams;
 
-    private mainStyleNode?: HTMLStyleElement;
-    private imagesStyleNode?: HTMLStyleElement;
     private animationStyleNode?: HTMLStyleElement;
+    private imagesStyleNode?: HTMLStyleElement;
+    private mainStyleNode?: HTMLStyleElement;
 
-    private destroyed = false;
-
-    static count = 0;
+    static instanceCounter = 0;
     static gid = 0;
 
-    constructor(params: SnowflakesRawParams) {
+    constructor(params?: SnowflakesRawParams) {
         this.params = this.setParams(params);
 
         this.isBody = isBody(this.params.container);
@@ -71,30 +70,6 @@ class Snowflakes {
     }
 
     /**
-     * Destroy flakes.
-     */
-    public destroy() {
-        if (this.destroyed) {
-            return;
-        }
-
-        this.destroyed = true;
-
-        if (Snowflakes.count) {
-            Snowflakes.count--;
-         }
-
-        this.removeStyles();
-
-        removeNode(this.container);
-
-        this.flakes.forEach(flake => flake.destroy());
-        this.flakes = [];
-
-        window.removeEventListener('resize', this.handleResize, false);
-    }
-
-    /**
      * Start CSS animation.
      */
     public start() {
@@ -106,6 +81,44 @@ class Snowflakes {
      */
     public stop() {
         addClass(this.container, 'snowflakes_paused');
+    }
+
+    /**
+     * Show snowflakes.
+     */
+    public show() {
+        removeClass(this.container, 'snowflakes_hidden');
+    }
+
+    /**
+     * Hide snowflakes.
+     */
+     public hide() {
+        addClass(this.container, 'snowflakes_hidden');
+    }
+
+    /**
+     * Destroy instance.
+     */
+     public destroy() {
+        if (this.destroyed) {
+            return;
+        }
+
+        this.destroyed = true;
+
+        if (Snowflakes.instanceCounter) {
+            Snowflakes.instanceCounter--;
+         }
+
+        this.removeStyles();
+
+        removeNode(this.container);
+
+        this.flakes.forEach(flake => flake.destroy());
+        this.flakes = [];
+
+        window.removeEventListener('resize', this.handleResize, false);
     }
 
     private handleResize() {
@@ -131,10 +144,10 @@ class Snowflakes {
     }
 
     private appendStyles() {
-        if (!Snowflakes.count) {
+        if (!Snowflakes.instanceCounter) {
             this.mainStyleNode = this.injectStyle(mainStyle);
         }
-        Snowflakes.count++;
+        Snowflakes.instanceCounter++;
 
         this.imagesStyleNode = this.injectStyle(imagesStyle.replace(/:color:/g, encodeURIComponent(this.params.color)));
         this.animationStyleNode = this.injectStyle(this.getAnimationStyle());
@@ -178,7 +191,7 @@ class Snowflakes {
             });
     }
 
-    private setParams(rawParams: SnowflakesRawParams) {
+    private setParams(rawParams?: SnowflakesRawParams) {
         const params = rawParams || {};
 
         const result = {} as SnowflakesParams;
@@ -232,7 +245,7 @@ class Snowflakes {
     }
 
     private removeStyles() {
-        if (!Snowflakes.count) {
+        if (!Snowflakes.instanceCounter) {
             removeNode(this.mainStyleNode);
             delete this.mainStyleNode;
         }
@@ -248,8 +261,4 @@ class Snowflakes {
         return this.params.height ||
             (this.isBody ? getWindowHeight() : this.params.container.offsetHeight + this.params.maxSize);
     }
-}
-
-export default function(params: SnowflakesRawParams) {
-    return new Snowflakes(params);
 }

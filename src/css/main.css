@@ -71,6 +71,10 @@
         }
     }
 
+    &_hidden {
+        visibility: hidden;
+    }
+
     &_body {
         position: fixed;
         top: 0;

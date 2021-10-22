@@ -1,3 +1,19 @@
+## v6.0.0
++ Fixes for typings.
++ Added show/hide methods.
+
+**BREAKING CHANGES:**
+Before:
+```js
+Snowflakes()
+// or
+new Snowflakes()
+```
+After:
+```js
+new Snowflakes()
+```
+
 ## v5.0.0
 + Code rewritten on TypeScript.
 + Added TypeScript typings.

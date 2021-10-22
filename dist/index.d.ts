@@ -16,23 +16,19 @@ export interface SnowflakesParams extends Record<string, boolean | HTMLElement |
     wind: boolean;
     zIndex: number;
 }
-declare class Snowflakes {
+export default class Snowflakes {
     private container;
-    private params;
+    private destroyed;
+    private flakes;
     private isBody;
     private gid;
-    private flakes;
-    private mainStyleNode?;
-    private imagesStyleNode?;
+    private params;
     private animationStyleNode?;
-    private destroyed;
-    static count: number;
+    private imagesStyleNode?;
+    private mainStyleNode?;
+    static instanceCounter: number;
     static gid: number;
-    constructor(params: SnowflakesRawParams);
-    /**
-     * Destroy flakes.
-     */
-    destroy(): void;
+    constructor(params?: SnowflakesRawParams);
     /**
      * Start CSS animation.
      */
@@ -41,6 +37,18 @@ declare class Snowflakes {
      * Stop CSS animation.
      */
     stop(): void;
+    /**
+     * Show snowflakes.
+     */
+    show(): void;
+    /**
+     * Hide snowflakes.
+     */
+    hide(): void;
+    /**
+     * Destroy instance.
+     */
+    destroy(): void;
     private handleResize;
     private appendContainer;
     private appendStyles;
@@ -53,5 +61,4 @@ declare class Snowflakes {
     private removeStyles;
     private height;
 }
-export default function (params: SnowflakesRawParams): Snowflakes;
 export {};

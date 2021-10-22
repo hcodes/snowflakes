@@ -40,7 +40,7 @@ npm i magic-snowflakes --save-dev
     ...
     <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script>
-        Snowflakes();
+        new Snowflakes();
     </script>
 </body>
 </html>
@@ -50,7 +50,13 @@ or
 
 ```js
 import Snowflakes from 'magic-snowflakes';
-Snowflakes();
+const snowflakes = new Snowflakes();
+// ...
+snowflakes.stop();
+// ...
+snowflakes.start();
+// ...
+snowflakes.destroy();
 ```
 
 ### Advanced settings
@@ -60,7 +66,7 @@ Snowflakes();
     <div id="snowflakes-container" style="width: 1000px; height: 500px;"></div>
     <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script>
-        var sf = new Snowflakes({
+        var snowflakes = new Snowflakes({
             color: '#f00', // Default: "#5ECDEF"
             container: document.querySelector('#snowflakes-container'), // Default: document.body
             count: 100, // 100 snowflakes. Default: 50
@@ -79,6 +85,28 @@ Snowflakes();
 </body>
 </html>
 ```
+
+## API
+
+```js
+import Snowflakes from 'magic-snowflakes';
+const snowflakes = new Snowflakes();
+```
+
+### .start()
+Start CSS Animation.
+
+### .stop()
+Stop CSS Animation.
+
+### .show()
+Show snowflakes.
+
+### .hide()
+Hide snowflakes.
+
+### .destroy()
+Destroy the instance of snowflakes.
 
 ## Different Builds
 In the `dist/` directory of [the NPM package](https://unpkg.com/magic-snowflakes/dist/) you will find many different builds of snowflakes.js.

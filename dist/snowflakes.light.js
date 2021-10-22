@@ -190,13 +190,13 @@
         return Flake;
     }());
 
-    var mainStyle = '.snowflake{-webkit-animation:snowflake_unknown 10s linear infinite;animation:snowflake_unknown 10s linear infinite;pointer-events:none;position:absolute;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;will-change:transform}.snowflake__inner,.snowflake__inner:before{bottom:0;left:0;position:absolute;right:0;top:0}.snowflake__inner:before{background-size:100% 100%;content:""}.snowflake__inner_wind{-webkit-animation:snowflake_unknown 2s ease-in-out infinite alternate;animation:snowflake_unknown 2s ease-in-out infinite alternate}.snowflake__inner_rotation:before{-webkit-animation:snowflake_rotation 10s linear infinite;animation:snowflake_rotation 10s linear infinite}.snowflake__inner_rotation_reverse:before{-webkit-animation:snowflake_rotation_reverse 10s linear infinite;animation:snowflake_rotation_reverse 10s linear infinite}@-webkit-keyframes snowflake_rotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes snowflake_rotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@-webkit-keyframes snowflake_rotation_reverse{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}@keyframes snowflake_rotation_reverse{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}.snowflakes{pointer-events:none}.snowflakes_paused .snowflake,.snowflakes_paused .snowflake__inner,.snowflakes_paused .snowflake__inner:before{-webkit-animation-play-state:paused;animation-play-state:paused}.snowflakes_body{height:1px;left:0;position:fixed;top:0;width:100%}';
+    var mainStyle = '.snowflake{-webkit-animation:snowflake_unknown 10s linear infinite;animation:snowflake_unknown 10s linear infinite;pointer-events:none;position:absolute;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;will-change:transform}.snowflake__inner,.snowflake__inner:before{bottom:0;left:0;position:absolute;right:0;top:0}.snowflake__inner:before{background-size:100% 100%;content:""}.snowflake__inner_wind{-webkit-animation:snowflake_unknown 2s ease-in-out infinite alternate;animation:snowflake_unknown 2s ease-in-out infinite alternate}.snowflake__inner_rotation:before{-webkit-animation:snowflake_rotation 10s linear infinite;animation:snowflake_rotation 10s linear infinite}.snowflake__inner_rotation_reverse:before{-webkit-animation:snowflake_rotation_reverse 10s linear infinite;animation:snowflake_rotation_reverse 10s linear infinite}@-webkit-keyframes snowflake_rotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes snowflake_rotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@-webkit-keyframes snowflake_rotation_reverse{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}@keyframes snowflake_rotation_reverse{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}.snowflakes{pointer-events:none}.snowflakes_paused .snowflake,.snowflakes_paused .snowflake__inner,.snowflakes_paused .snowflake__inner:before{-webkit-animation-play-state:paused;animation-play-state:paused}.snowflakes_hidden{visibility:hidden}.snowflakes_body{height:1px;left:0;position:fixed;top:0;width:100%}';
     var imagesStyle = '';
     var Snowflakes = /** @class */ (function () {
         function Snowflakes(params) {
-            this.isBody = false;
-            this.flakes = [];
             this.destroyed = false;
+            this.flakes = [];
+            this.isBody = false;
             this.params = this.setParams(params);
             this.isBody = isBody(this.params.container);
             Snowflakes.gid++;
@@ -211,23 +211,6 @@
             window.addEventListener('resize', this.handleResize, false);
         }
         /**
-         * Destroy flakes.
-         */
-        Snowflakes.prototype.destroy = function () {
-            if (this.destroyed) {
-                return;
-            }
-            this.destroyed = true;
-            if (Snowflakes.count) {
-                Snowflakes.count--;
-            }
-            this.removeStyles();
-            removeNode(this.container);
-            this.flakes.forEach(function (flake) { return flake.destroy(); });
-            this.flakes = [];
-            window.removeEventListener('resize', this.handleResize, false);
-        };
-        /**
          * Start CSS animation.
          */
         Snowflakes.prototype.start = function () {
@@ -238,6 +221,35 @@
          */
         Snowflakes.prototype.stop = function () {
             addClass(this.container, 'snowflakes_paused');
+        };
+        /**
+         * Show snowflakes.
+         */
+        Snowflakes.prototype.show = function () {
+            removeClass(this.container, 'snowflakes_hidden');
+        };
+        /**
+         * Hide snowflakes.
+         */
+        Snowflakes.prototype.hide = function () {
+            addClass(this.container, 'snowflakes_hidden');
+        };
+        /**
+         * Destroy instance.
+         */
+        Snowflakes.prototype.destroy = function () {
+            if (this.destroyed) {
+                return;
+            }
+            this.destroyed = true;
+            if (Snowflakes.instanceCounter) {
+                Snowflakes.instanceCounter--;
+            }
+            this.removeStyles();
+            removeNode(this.container);
+            this.flakes.forEach(function (flake) { return flake.destroy(); });
+            this.flakes = [];
+            window.removeEventListener('resize', this.handleResize, false);
         };
         Snowflakes.prototype.handleResize = function () {
             var flakeParams = this.getFlakeParams();
@@ -256,10 +268,10 @@
             return container;
         };
         Snowflakes.prototype.appendStyles = function () {
-            if (!Snowflakes.count) {
+            if (!Snowflakes.instanceCounter) {
                 this.mainStyleNode = this.injectStyle(mainStyle);
             }
-            Snowflakes.count++;
+            Snowflakes.instanceCounter++;
             this.imagesStyleNode = this.injectStyle(imagesStyle.replace(/:color:/g, encodeURIComponent(this.params.color)));
             this.animationStyleNode = this.injectStyle(this.getAnimationStyle());
         };
@@ -338,7 +350,7 @@
             this.injectStyle(this.getAnimationStyle(), this.animationStyleNode);
         };
         Snowflakes.prototype.removeStyles = function () {
-            if (!Snowflakes.count) {
+            if (!Snowflakes.instanceCounter) {
                 removeNode(this.mainStyleNode);
                 delete this.mainStyleNode;
             }
@@ -351,14 +363,11 @@
             return this.params.height ||
                 (this.isBody ? getWindowHeight() : this.params.container.offsetHeight + this.params.maxSize);
         };
-        Snowflakes.count = 0;
+        Snowflakes.instanceCounter = 0;
         Snowflakes.gid = 0;
         return Snowflakes;
     }());
-    function index (params) {
-        return new Snowflakes(params);
-    }
 
-    return index;
+    return Snowflakes;
 
 }));
