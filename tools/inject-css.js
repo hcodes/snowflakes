@@ -10,10 +10,10 @@ const encodeQuotes = (content) => {
 }
 
 const injectCSS = (source, dest, isLight) => {
-    let content = fs.readFileSync(source, 'utf-8')
-    content = content.replace(/\{MAIN_STYLE\}/, encodeQuotes(cssMain));
-    content = content.replace(/\{IMAGES_STYLE\}/, encodeQuotes(isLight ? '' : cssTypes));
-    content = content.replace(/^/, copyright);
+    const content = fs.readFileSync(source, 'utf-8')
+        .replace(/\{MAIN_STYLE\}/, encodeQuotes(cssMain))
+        .replace(/\{IMAGES_STYLE\}/, encodeQuotes(isLight ? '' : cssTypes))
+        .replace(/^/, copyright);
 
     fs.writeFileSync(dest, content, 'utf-8');
 }
