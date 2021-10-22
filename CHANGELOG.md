@@ -3,15 +3,16 @@
 + Added show/hide methods.
 
 **BREAKING CHANGES:**
+
 Before:
 ```js
-Snowflakes()
+Snowflakes();
 // or
-new Snowflakes()
+new Snowflakes();
 ```
 After:
 ```js
-new Snowflakes()
+new Snowflakes();
 ```
 
 ## v5.0.0
