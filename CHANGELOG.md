@@ -1,5 +1,5 @@
 ## v6.0.0
-+ Fixes for typings.
++ Fixes for TypeScript typings.
 + Added show/hide methods.
 
 **BREAKING CHANGES:**
