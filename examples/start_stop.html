@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
     <meta name="format-detection" content="telephone=no"/>
-    <title>Methods: start() and stop()</title>
+    <title>Methods: start(), stop(), show() and hide()</title>
     <style>
         #toggle {
             position: fixed;
@@ -15,25 +15,13 @@
 </head>
 <body>
     <script src="../dist/snowflakes.js"></script>
-    <button id="toggle">Stop</button>
-    <script>
-        (function() {
-            var isStart = true,
-                button = document.querySelector('#toggle'),
-                sf = new Snowflakes();
+    <script>var sf = new Snowflakes();</script>
 
-            button.onclick = function() {
-                if (isStart) {
-                    sf.stop();
-                    button.innerHTML = 'Start';
-                } else {
-                    sf.start();
-                    button.innerHTML = 'Stop';
-                }
-
-                isStart = !isStart;
-            };
-        })();
-    </script>
+    <div style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);">
+        <button onclick="sf.stop()">Stop</button>
+        <button onclick="sf.start()">Start</button>
+        <button onclick="sf.hide()">Hide</button>
+        <button onclick="sf.show()">Show</button>
+    </div>
 </body>
 </html>
