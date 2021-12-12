@@ -8,7 +8,8 @@ import {
     injectStyle,
     removeNode,
     addClass,
-    removeClass
+    removeClass,
+    getWindowWidth
 } from './helpers/dom';
 
 const mainStyle = '{MAIN_STYLE}';
@@ -34,6 +35,11 @@ export interface SnowflakesParams extends Record<string, boolean | HTMLElement |
     zIndex: number; // Default: 9999
 }
 
+interface ContainerSize {
+    width: number;
+    height: number;
+}
+
 export default class Snowflakes {
     private container: HTMLElement;
     private destroyed = false;
@@ -45,7 +51,7 @@ export default class Snowflakes {
     private animationStyleNode?: HTMLStyleElement;
     private imagesStyleNode?: HTMLStyleElement;
     private mainStyleNode?: HTMLStyleElement;
-
+    private containerSize: ContainerSize;
     static instanceCounter = 0;
     static gid = 0;
 
@@ -64,6 +70,11 @@ export default class Snowflakes {
 
         this.appendStyles();
         this.appendFlakes();
+
+        this.containerSize = {
+            width: this.width(),
+            height: this.height(),
+        };
 
         this.handleResize = this.handleResize.bind(this);
         window.addEventListener('resize', this.handleResize, false);
@@ -122,6 +133,16 @@ export default class Snowflakes {
     }
 
     private handleResize() {
+        const newWidth = this.width();
+        const newHeight = this.height();
+
+        if (this.containerSize.width === newWidth && this.containerSize.height === newHeight) {
+            return;
+        }
+
+        this.containerSize.width = newWidth;
+        this.containerSize.height = newHeight;
+
         const flakeParams = this.getFlakeParams();
 
         hideElement(this.container);
@@ -255,6 +276,11 @@ export default class Snowflakes {
 
         removeNode(this.animationStyleNode);
         delete this.animationStyleNode;
+    }
+
+    private width() {
+        return this.params.width ||
+            (this.isBody ? getWindowWidth() : this.params.container.offsetWidth);
     }
 
     private height() {
