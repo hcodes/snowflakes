@@ -57,8 +57,30 @@ export function getWindowHeight() {
     return height || 0;
 }
 
+
+
 /**
- * Get window height.
+ * Get window width.
+ */
+ export function getWindowWidth() {
+    const body = document.body;
+    const docElement = document.documentElement;
+
+    let width;
+
+    if (window.innerWidth) {
+        width = window.innerWidth;
+    } else if (docElement && docElement.clientWidth) {
+        width = docElement.clientWidth;
+    } else if (body) {
+        width = body.clientWidth;
+    }
+
+    return width || 0;
+}
+
+/**
+ * Inject style.
  */
 export function injectStyle(style: string, styleNode?: HTMLStyleElement) {
     if (!styleNode) {

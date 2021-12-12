@@ -51,7 +51,25 @@ function getWindowHeight() {
     return height || 0;
 }
 /**
- * Get window height.
+ * Get window width.
+ */
+function getWindowWidth() {
+    const body = document.body;
+    const docElement = document.documentElement;
+    let width;
+    if (window.innerWidth) {
+        width = window.innerWidth;
+    }
+    else if (docElement && docElement.clientWidth) {
+        width = docElement.clientWidth;
+    }
+    else if (body) {
+        width = body.clientWidth;
+    }
+    return width || 0;
+}
+/**
+ * Inject style.
  */
 function injectStyle(style, styleNode) {
     if (!styleNode) {
@@ -200,6 +218,10 @@ class Snowflakes {
         }
         this.appendStyles();
         this.appendFlakes();
+        this.containerSize = {
+            width: this.width(),
+            height: this.height(),
+        };
         this.handleResize = this.handleResize.bind(this);
         window.addEventListener('resize', this.handleResize, false);
     }
@@ -245,6 +267,13 @@ class Snowflakes {
         window.removeEventListener('resize', this.handleResize, false);
     }
     handleResize() {
+        const newWidth = this.width();
+        const newHeight = this.height();
+        if (this.containerSize.width === newWidth && this.containerSize.height === newHeight) {
+            return;
+        }
+        this.containerSize.width = newWidth;
+        this.containerSize.height = newHeight;
         const flakeParams = this.getFlakeParams();
         hideElement(this.container);
         this.flakes.forEach(flake => flake.resize(flakeParams));
@@ -352,6 +381,10 @@ class Snowflakes {
         delete this.imagesStyleNode;
         removeNode(this.animationStyleNode);
         delete this.animationStyleNode;
+    }
+    width() {
+        return this.params.width ||
+            (this.isBody ? getWindowWidth() : this.params.container.offsetWidth);
     }
     height() {
         return this.params.height ||

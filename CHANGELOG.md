@@ -1,3 +1,6 @@
+## v6.0.1
+Fix: Resize container for snowflakes only if necessary #51.
+
 ## v6.0.0
 + Fixes for TypeScript typings.
 + Added show/hide methods.

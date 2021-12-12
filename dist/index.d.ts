@@ -26,6 +26,7 @@ export default class Snowflakes {
     private animationStyleNode?;
     private imagesStyleNode?;
     private mainStyleNode?;
+    private containerSize;
     static instanceCounter: number;
     static gid: number;
     constructor(params?: SnowflakesRawParams);
@@ -59,6 +60,7 @@ export default class Snowflakes {
     private getAnimationStyle;
     private updateAnimationStyle;
     private removeStyles;
+    private width;
     private height;
 }
 export {};
