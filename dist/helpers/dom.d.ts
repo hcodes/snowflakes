@@ -15,7 +15,11 @@ export declare function hideElement(dom: HTMLElement): void;
  */
 export declare function getWindowHeight(): number;
 /**
- * Get window height.
+ * Get window width.
+ */
+export declare function getWindowWidth(): number;
+/**
+ * Inject style.
  */
 export declare function injectStyle(style: string, styleNode?: HTMLStyleElement): HTMLStyleElement;
 /**

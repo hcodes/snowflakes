@@ -57,7 +57,25 @@
         return height || 0;
     }
     /**
-     * Get window height.
+     * Get window width.
+     */
+    function getWindowWidth() {
+        var body = document.body;
+        var docElement = document.documentElement;
+        var width;
+        if (window.innerWidth) {
+            width = window.innerWidth;
+        }
+        else if (docElement && docElement.clientWidth) {
+            width = docElement.clientWidth;
+        }
+        else if (body) {
+            width = body.clientWidth;
+        }
+        return width || 0;
+    }
+    /**
+     * Inject style.
      */
     function injectStyle(style, styleNode) {
         if (!styleNode) {
@@ -207,6 +225,10 @@
             }
             this.appendStyles();
             this.appendFlakes();
+            this.containerSize = {
+                width: this.width(),
+                height: this.height(),
+            };
             this.handleResize = this.handleResize.bind(this);
             window.addEventListener('resize', this.handleResize, false);
         }
@@ -252,6 +274,13 @@
             window.removeEventListener('resize', this.handleResize, false);
         };
         Snowflakes.prototype.handleResize = function () {
+            var newWidth = this.width();
+            var newHeight = this.height();
+            if (this.containerSize.width === newWidth && this.containerSize.height === newHeight) {
+                return;
+            }
+            this.containerSize.width = newWidth;
+            this.containerSize.height = newHeight;
             var flakeParams = this.getFlakeParams();
             hideElement(this.container);
             this.flakes.forEach(function (flake) { return flake.resize(flakeParams); });
@@ -358,6 +387,10 @@
             delete this.imagesStyleNode;
             removeNode(this.animationStyleNode);
             delete this.animationStyleNode;
+        };
+        Snowflakes.prototype.width = function () {
+            return this.params.width ||
+                (this.isBody ? getWindowWidth() : this.params.container.offsetWidth);
         };
         Snowflakes.prototype.height = function () {
             return this.params.height ||
