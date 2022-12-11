@@ -32,7 +32,8 @@ export interface SnowflakesParams extends Record<string, boolean | HTMLElement |
     width?: number; // Default: width of container
     height?: number; // Default: height of container
     wind: boolean; // Default: true
-    zIndex: number; // Default: 9999
+    zIndex: number; // Default: 9999,
+    autoResize: boolean; // Default: true
 }
 
 interface ContainerSize {
@@ -76,8 +77,11 @@ export default class Snowflakes {
             height: this.height(),
         };
 
-        this.handleResize = this.handleResize.bind(this);
         window.addEventListener('resize', this.handleResize, false);
+
+        if (screen.orientation && screen.orientation.addEventListener) {
+            screen.orientation.addEventListener('change', this.handleOrientationChange);
+        }
     }
 
     /**
@@ -109,6 +113,28 @@ export default class Snowflakes {
     }
 
     /**
+     * Resize snowflakes.
+     */
+     public resize() {
+        const newWidth = this.width();
+        const newHeight = this.height();
+
+        if (this.containerSize.width === newWidth && this.containerSize.height === newHeight) {
+            return;
+        }
+
+        this.containerSize.width = newWidth;
+        this.containerSize.height = newHeight;
+
+        const flakeParams = this.getFlakeParams();
+
+        hideElement(this.container);
+        this.flakes.forEach(flake => flake.resize(flakeParams));
+        this.updateAnimationStyle();
+        showElement(this.container);
+    }
+
+    /**
      * Destroy instance.
      */
      public destroy() {
@@ -130,25 +156,20 @@ export default class Snowflakes {
         this.flakes = [];
 
         window.removeEventListener('resize', this.handleResize, false);
+
+        if (screen.orientation && screen.orientation.removeEventListener) {
+            screen.orientation.removeEventListener('change', this.handleOrientationChange, false);
+        }
     }
 
-    private handleResize() {
-        const newWidth = this.width();
-        const newHeight = this.height();
-
-        if (this.containerSize.width === newWidth && this.containerSize.height === newHeight) {
-            return;
+    private handleResize = () => {
+        if (this.params.autoResize) {
+            this.resize();
         }
+    }
 
-        this.containerSize.width = newWidth;
-        this.containerSize.height = newHeight;
-
-        const flakeParams = this.getFlakeParams();
-
-        hideElement(this.container);
-        this.flakes.forEach(flake => flake.resize(flakeParams));
-        this.updateAnimationStyle();
-        showElement(this.container);
+    private handleOrientationChange = () => {
+        this.resize();
     }
 
     private appendContainer() {
@@ -233,6 +254,7 @@ export default class Snowflakes {
             height: undefined,
             wind: true,
             zIndex: 9999,
+            autoResize: true,
         };
 
         Object.keys(defaultParams).forEach(name => {

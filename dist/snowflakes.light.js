@@ -1,4 +1,4 @@
-/*! Snowflakes | © 2021 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
+/*! Snowflakes | © 2022 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -141,7 +141,7 @@
             var innerFlake = document.createElement('div');
             var animationProps = this.getAnimationProps(params);
             var styleProps = {
-                animationName: "snowflake_gid_" + params.gid + "_y",
+                animationName: "snowflake_gid_".concat(params.gid, "_y"),
                 animationDelay: animationProps.animationDelay,
                 animationDuration: animationProps.animationDuration,
                 left: (Math.random() * 99) + '%',
@@ -154,7 +154,7 @@
             }
             setStyle(flake, styleProps);
             setStyle(innerFlake, {
-                animationName: "snowflake_gid_" + params.gid + "_x_" + this.innerSize,
+                animationName: "snowflake_gid_".concat(params.gid, "_x_").concat(this.innerSize),
                 animationDelay: (Math.random() * 4) + 's'
             });
             addClass(flake, 'snowflake');
@@ -212,9 +212,18 @@
     var imagesStyle = '';
     var Snowflakes = /** @class */ (function () {
         function Snowflakes(params) {
+            var _this = this;
             this.destroyed = false;
             this.flakes = [];
             this.isBody = false;
+            this.handleResize = function () {
+                if (_this.params.autoResize) {
+                    _this.resize();
+                }
+            };
+            this.handleOrientationChange = function () {
+                _this.resize();
+            };
             this.params = this.setParams(params);
             this.isBody = isBody(this.params.container);
             Snowflakes.gid++;
@@ -229,8 +238,10 @@
                 width: this.width(),
                 height: this.height(),
             };
-            this.handleResize = this.handleResize.bind(this);
             window.addEventListener('resize', this.handleResize, false);
+            if (screen.orientation && screen.orientation.addEventListener) {
+                screen.orientation.addEventListener('change', this.handleOrientationChange);
+            }
         }
         /**
          * Start CSS animation.
@@ -257,6 +268,23 @@
             addClass(this.container, 'snowflakes_hidden');
         };
         /**
+         * Resize snowflakes.
+         */
+        Snowflakes.prototype.resize = function () {
+            var newWidth = this.width();
+            var newHeight = this.height();
+            if (this.containerSize.width === newWidth && this.containerSize.height === newHeight) {
+                return;
+            }
+            this.containerSize.width = newWidth;
+            this.containerSize.height = newHeight;
+            var flakeParams = this.getFlakeParams();
+            hideElement(this.container);
+            this.flakes.forEach(function (flake) { return flake.resize(flakeParams); });
+            this.updateAnimationStyle();
+            showElement(this.container);
+        };
+        /**
          * Destroy instance.
          */
         Snowflakes.prototype.destroy = function () {
@@ -272,25 +300,14 @@
             this.flakes.forEach(function (flake) { return flake.destroy(); });
             this.flakes = [];
             window.removeEventListener('resize', this.handleResize, false);
-        };
-        Snowflakes.prototype.handleResize = function () {
-            var newWidth = this.width();
-            var newHeight = this.height();
-            if (this.containerSize.width === newWidth && this.containerSize.height === newHeight) {
-                return;
+            if (screen.orientation && screen.orientation.removeEventListener) {
+                screen.orientation.removeEventListener('change', this.handleOrientationChange, false);
             }
-            this.containerSize.width = newWidth;
-            this.containerSize.height = newHeight;
-            var flakeParams = this.getFlakeParams();
-            hideElement(this.container);
-            this.flakes.forEach(function (flake) { return flake.resize(flakeParams); });
-            this.updateAnimationStyle();
-            showElement(this.container);
         };
         Snowflakes.prototype.appendContainer = function () {
             var container = document.createElement('div');
             addClass(container, 'snowflakes');
-            addClass(container, "snowflakes_gid_" + this.gid);
+            addClass(container, "snowflakes_gid_".concat(this.gid));
             this.isBody && addClass(container, 'snowflakes_body');
             setStyle(container, { zIndex: String(this.params.zIndex) });
             this.params.container.appendChild(container);
@@ -305,7 +322,7 @@
             this.animationStyleNode = this.injectStyle(this.getAnimationStyle());
         };
         Snowflakes.prototype.injectStyle = function (style, container) {
-            return injectStyle(style.replace(/_gid_value/g, "_gid_" + this.gid), container);
+            return injectStyle(style.replace(/_gid_value/g, "_gid_".concat(this.gid)), container);
         };
         Snowflakes.prototype.getFlakeParams = function () {
             var height = this.height();
@@ -356,6 +373,7 @@
                 height: undefined,
                 wind: true,
                 zIndex: 9999,
+                autoResize: true,
             };
             Object.keys(defaultParams).forEach(function (name) {
                 result[name] = typeof params[name] === 'undefined' ?
@@ -368,10 +386,10 @@
             var fromY = '0px';
             var toY = (this.height() + this.params.maxSize * Math.sqrt(2)) + 'px';
             var gid = this.gid;
-            var css = "@-webkit-keyframes snowflake_gid_" + gid + "_y{from{-webkit-transform:translateY(" + fromY + ")}to{-webkit-transform:translateY(" + toY + ");}}\n@keyframes snowflake_gid_" + gid + "_y{from{transform:translateY(" + fromY + ")}to{transform:translateY(" + toY + ")}}";
+            var css = "@-webkit-keyframes snowflake_gid_".concat(gid, "_y{from{-webkit-transform:translateY(").concat(fromY, ")}to{-webkit-transform:translateY(").concat(toY, ");}}\n@keyframes snowflake_gid_").concat(gid, "_y{from{transform:translateY(").concat(fromY, ")}to{transform:translateY(").concat(toY, ")}}");
             for (var i = 0; i <= maxInnerSize; i++) {
                 var left = calcSize(i, this.params.minSize, this.params.maxSize) + 'px';
-                css += "@-webkit-keyframes snowflake_gid_" + gid + "_x_" + i + "{from{-webkit-transform:translateX(0px)}to{-webkit-transform:translateX(" + left + ");}}\n@keyframes snowflake_gid_" + gid + "_x_" + i + "{from{transform:translateX(0px)}to{transform:translateX(" + left + ")}}";
+                css += "@-webkit-keyframes snowflake_gid_".concat(gid, "_x_").concat(i, "{from{-webkit-transform:translateX(0px)}to{-webkit-transform:translateX(").concat(left, ");}}\n@keyframes snowflake_gid_").concat(gid, "_x_").concat(i, "{from{transform:translateX(0px)}to{transform:translateX(").concat(left, ")}}");
             }
             return css;
         };

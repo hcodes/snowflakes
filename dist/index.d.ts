@@ -1,4 +1,4 @@
-declare type SnowflakesRawParams = Partial<SnowflakesParams>;
+type SnowflakesRawParams = Partial<SnowflakesParams>;
 export interface SnowflakesParams extends Record<string, boolean | HTMLElement | number | string | undefined> {
     container: HTMLElement;
     count: number;
@@ -15,6 +15,7 @@ export interface SnowflakesParams extends Record<string, boolean | HTMLElement |
     height?: number;
     wind: boolean;
     zIndex: number;
+    autoResize: boolean;
 }
 export default class Snowflakes {
     private container;
@@ -47,10 +48,15 @@ export default class Snowflakes {
      */
     hide(): void;
     /**
+     * Resize snowflakes.
+     */
+    resize(): void;
+    /**
      * Destroy instance.
      */
     destroy(): void;
     private handleResize;
+    private handleOrientationChange;
     private appendContainer;
     private appendStyles;
     private injectStyle;
