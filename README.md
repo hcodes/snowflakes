@@ -90,7 +90,8 @@ snowflakes.destroy();
             wind: false, // Without wind. Default: true
             width: 500, // Default: width of container
             height: 250, // Default: height of container
-            zIndex: 100 // Default: 9999
+            zIndex: 100, // Default: 9999,
+            autoResize: true // Default: true
         });
     </script>
 </body>
@@ -115,6 +116,9 @@ Show snowflakes.
 
 ### .hide()
 Hide snowflakes.
+
+### .resize()
+Resize snowflakes.
 
 ### .destroy()
 Destroy the instance of snowflakes.

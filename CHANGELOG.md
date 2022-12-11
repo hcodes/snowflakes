@@ -1,3 +1,6 @@
+## v6.1.0
++ Add `autoResize` param.
+
 ## v6.0.1
 Fix: Resize container for snowflakes only if necessary #51.
 
