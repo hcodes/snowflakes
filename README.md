@@ -63,8 +63,18 @@ snowflakes.destroy();
 ### Advanced settings
 ```html
 <html>
+<head>
+<style>
+    #snowflakes-container {
+        width: 500px;
+        height: 500px;
+        position: relative;
+        overflow: hidden;
+    }
+</style>
+</head>
 <body>
-    <div id="snowflakes-container" style="width: 1000px; height: 500px;"></div>
+    <div id="snowflakes-container"></div>
     <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script>
         var snowflakes = new Snowflakes({
