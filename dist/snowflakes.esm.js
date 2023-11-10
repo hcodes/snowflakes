@@ -1,4 +1,4 @@
-/*! Snowflakes | © 2022 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
+/*! Snowflakes | © 2023 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
 let animationPrefix = '';
 if (typeof window !== 'undefined') {
     animationPrefix = (Array.prototype.slice

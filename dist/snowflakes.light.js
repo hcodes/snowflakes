@@ -1,4 +1,4 @@
-/*! Snowflakes | © 2022 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
+/*! Snowflakes | © 2023 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
