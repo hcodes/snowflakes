@@ -1,4 +1,4 @@
-import { addClass, setStyle } from './helpers/dom';
+import { addClass, hideElement, isAnimationEndSupported, setStyle, showElement } from './helpers/dom';
 import { getRandom, interpolation } from './helpers/number';
 
 export const maxInnerSize = 20;
@@ -36,19 +36,61 @@ export interface FlakeParams {
 }
 
 export class Flake {
-    public size: number;
+    public size = 0;
+    private sizeInner = 0;
 
-    private innerSize: number;
     private elem?: HTMLElement;
+    private elemInner?: HTMLElement;
 
     constructor(params: FlakeParams) {
+        const flake = this.elem = document.createElement('div');
+        const innerFlake = this.elemInner = document.createElement('div');
+
+        this.update(params);
+
+        addClass(flake, 'snowflake');
+        addClass(innerFlake, 'snowflake__inner');
+        addClass(flake, 'snowflake_animation');
+
+        if (isAnimationEndSupported) {
+            addClass(flake, 'snowflake_animation-end');
+            flake.onanimationend = e => {
+                if (e.target !== flake) {
+                    return;
+                }
+
+                this.update(params);
+                this.reflow();
+            };
+        } else {
+            addClass(flake, 'snowflake_animation-infinity');
+        }
+
+        if (params.types) {
+            addClass(innerFlake, 'snowflake__inner_type_' + getRandom(0, params.types));
+        }
+
+        if (params.wind) {
+            addClass(innerFlake, 'snowflake__inner_wind');
+        }
+
+        if (params.rotation) {
+            addClass(innerFlake, 'snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse'));
+        }
+
+        flake.appendChild(innerFlake);
+    }
+
+    private update(params: FlakeParams) {
+        if (!this.elem || !this.elemInner) {
+            return;
+        }
+
         const isEqual = params.minSize === params.maxSize;
 
-        this.innerSize = isEqual ? 0 : getRandom(0, maxInnerSize);
-        this.size = calcSize(this.innerSize, params.minSize, params.maxSize);
+        this.sizeInner = isEqual ? 0 : getRandom(0, maxInnerSize);
+        this.size = calcSize(this.sizeInner, params.minSize, params.maxSize);
 
-        const flake = document.createElement('div');
-        const innerFlake = document.createElement('div');
         const animationProps = this.getAnimationProps(params);
         const styleProps: StyleProps = {
             animationName: `snowflake_gid_${params.gid}_y`,
@@ -70,29 +112,23 @@ export class Flake {
             ));
         }
 
-        setStyle(flake, styleProps);
-        setStyle(innerFlake, {
-            animationName: `snowflake_gid_${params.gid}_x_${this.innerSize}`,
+        setStyle(this.elem, styleProps);
+
+        const animationName = `snowflake_gid_${params.gid}_x_${this.sizeInner}`;
+        setStyle(this.elemInner, {
+            animationName,
             animationDelay: (Math.random() * 4) + 's'
         });
+    }
 
-        addClass(flake, 'snowflake');
-        addClass(innerFlake, 'snowflake__inner');
-
-        if (params.types) {
-            addClass(innerFlake, 'snowflake__inner_type_' + getRandom(0, params.types));
+    private reflow() {
+        if (!this.elem) {
+            return;
         }
 
-        if (params.wind) {
-            addClass(innerFlake, 'snowflake__inner_wind');
-        }
-
-        if (params.rotation) {
-            addClass(innerFlake, 'snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse'));
-        }
-
-        flake.appendChild(innerFlake);
-        this.elem = flake;
+        hideElement(this.elem);
+        void this.elem.offsetHeight;
+        showElement(this.elem);
     }
 
     /**
@@ -119,7 +155,12 @@ export class Flake {
      * Destroy a flake.
      */
     public destroy() {
+        if (this.elem) {
+            this.elem.onanimationend = null;
+        }
+
         delete this.elem;
+        delete this.elemInner;
     }
 
     /**
