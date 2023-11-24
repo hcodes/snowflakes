@@ -4,8 +4,15 @@
     user-select: none;
     pointer-events: none;
 
-    animation: snowflake_unknown 10s infinite linear;
     will-change: transform;
+
+    &_animation {
+        animation: snowflake_unknown 10s linear;
+    }
+
+    &_animation-infinity {
+        animation-iteration-count: infinite;
+    }
 
     &__inner {
         position: absolute;

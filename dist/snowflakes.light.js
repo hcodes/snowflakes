@@ -111,6 +111,7 @@
     function removeClass(node, className) {
         node.classList.remove(className);
     }
+    var isAnimationEndSupported = 'onanimationend' in document;
 
     /**
      * Get random number.
@@ -134,11 +135,46 @@
     }
     var Flake = /** @class */ (function () {
         function Flake(params) {
+            var _this = this;
+            this.size = 0;
+            this.sizeInner = 0;
+            var flake = this.elem = document.createElement('div');
+            var innerFlake = this.elemInner = document.createElement('div');
+            this.update(params);
+            addClass(flake, 'snowflake');
+            addClass(innerFlake, 'snowflake__inner');
+            addClass(flake, 'snowflake_animation');
+            if (isAnimationEndSupported) {
+                addClass(flake, 'snowflake_animation-end');
+                flake.onanimationend = function (e) {
+                    if (e.target !== flake) {
+                        return;
+                    }
+                    _this.update(params);
+                    _this.reflow();
+                };
+            }
+            else {
+                addClass(flake, 'snowflake_animation-infinity');
+            }
+            if (params.types) {
+                addClass(innerFlake, 'snowflake__inner_type_' + getRandom(0, params.types));
+            }
+            if (params.wind) {
+                addClass(innerFlake, 'snowflake__inner_wind');
+            }
+            if (params.rotation) {
+                addClass(innerFlake, 'snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse'));
+            }
+            flake.appendChild(innerFlake);
+        }
+        Flake.prototype.update = function (params) {
+            if (!this.elem || !this.elemInner) {
+                return;
+            }
             var isEqual = params.minSize === params.maxSize;
-            this.innerSize = isEqual ? 0 : getRandom(0, maxInnerSize);
-            this.size = calcSize(this.innerSize, params.minSize, params.maxSize);
-            var flake = document.createElement('div');
-            var innerFlake = document.createElement('div');
+            this.sizeInner = isEqual ? 0 : getRandom(0, maxInnerSize);
+            this.size = calcSize(this.sizeInner, params.minSize, params.maxSize);
             var animationProps = this.getAnimationProps(params);
             var styleProps = {
                 animationName: "snowflake_gid_".concat(params.gid, "_y"),
@@ -152,25 +188,21 @@
             if (!isEqual) {
                 styleProps.opacity = String(interpolation(this.size, params.minSize, params.maxSize, params.minOpacity, params.maxOpacity));
             }
-            setStyle(flake, styleProps);
-            setStyle(innerFlake, {
-                animationName: "snowflake_gid_".concat(params.gid, "_x_").concat(this.innerSize),
+            setStyle(this.elem, styleProps);
+            var animationName = "snowflake_gid_".concat(params.gid, "_x_").concat(this.sizeInner);
+            setStyle(this.elemInner, {
+                animationName: animationName,
                 animationDelay: (Math.random() * 4) + 's'
             });
-            addClass(flake, 'snowflake');
-            addClass(innerFlake, 'snowflake__inner');
-            if (params.types) {
-                addClass(innerFlake, 'snowflake__inner_type_' + getRandom(0, params.types));
+        };
+        Flake.prototype.reflow = function () {
+            if (!this.elem) {
+                return;
             }
-            if (params.wind) {
-                addClass(innerFlake, 'snowflake__inner_wind');
-            }
-            if (params.rotation) {
-                addClass(innerFlake, 'snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse'));
-            }
-            flake.appendChild(innerFlake);
-            this.elem = flake;
-        }
+            hideElement(this.elem);
+            void this.elem.offsetHeight;
+            showElement(this.elem);
+        };
         /**
          * Resize a flake.
          */
@@ -192,7 +224,11 @@
          * Destroy a flake.
          */
         Flake.prototype.destroy = function () {
+            if (this.elem) {
+                this.elem.onanimationend = null;
+            }
             delete this.elem;
+            delete this.elemInner;
         };
         /**
          * Get animation properties.
@@ -208,7 +244,7 @@
         return Flake;
     }());
 
-    var mainStyle = '.snowflake{-webkit-animation:snowflake_unknown 10s linear infinite;animation:snowflake_unknown 10s linear infinite;pointer-events:none;position:absolute;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;will-change:transform}.snowflake__inner,.snowflake__inner:before{bottom:0;left:0;position:absolute;right:0;top:0}.snowflake__inner:before{background-size:100% 100%;content:""}.snowflake__inner_wind{-webkit-animation:snowflake_unknown 2s ease-in-out infinite alternate;animation:snowflake_unknown 2s ease-in-out infinite alternate}.snowflake__inner_rotation:before{-webkit-animation:snowflake_rotation 10s linear infinite;animation:snowflake_rotation 10s linear infinite}.snowflake__inner_rotation_reverse:before{-webkit-animation:snowflake_rotation_reverse 10s linear infinite;animation:snowflake_rotation_reverse 10s linear infinite}@-webkit-keyframes snowflake_rotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes snowflake_rotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@-webkit-keyframes snowflake_rotation_reverse{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}@keyframes snowflake_rotation_reverse{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}.snowflakes{pointer-events:none}.snowflakes_paused .snowflake,.snowflakes_paused .snowflake__inner,.snowflakes_paused .snowflake__inner:before{-webkit-animation-play-state:paused;animation-play-state:paused}.snowflakes_hidden{visibility:hidden}.snowflakes_body{height:1px;left:0;position:fixed;top:0;width:100%}';
+    var mainStyle = '.snowflake{pointer-events:none;position:absolute;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;will-change:transform}.snowflake_animation{-webkit-animation:snowflake_unknown 10s linear;animation:snowflake_unknown 10s linear}.snowflake_animation-infinity{-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite}.snowflake__inner,.snowflake__inner:before{bottom:0;left:0;position:absolute;right:0;top:0}.snowflake__inner:before{background-size:100% 100%;content:""}.snowflake__inner_wind{-webkit-animation:snowflake_unknown 2s ease-in-out infinite alternate;animation:snowflake_unknown 2s ease-in-out infinite alternate}.snowflake__inner_rotation:before{-webkit-animation:snowflake_rotation 10s linear infinite;animation:snowflake_rotation 10s linear infinite}.snowflake__inner_rotation_reverse:before{-webkit-animation:snowflake_rotation_reverse 10s linear infinite;animation:snowflake_rotation_reverse 10s linear infinite}@-webkit-keyframes snowflake_rotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes snowflake_rotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@-webkit-keyframes snowflake_rotation_reverse{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}@keyframes snowflake_rotation_reverse{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}.snowflakes{pointer-events:none}.snowflakes_paused .snowflake,.snowflakes_paused .snowflake__inner,.snowflakes_paused .snowflake__inner:before{-webkit-animation-play-state:paused;animation-play-state:paused}.snowflakes_hidden{visibility:hidden}.snowflakes_body{height:1px;left:0;position:fixed;top:0;width:100%}';
     var imagesStyle = '';
     var Snowflakes = /** @class */ (function () {
         function Snowflakes(params) {
