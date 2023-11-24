@@ -38,3 +38,4 @@ export declare function addClass(node: HTMLElement, className: string): void;
  * Remove className for a node.
  */
 export declare function removeClass(node: HTMLElement, className: string): void;
+export declare const isAnimationEndSupported: boolean;

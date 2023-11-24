@@ -18,9 +18,12 @@ export interface FlakeParams {
 }
 export declare class Flake {
     size: number;
-    private innerSize;
+    private sizeInner;
     private elem?;
+    private elemInner?;
     constructor(params: FlakeParams);
+    private update;
+    private reflow;
     /**
      * Resize a flake.
      */
