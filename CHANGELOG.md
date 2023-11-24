@@ -1,3 +1,6 @@
+## v6.2.0
++ Improved randomization of snowflake positions.
+
 ## v6.1.0
 + Add `autoResize` param.
 
