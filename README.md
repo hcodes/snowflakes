@@ -15,18 +15,18 @@
 - Flexible settings
 
 ## Examples
-- [Demo](https://hcodes.github.io/demo-snowflakes/)
-- [Simple](https://hcodes.github.io/snowflakes/examples/simple.html)
-- [Multicolor](https://hcodes.github.io/snowflakes/examples/multicolor.html)
-- [Big](https://hcodes.github.io/snowflakes/examples/big.html)
-- [Increased speed](https://hcodes.github.io/snowflakes/examples/increased_speed.html)
-- [Layer](https://hcodes.github.io/snowflakes/examples/layer.html)
-- [Some layers](https://hcodes.github.io/snowflakes/examples/some_layers.html)
-- [Own color](https://hcodes.github.io/snowflakes/examples/color.html)
-- [Own kind](https://hcodes.github.io/snowflakes/examples/balls.html)
-- [Own z-index](https://hcodes.github.io/snowflakes/examples/z-index.html)
-- [start() and stop()](https://hcodes.github.io/snowflakes/examples/start_stop.html)
-- [Without wind](https://hcodes.github.io/snowflakes/examples/without_wind.html)
+- 🔍 [Demo](https://hcodes.github.io/demo-snowflakes/)
+- ❄ [Simple](https://hcodes.github.io/snowflakes/examples/simple.html)
+- 🎨 [Multicolor](https://hcodes.github.io/snowflakes/examples/multicolor.html)
+- 🐘 [Big](https://hcodes.github.io/snowflakes/examples/big.html)
+- 🚀 [Increased speed](https://hcodes.github.io/snowflakes/examples/increased_speed.html)
+- 🪟 [Layer](https://hcodes.github.io/snowflakes/examples/layer.html)
+- 🏠 [Some layers](https://hcodes.github.io/snowflakes/examples/some_layers.html)
+- 🔴 [Own color](https://hcodes.github.io/snowflakes/examples/color.html)
+- 💛 [Own kind](https://hcodes.github.io/snowflakes/examples/balls.html)
+- 🗻[Own z-index](https://hcodes.github.io/snowflakes/examples/z-index.html)
+- ⏸ [start() and stop()](https://hcodes.github.io/snowflakes/examples/start_stop.html)
+- 🌬 [Without wind](https://hcodes.github.io/snowflakes/examples/without_wind.html)
 
 [See details](https://github.com/hcodes/snowflakes/tree/master/examples)
 
