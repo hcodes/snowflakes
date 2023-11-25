@@ -1,4 +1,4 @@
-❄️ [Falling snowflakes](https://hcodes.github.io/demo-snowflakes/)
+❄️☃️🎄 [Falling snowflakes](https://hcodes.github.io/demo-snowflakes/)
 ==================
 [![NPM version](https://img.shields.io/npm/v/magic-snowflakes.svg)](https://www.npmjs.com/package/magic-snowflakes)
 [![NPM Downloads](https://img.shields.io/npm/dm/magic-snowflakes.svg?style=flat)](https://www.npmjs.org/package/magic-snowflakes)
@@ -6,6 +6,7 @@
 [![install size](https://packagephobia.com/badge?p=magic-snowflakes)](https://packagephobia.com/result?p=magic-snowflakes)
 [![magic-snowflakes](https://snyk.io/advisor/npm-package/magic-snowflakes/badge.svg)](https://snyk.io/advisor/npm-package/magic-snowflakes)
 
+<img align="right" width="800" src="./img/flakes.png" />
 
 ## Details
 - Only one JavaScript file
@@ -16,6 +17,7 @@
 ## Examples
 - [Demo](https://hcodes.github.io/demo-snowflakes/)
 - [Simple](https://hcodes.github.io/snowflakes/examples/simple.html)
+- [Multicolor](https://hcodes.github.io/snowflakes/examples/multicolor.html)
 - [Big](https://hcodes.github.io/snowflakes/examples/big.html)
 - [Increased speed](https://hcodes.github.io/snowflakes/examples/increased_speed.html)
 - [Layer](https://hcodes.github.io/snowflakes/examples/layer.html)
