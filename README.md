@@ -6,7 +6,7 @@
 [![install size](https://packagephobia.com/badge?p=magic-snowflakes)](https://packagephobia.com/result?p=magic-snowflakes)
 [![magic-snowflakes](https://snyk.io/advisor/npm-package/magic-snowflakes/badge.svg)](https://snyk.io/advisor/npm-package/magic-snowflakes)
 
-<img align="right" width="800" src="./img/flakes.png" />
+<img width="600" src="./img/flakes.png" />
 
 ## Details
 - Only one JavaScript file
