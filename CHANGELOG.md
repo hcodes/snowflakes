@@ -1,3 +1,6 @@
+## v6.2.1
++ Fix for server rendering.
+
 ## v6.2.0
 + Improved randomization of snowflake positions.
 
