@@ -123,4 +123,4 @@ export function removeClass(node: HTMLElement, className: string) {
     node.classList.remove(className);
 }
 
-export const isAnimationEndSupported = 'onanimationend' in document;
+export const isAnimationEndSupported = typeof document !== 'undefined' && 'onanimationend' in document;
