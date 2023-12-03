@@ -105,7 +105,7 @@ function addClass(node, className) {
 function removeClass(node, className) {
     node.classList.remove(className);
 }
-const isAnimationEndSupported = 'onanimationend' in document;
+const isAnimationEndSupported = typeof document !== 'undefined' && 'onanimationend' in document;
 
 /**
  * Get random number.
