@@ -143,7 +143,7 @@ class Flake {
                 if (e.target !== flake) {
                     return;
                 }
-                this.update(params);
+                this.updateLeft();
                 this.reflow();
             };
         }
@@ -161,6 +161,17 @@ class Flake {
         }
         flake.appendChild(innerFlake);
     }
+    getLeft() {
+        return (Math.random() * 99) + '%';
+    }
+    updateLeft() {
+        if (!this.elem) {
+            return;
+        }
+        setStyle(this.elem, {
+            left: this.getLeft(),
+        });
+    }
     update(params) {
         if (!this.elem || !this.elemInner) {
             return;
@@ -173,7 +184,7 @@ class Flake {
             animationName: `snowflake_gid_${params.gid}_y`,
             animationDelay: animationProps.animationDelay,
             animationDuration: animationProps.animationDuration,
-            left: (Math.random() * 99) + '%',
+            left: this.getLeft(),
             top: -Math.sqrt(2) * this.size + 'px',
             width: this.size + 'px',
             height: this.size + 'px'
@@ -200,26 +211,31 @@ class Flake {
      * Resize a flake.
      */
     resize(params) {
-        const props = this.getAnimationProps(params);
-        if (this.elem) {
-            setStyle(this.elem, props);
+        if (!this.elem) {
+            return;
         }
+        const props = this.getAnimationProps(params);
+        setStyle(this.elem, {
+            animationDuration: props.animationDuration,
+        });
     }
     /**
      * Append flake to container.
      */
     appendTo(container) {
-        if (this.elem) {
-            container.appendChild(this.elem);
+        if (!this.elem) {
+            return;
         }
+        container.appendChild(this.elem);
     }
     /**
      * Destroy a flake.
      */
     destroy() {
-        if (this.elem) {
-            this.elem.onanimationend = null;
+        if (!this.elem) {
+            return;
         }
+        this.elem.onanimationend = null;
         delete this.elem;
         delete this.elemInner;
     }
@@ -300,14 +316,17 @@ class Snowflakes {
     resize() {
         const newWidth = this.width();
         const newHeight = this.height();
-        if (this.containerSize.width === newWidth && this.containerSize.height === newHeight) {
+        if (newHeight === this.containerSize.height) {
             return;
         }
         this.containerSize.width = newWidth;
         this.containerSize.height = newHeight;
         const flakeParams = this.getFlakeParams();
-        hideElement(this.container);
         this.flakes.forEach(flake => flake.resize(flakeParams));
+        if (this.isBody) {
+            return;
+        }
+        hideElement(this.container);
         this.updateAnimationStyle();
         showElement(this.container);
     }
@@ -410,10 +429,11 @@ class Snowflakes {
     }
     getAnimationStyle() {
         const fromY = '0px';
-        const toY = (this.height() + this.params.maxSize * Math.sqrt(2)) + 'px';
+        const maxSize = this.params.maxSize * Math.sqrt(2);
+        const toY = this.isBody ? `calc(100vh + ${maxSize}px)` : `${this.height() + maxSize}px`;
         const gid = this.gid;
         let css = `@-webkit-keyframes snowflake_gid_${gid}_y{from{-webkit-transform:translateY(${fromY})}to{-webkit-transform:translateY(${toY});}}
-@keyframes snowflake_gid_${gid}_y{from{transform:translateY(${fromY})}to{transform:translateY(${toY})}}`;
+@keyframes snowflake_gid_${gid}_y{from{transform:translateY(${fromY})}to{transform:translateY(${toY});}}`;
         for (let i = 0; i <= maxInnerSize; i++) {
             const left = calcSize(i, this.params.minSize, this.params.maxSize) + 'px';
             css += `@-webkit-keyframes snowflake_gid_${gid}_x_${i}{from{-webkit-transform:translateX(0px)}to{-webkit-transform:translateX(${left});}}

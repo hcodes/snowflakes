@@ -119,7 +119,7 @@ export default class Snowflakes {
         const newWidth = this.width();
         const newHeight = this.height();
 
-        if (this.containerSize.width === newWidth && this.containerSize.height === newHeight) {
+        if (newHeight === this.containerSize.height) {
             return;
         }
 
@@ -127,9 +127,13 @@ export default class Snowflakes {
         this.containerSize.height = newHeight;
 
         const flakeParams = this.getFlakeParams();
+        this.flakes.forEach(flake => flake.resize(flakeParams));
+
+        if (this.isBody) {
+            return;
+        }
 
         hideElement(this.container);
-        this.flakes.forEach(flake => flake.resize(flakeParams));
         this.updateAnimationStyle();
         showElement(this.container);
     }
@@ -268,11 +272,12 @@ export default class Snowflakes {
 
     private getAnimationStyle() {
         const fromY = '0px';
-        const toY = (this.height() + this.params.maxSize * Math.sqrt(2)) + 'px';
+        const maxSize = this.params.maxSize * Math.sqrt(2);
+        const toY = this.isBody ? `calc(100vh + ${maxSize}px)` : `${this.height() + maxSize}px`;
         const gid = this.gid;
 
         let css = `@-webkit-keyframes snowflake_gid_${gid}_y{from{-webkit-transform:translateY(${fromY})}to{-webkit-transform:translateY(${toY});}}
-@keyframes snowflake_gid_${gid}_y{from{transform:translateY(${fromY})}to{transform:translateY(${toY})}}`;
+@keyframes snowflake_gid_${gid}_y{from{transform:translateY(${fromY})}to{transform:translateY(${toY});}}`;
 
         for (let i = 0; i <= maxInnerSize; i++) {
             const left = calcSize(i, this.params.minSize, this.params.maxSize) + 'px';

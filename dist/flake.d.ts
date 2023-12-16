@@ -22,6 +22,8 @@ export declare class Flake {
     private elem?;
     private elemInner?;
     constructor(params: FlakeParams);
+    private getLeft;
+    private updateLeft;
     private update;
     private reflow;
     /**

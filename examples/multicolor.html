@@ -33,11 +33,7 @@
             '#9370DB',
             '#FFD700'
         ].forEach(function(item) {
-            var container = document.createElement('div');
-            container.className = 'layer';
-            document.body.appendChild(container);
             new Snowflakes({
-                container: container,
                 count: 15,
                 maxSize: 60,
                 color: item

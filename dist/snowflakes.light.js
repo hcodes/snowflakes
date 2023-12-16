@@ -150,7 +150,7 @@
                     if (e.target !== flake) {
                         return;
                     }
-                    _this.update(params);
+                    _this.updateLeft();
                     _this.reflow();
                 };
             }
@@ -168,6 +168,17 @@
             }
             flake.appendChild(innerFlake);
         }
+        Flake.prototype.getLeft = function () {
+            return (Math.random() * 99) + '%';
+        };
+        Flake.prototype.updateLeft = function () {
+            if (!this.elem) {
+                return;
+            }
+            setStyle(this.elem, {
+                left: this.getLeft(),
+            });
+        };
         Flake.prototype.update = function (params) {
             if (!this.elem || !this.elemInner) {
                 return;
@@ -180,7 +191,7 @@
                 animationName: "snowflake_gid_".concat(params.gid, "_y"),
                 animationDelay: animationProps.animationDelay,
                 animationDuration: animationProps.animationDuration,
-                left: (Math.random() * 99) + '%',
+                left: this.getLeft(),
                 top: -Math.sqrt(2) * this.size + 'px',
                 width: this.size + 'px',
                 height: this.size + 'px'
@@ -207,26 +218,31 @@
          * Resize a flake.
          */
         Flake.prototype.resize = function (params) {
-            var props = this.getAnimationProps(params);
-            if (this.elem) {
-                setStyle(this.elem, props);
+            if (!this.elem) {
+                return;
             }
+            var props = this.getAnimationProps(params);
+            setStyle(this.elem, {
+                animationDuration: props.animationDuration,
+            });
         };
         /**
          * Append flake to container.
          */
         Flake.prototype.appendTo = function (container) {
-            if (this.elem) {
-                container.appendChild(this.elem);
+            if (!this.elem) {
+                return;
             }
+            container.appendChild(this.elem);
         };
         /**
          * Destroy a flake.
          */
         Flake.prototype.destroy = function () {
-            if (this.elem) {
-                this.elem.onanimationend = null;
+            if (!this.elem) {
+                return;
             }
+            this.elem.onanimationend = null;
             delete this.elem;
             delete this.elemInner;
         };
@@ -309,14 +325,17 @@
         Snowflakes.prototype.resize = function () {
             var newWidth = this.width();
             var newHeight = this.height();
-            if (this.containerSize.width === newWidth && this.containerSize.height === newHeight) {
+            if (newHeight === this.containerSize.height) {
                 return;
             }
             this.containerSize.width = newWidth;
             this.containerSize.height = newHeight;
             var flakeParams = this.getFlakeParams();
-            hideElement(this.container);
             this.flakes.forEach(function (flake) { return flake.resize(flakeParams); });
+            if (this.isBody) {
+                return;
+            }
+            hideElement(this.container);
             this.updateAnimationStyle();
             showElement(this.container);
         };
@@ -420,9 +439,10 @@
         };
         Snowflakes.prototype.getAnimationStyle = function () {
             var fromY = '0px';
-            var toY = (this.height() + this.params.maxSize * Math.sqrt(2)) + 'px';
+            var maxSize = this.params.maxSize * Math.sqrt(2);
+            var toY = this.isBody ? "calc(100vh + ".concat(maxSize, "px)") : "".concat(this.height() + maxSize, "px");
             var gid = this.gid;
-            var css = "@-webkit-keyframes snowflake_gid_".concat(gid, "_y{from{-webkit-transform:translateY(").concat(fromY, ")}to{-webkit-transform:translateY(").concat(toY, ");}}\n@keyframes snowflake_gid_").concat(gid, "_y{from{transform:translateY(").concat(fromY, ")}to{transform:translateY(").concat(toY, ")}}");
+            var css = "@-webkit-keyframes snowflake_gid_".concat(gid, "_y{from{-webkit-transform:translateY(").concat(fromY, ")}to{-webkit-transform:translateY(").concat(toY, ");}}\n@keyframes snowflake_gid_").concat(gid, "_y{from{transform:translateY(").concat(fromY, ")}to{transform:translateY(").concat(toY, ");}}");
             for (var i = 0; i <= maxInnerSize; i++) {
                 var left = calcSize(i, this.params.minSize, this.params.maxSize) + 'px';
                 css += "@-webkit-keyframes snowflake_gid_".concat(gid, "_x_").concat(i, "{from{-webkit-transform:translateX(0px)}to{-webkit-transform:translateX(").concat(left, ");}}\n@keyframes snowflake_gid_").concat(gid, "_x_").concat(i, "{from{transform:translateX(0px)}to{transform:translateX(").concat(left, ")}}");

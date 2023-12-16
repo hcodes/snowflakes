@@ -1,3 +1,6 @@
+## v6.3.0
++ Improved positioning of snowflakes when resizing the window.
+
 ## v6.2.1
 + Fix for server rendering.
 
