@@ -59,7 +59,7 @@ export class Flake {
                     return;
                 }
 
-                this.update(params);
+                this.updateLeft();
                 this.reflow();
             };
         } else {
@@ -81,6 +81,20 @@ export class Flake {
         flake.appendChild(innerFlake);
     }
 
+    private getLeft() {
+        return (Math.random() * 99) + '%';
+    }
+
+    private updateLeft() {
+        if (!this.elem) {
+            return;
+        }
+
+        setStyle(this.elem, {
+            left: this.getLeft(),
+        });
+    }
+
     private update(params: FlakeParams) {
         if (!this.elem || !this.elemInner) {
             return;
@@ -96,7 +110,7 @@ export class Flake {
             animationName: `snowflake_gid_${params.gid}_y`,
             animationDelay: animationProps.animationDelay,
             animationDuration: animationProps.animationDuration,
-            left: (Math.random() * 99) + '%',
+            left: this.getLeft(),
             top: -Math.sqrt(2) * this.size + 'px',
             width: this.size + 'px',
             height: this.size + 'px'
@@ -135,29 +149,36 @@ export class Flake {
      * Resize a flake.
      */
      public resize(params: FlakeParams) {
-        const props = this.getAnimationProps(params);
-
-        if (this.elem) {
-            setStyle(this.elem, props);
+        if (!this.elem) {
+            return;
         }
+
+        const props = this.getAnimationProps(params);
+        setStyle(this.elem, {
+            animationDuration: props.animationDuration,
+        });
     }
 
     /**
      * Append flake to container.
      */
     public appendTo(container: HTMLElement) {
-        if (this.elem) {
-            container.appendChild(this.elem);
+        if (!this.elem) {
+            return;
         }
+
+        container.appendChild(this.elem);
     }
 
     /**
      * Destroy a flake.
      */
     public destroy() {
-        if (this.elem) {
-            this.elem.onanimationend = null;
+        if (!this.elem) {
+            return;
         }
+
+        this.elem.onanimationend = null;
 
         delete this.elem;
         delete this.elemInner;
