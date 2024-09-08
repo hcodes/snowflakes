@@ -181,7 +181,10 @@ export default class Snowflakes {
 
         addClass(container, 'snowflakes');
         addClass(container, `snowflakes_gid_${this.gid}`);
-        this.isBody && addClass(container, 'snowflakes_body');
+        if (this.isBody) {
+            addClass(container, 'snowflakes_body');
+        }
+        
         setStyle(container, { zIndex: String(this.params.zIndex) });
 
         this.params.container.appendChild(container);
