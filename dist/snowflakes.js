@@ -1,4 +1,4 @@
-/*! Snowflakes | © 2023 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
+/*! Snowflakes | © 2024 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -363,7 +363,9 @@
             var container = document.createElement('div');
             addClass(container, 'snowflakes');
             addClass(container, "snowflakes_gid_".concat(this.gid));
-            this.isBody && addClass(container, 'snowflakes_body');
+            if (this.isBody) {
+                addClass(container, 'snowflakes_body');
+            }
             setStyle(container, { zIndex: String(this.params.zIndex) });
             this.params.container.appendChild(container);
             return container;
