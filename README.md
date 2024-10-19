@@ -12,8 +12,8 @@
 - Rubber design
 - Flexible settings
 
-## Examples
-- 🔍 [Demo](https://hcodes.github.io/demo-snowflakes/)
+## [Examples](https://hcodes.github.io/demo-snowflakes/)
+- 🔍 [Constructor](https://hcodes.github.io/demo-snowflakes/): Change settings and copy code for your site
 - ❄ [Simple](https://hcodes.github.io/snowflakes/examples/simple.html)
 - 🎨 [Multicolor](https://hcodes.github.io/snowflakes/examples/multicolor.html)
 - 🐘 [Big](https://hcodes.github.io/snowflakes/examples/big.html)
