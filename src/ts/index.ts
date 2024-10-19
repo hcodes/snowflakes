@@ -32,7 +32,7 @@ export interface SnowflakesParams extends Record<string, boolean | HTMLElement |
     width?: number; // Default: width of container
     height?: number; // Default: height of container
     wind: boolean; // Default: true
-    zIndex: number; // Default: 9999,
+    zIndex: number; // Default: 9999
     autoResize: boolean; // Default: true
 }
 
@@ -108,14 +108,14 @@ export default class Snowflakes {
     /**
      * Hide snowflakes.
      */
-     public hide() {
+    public hide() {
         addClass(this.container, 'snowflakes_hidden');
     }
 
     /**
      * Resize snowflakes.
      */
-     public resize() {
+    public resize() {
         const newWidth = this.width();
         const newHeight = this.height();
 
@@ -141,7 +141,7 @@ export default class Snowflakes {
     /**
      * Destroy instance.
      */
-     public destroy() {
+    public destroy() {
         if (this.destroyed) {
             return;
         }

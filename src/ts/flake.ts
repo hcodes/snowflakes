@@ -148,7 +148,7 @@ export class Flake {
     /**
      * Resize a flake.
      */
-     public resize(params: FlakeParams) {
+    public resize(params: FlakeParams) {
         if (!this.elem) {
             return;
         }
