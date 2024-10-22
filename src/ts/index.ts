@@ -10,7 +10,9 @@ import {
     removeNode,
     addClass,
     removeClass,
-    getWindowWidth
+    getWindowWidth,
+    animationPrefix,
+    transformPrefix
 } from './helpers/dom';
 import { ContainerSize, SnowflakesInnerParams, SnowflakesParams } from './types';
 export { SnowflakesParams } from './types';
@@ -23,15 +25,17 @@ export default class Snowflakes {
     private destroyed = false;
     private flakes: Flake[] = [];
     private isBody = false;
-    private gid: number;
     private params: SnowflakesInnerParams;
 
     private animationStyleNode?: HTMLStyleElement;
     private imagesStyleNode?: HTMLStyleElement;
     private mainStyleNode?: HTMLStyleElement;
+
     private containerSize: ContainerSize;
-    static instanceCounter = 0;
+    private gid: number;
+
     static gid = 0;
+    static instanceCounter = 0;
 
     constructor(params?: SnowflakesParams) {
         this.params = this.setParams(params);
@@ -162,7 +166,7 @@ export default class Snowflakes {
             `snowflakes_gid_${this.gid}`,
             this.isBody ? 'snowflakes_body' : '',
         );
-        
+
         setStyle(container, { zIndex: String(this.params.zIndex) });
 
         this.params.container.appendChild(container);
@@ -234,20 +238,17 @@ export default class Snowflakes {
 
     private getAnimationStyle() {
         const fromY = '0px';
-        const maxSize = this.params.maxSize * Math.sqrt(2);
+        const maxSize = Math.ceil(this.params.maxSize * Math.sqrt(2));
         const toY = this.isBody ? `calc(100vh + ${maxSize}px)` : `${this.height() + maxSize}px`;
         const gid = this.gid;
 
-        let css = `@-webkit-keyframes snowflake_gid_${gid}_y{from{-webkit-transform:translateY(${fromY})}to{-webkit-transform:translateY(${toY});}}
-@keyframes snowflake_gid_${gid}_y{from{transform:translateY(${fromY})}to{transform:translateY(${toY});}}`;
-
+        const cssText = [`@${animationPrefix}keyframes snowflake_gid_${gid}_y{from{${transformPrefix}transform:translateY(${fromY})}to{${transformPrefix}transform:translateY(${toY})}}`];
         for (let i = 0; i <= maxInnerSize; i++) {
             const left = calcSize(i, this.params.minSize, this.params.maxSize) + 'px';
-            css += `@-webkit-keyframes snowflake_gid_${gid}_x_${i}{from{-webkit-transform:translateX(0px)}to{-webkit-transform:translateX(${left});}}
-@keyframes snowflake_gid_${gid}_x_${i}{from{transform:translateX(0px)}to{transform:translateX(${left})}}`;
+            cssText.push(`@${animationPrefix}keyframes snowflake_gid_${gid}_x_${i}{from{${transformPrefix}transform:translateX(0px)}to{${transformPrefix}transform:translateX(${left})}}`);
         }
 
-        return css;
+        return cssText.join('\n');
     }
 
     private updateAnimationStyle() {
