@@ -1,10 +1,19 @@
-let animationPrefix = '';
+export let animationPrefix = '';
+export let transformPrefix = '';
+
 if (typeof window !== 'undefined') {
-    animationPrefix = (Array.prototype.slice
-        .call(window.getComputedStyle(document.documentElement, ''))
-        .join(',')
-        .search(/,animation/) > -1
-    ) ? '' : 'webkit';
+    const props = Array.prototype.slice.call(window.getComputedStyle(document.documentElement, ''));
+    if (props.indexOf('animation-name') === -1) {
+        animationPrefix = '-webkit-';
+    }
+
+    if (props.indexOf('transform') === -1) {
+        transformPrefix = '-webkit-';
+    }
+}
+
+function prepareCssProperty(prefix: string, key: string) {
+    return prefix.replace(/-/g, '') + key[0].toUpperCase() + key.substr(1);
 }
 
 /**
@@ -14,7 +23,11 @@ export function setStyle(dom: HTMLElement, props: Partial<CSSStyleDeclaration>) 
     Object.keys(props).forEach(originalKey =>  {
         let key = originalKey;
         if (animationPrefix && originalKey.search('animation') > -1) {
-            key = animationPrefix + originalKey[0].toUpperCase() + originalKey.substr(1);
+            key = prepareCssProperty(animationPrefix, originalKey);
+        }
+
+        if (transformPrefix && originalKey.search('transform') > -1) {
+            key = prepareCssProperty(transformPrefix, originalKey);
         }
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -56,8 +69,6 @@ export function getWindowHeight() {
 
     return height || 0;
 }
-
-
 
 /**
  * Get window width.
@@ -130,7 +141,7 @@ export function removeClass(node: HTMLElement, ...classNames: (string | boolean 
     const buffer = classNames.filter(isNotEmptyString);
     if (buffer.length) {
         node.classList.remove(...buffer);
-    }    
+    }
 }
 
 export function reflow(node: HTMLElement) {
@@ -138,6 +149,5 @@ export function reflow(node: HTMLElement) {
     void node.offsetHeight;
     showElement(node);
 }
-
 
 export const isAnimationEndSupported = typeof document !== 'undefined' && 'onanimationend' in document;
