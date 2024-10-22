@@ -109,18 +109,35 @@ export function isBody(node: HTMLElement) {
     return node === document.body;
 }
 
+function isNotEmptyString(value: unknown): value is string {
+    return typeof value === 'string' && value !== '';
+}
+
 /**
  * Add className for a node.
  */
-export function addClass(node: HTMLElement, className: string) {
-    node.classList.add(className);
+export function addClass(node: HTMLElement, ...classNames: (string | boolean | null | undefined)[]) {
+    const buffer = classNames.filter(isNotEmptyString);
+    if (buffer.length) {
+        node.classList.add(...buffer);
+    }
 }
 
 /**
  * Remove className for a node.
  */
-export function removeClass(node: HTMLElement, className: string) {
-    node.classList.remove(className);
+export function removeClass(node: HTMLElement, ...classNames: (string | boolean | null | undefined)[]) {
+    const buffer = classNames.filter(isNotEmptyString);
+    if (buffer.length) {
+        node.classList.remove(...buffer);
+    }    
 }
+
+export function reflow(node: HTMLElement) {
+    hideElement(node);
+    void node.offsetHeight;
+    showElement(node);
+}
+
 
 export const isAnimationEndSupported = typeof document !== 'undefined' && 'onanimationend' in document;

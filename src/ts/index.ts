@@ -1,3 +1,4 @@
+import { defaultParams } from './defaultParams';
 import { Flake, maxInnerSize, calcSize, FlakeParams }  from './flake';
 import {
     isBody,
@@ -11,35 +12,11 @@ import {
     removeClass,
     getWindowWidth
 } from './helpers/dom';
+import { ContainerSize, SnowflakesInnerParams, SnowflakesParams } from './types';
+export { SnowflakesParams } from './types';
 
 const mainStyle = '{MAIN_STYLE}';
 const imagesStyle = '{IMAGES_STYLE}';
-
-type SnowflakesRawParams = Partial<SnowflakesParams>;
-
-export interface SnowflakesParams extends Record<string, boolean | HTMLElement | number | string | undefined> {
-    container: HTMLElement; // Default: document.body
-    count: number; // Default: 50
-    color: string; // Default: "#5ECDEF"
-    minOpacity: number; // Default: 0.6
-    maxOpacity: number; // Default: 1
-    minSize: number; // Default: 10
-    maxSize: number; // Default: 25
-    rotation: boolean; // Default: true
-    speed: number; // Default: 1
-    stop: boolean; // Default: false
-    types: number; // Default: 6
-    width?: number; // Default: width of container
-    height?: number; // Default: height of container
-    wind: boolean; // Default: true
-    zIndex: number; // Default: 9999
-    autoResize: boolean; // Default: true
-}
-
-interface ContainerSize {
-    width: number;
-    height: number;
-}
 
 export default class Snowflakes {
     private container: HTMLElement;
@@ -47,7 +24,7 @@ export default class Snowflakes {
     private flakes: Flake[] = [];
     private isBody = false;
     private gid: number;
-    private params: SnowflakesParams;
+    private params: SnowflakesInnerParams;
 
     private animationStyleNode?: HTMLStyleElement;
     private imagesStyleNode?: HTMLStyleElement;
@@ -56,7 +33,7 @@ export default class Snowflakes {
     static instanceCounter = 0;
     static gid = 0;
 
-    constructor(params?: SnowflakesRawParams) {
+    constructor(params?: SnowflakesParams) {
         this.params = this.setParams(params);
 
         this.isBody = isBody(this.params.container);
@@ -179,11 +156,12 @@ export default class Snowflakes {
     private appendContainer() {
         const container = document.createElement('div');
 
-        addClass(container, 'snowflakes');
-        addClass(container, `snowflakes_gid_${this.gid}`);
-        if (this.isBody) {
-            addClass(container, 'snowflakes_body');
-        }
+        addClass(
+            container,
+            'snowflakes',
+            `snowflakes_gid_${this.gid}`,
+            this.isBody ? 'snowflakes_body' : '',
+        );
         
         setStyle(container, { zIndex: String(this.params.zIndex) });
 
@@ -240,29 +218,10 @@ export default class Snowflakes {
             });
     }
 
-    private setParams(rawParams?: SnowflakesRawParams) {
+    private setParams(rawParams?: SnowflakesParams) {
         const params = rawParams || {};
 
-        const result = {} as SnowflakesParams;
-
-        const defaultParams: SnowflakesParams = {
-            color: '#5ECDEF',
-            container: document.body,
-            count: 50,
-            speed: 1,
-            stop: false,
-            rotation: true,
-            minOpacity: 0.6,
-            maxOpacity: 1,
-            minSize: 10,
-            maxSize: 25,
-            types: 6,
-            width: undefined,
-            height: undefined,
-            wind: true,
-            zIndex: 9999,
-            autoResize: true,
-        };
+        const result = {} as SnowflakesInnerParams;
 
         Object.keys(defaultParams).forEach(name => {
             result[name] = typeof params[name] === 'undefined' ?

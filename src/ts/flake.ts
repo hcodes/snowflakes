@@ -1,4 +1,4 @@
-import { addClass, hideElement, isAnimationEndSupported, setStyle, showElement } from './helpers/dom';
+import { addClass, isAnimationEndSupported, reflow, setStyle } from './helpers/dom';
 import { getRandom, interpolation } from './helpers/number';
 
 export const maxInnerSize = 20;
@@ -48,51 +48,44 @@ export class Flake {
 
         this.update(params);
 
-        addClass(flake, 'snowflake');
-        addClass(innerFlake, 'snowflake__inner');
-        addClass(flake, 'snowflake_animation');
+        addClass(
+            flake,
+            'snowflake',
+            'snowflake_animation',
+            isAnimationEndSupported ? 'snowflake_animation-end' : 'snowflake_animation-infinity',
+        );
 
-        if (isAnimationEndSupported) {
-            addClass(flake, 'snowflake_animation-end');
-            flake.onanimationend = e => {
-                if (e.target !== flake) {
-                    return;
-                }
-
-                this.updateLeft();
-                this.reflow();
-            };
-        } else {
-            addClass(flake, 'snowflake_animation-infinity');
-        }
-
-        if (params.types) {
-            addClass(innerFlake, 'snowflake__inner_type_' + getRandom(0, params.types));
-        }
-
-        if (params.wind) {
-            addClass(innerFlake, 'snowflake__inner_wind');
-        }
-
-        if (params.rotation) {
-            addClass(innerFlake, 'snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse'));
-        }
+        addClass(
+            innerFlake,
+            'snowflake__inner',
+            params.types ? 'snowflake__inner_type_' + getRandom(0, params.types) : '',
+            params.wind ? 'snowflake__inner_wind' : '',
+            params.rotation ? ('snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse')) : '',
+        );
 
         flake.appendChild(innerFlake);
+
+        if (isAnimationEndSupported) {
+            flake.onanimationend = this.handleAnimationEnd;
+        }
+    }
+
+    private handleAnimationEnd = (e: AnimationEvent) => {
+        const { elem } = this;
+        if (!elem) {
+            return;
+        }
+
+        if (e.target !== elem) {
+            return;
+        }
+
+        setStyle(elem, { left: this.getLeft() });
+        reflow(elem);
     }
 
     private getLeft() {
         return (Math.random() * 99) + '%';
-    }
-
-    private updateLeft() {
-        if (!this.elem) {
-            return;
-        }
-
-        setStyle(this.elem, {
-            left: this.getLeft(),
-        });
     }
 
     private update(params: FlakeParams) {
@@ -133,16 +126,6 @@ export class Flake {
             animationName,
             animationDelay: (Math.random() * 4) + 's'
         });
-    }
-
-    private reflow() {
-        if (!this.elem) {
-            return;
-        }
-
-        hideElement(this.elem);
-        void this.elem.offsetHeight;
-        showElement(this.elem);
     }
 
     /**
