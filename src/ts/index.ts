@@ -37,6 +37,10 @@ export default class Snowflakes {
     static gid = 0;
     static instanceCounter = 0;
 
+    static hasSupport() {
+        return Boolean(document.documentElement.classList);
+    }
+
     constructor(params?: SnowflakesParams) {
         this.params = this.setParams(params);
 
