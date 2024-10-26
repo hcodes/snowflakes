@@ -36,7 +36,7 @@ export default class Snowflakes {
     static instanceCounter = 0;
 
     static hasSupport() {
-        return Boolean(document.documentElement.classList);
+        return Boolean('onanimationend' in document);
     }
 
     constructor(params?: SnowflakesParams) {
