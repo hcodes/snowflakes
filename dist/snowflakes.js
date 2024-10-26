@@ -47,42 +47,6 @@
         setStyle(dom, { display: 'none' });
     }
     /**
-     * Get window height.
-     */
-    function getWindowHeight() {
-        var body = document.body;
-        var docElement = document.documentElement;
-        var height;
-        if (window.innerHeight) {
-            height = window.innerHeight;
-        }
-        else if (docElement && docElement.clientHeight) {
-            height = docElement.clientHeight;
-        }
-        else if (body) {
-            height = body.clientHeight;
-        }
-        return height || 0;
-    }
-    /**
-     * Get window width.
-     */
-    function getWindowWidth() {
-        var body = document.body;
-        var docElement = document.documentElement;
-        var width;
-        if (window.innerWidth) {
-            width = window.innerWidth;
-        }
-        else if (docElement && docElement.clientWidth) {
-            width = docElement.clientWidth;
-        }
-        else if (body) {
-            width = body.clientWidth;
-        }
-        return width || 0;
-    }
-    /**
      * Inject style.
      */
     function injectStyle(style, styleNode) {
@@ -300,7 +264,7 @@
             }
         }
         Snowflakes.hasSupport = function () {
-            return Boolean(document.documentElement.classList);
+            return Boolean('onanimationend' in document);
         };
         /**
          * Start CSS animation.
@@ -451,11 +415,11 @@
         };
         Snowflakes.prototype.width = function () {
             return this.params.width ||
-                (this.isBody ? getWindowWidth() : this.params.container.offsetWidth);
+                (this.isBody ? window.innerWidth : this.params.container.offsetWidth);
         };
         Snowflakes.prototype.height = function () {
             return this.params.height ||
-                (this.isBody ? getWindowHeight() : this.params.container.offsetHeight + this.params.maxSize);
+                (this.isBody ? window.innerHeight : this.params.container.offsetHeight + this.params.maxSize);
         };
         Snowflakes.gid = 0;
         Snowflakes.instanceCounter = 0;
