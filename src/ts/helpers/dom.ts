@@ -96,7 +96,7 @@ export function getWindowHeight() {
 export function injectStyle(style: string, styleNode?: HTMLStyleElement) {
     if (!styleNode) {
         styleNode = document.createElement('style');
-        document.body.appendChild(styleNode);
+        document.head.appendChild(styleNode);
     }
 
     styleNode.textContent = style;
