@@ -46,13 +46,6 @@ export function removeNode(node?: HTMLElement) {
     }
 }
 
-/**
- * A DOM node is body.
- */
-export function isBody(node: HTMLElement) {
-    return node === document.body;
-}
-
 function isNotEmptyString(value: unknown): value is string {
     return typeof value === 'string' && value !== '';
 }

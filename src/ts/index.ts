@@ -1,7 +1,6 @@
 import { defaultParams } from './defaultParams';
 import { Flake, maxInnerSize, calcSize, FlakeParams }  from './flake';
 import {
-    isBody,
     setStyle,
     showElement,
     hideElement,
@@ -20,7 +19,6 @@ export default class Snowflakes {
     private container: HTMLElement;
     private destroyed = false;
     private flakes: Flake[] = [];
-    private isBody = false;
     private params: SnowflakesInnerParams;
 
     private animationStyleNode?: HTMLStyleElement;
@@ -40,7 +38,6 @@ export default class Snowflakes {
     constructor(params?: SnowflakesParams) {
         this.params = this.setParams(params);
 
-        this.isBody = isBody(this.params.container);
         Snowflakes.gid++;
         this.gid = Snowflakes.gid;
 
@@ -110,7 +107,7 @@ export default class Snowflakes {
         const flakeParams = this.getFlakeParams();
         this.flakes.forEach(flake => flake.resize(flakeParams));
 
-        if (this.isBody) {
+        if (this.isBody()) {
             return;
         }
 
@@ -147,6 +144,10 @@ export default class Snowflakes {
         }
     }
 
+    private isBody() {
+        return this.params.container === document.body;
+    }
+
     private handleResize = () => {
         if (this.params.autoResize) {
             this.resize();
@@ -164,7 +165,7 @@ export default class Snowflakes {
             container,
             'snowflakes',
             `snowflakes_gid_${this.gid}`,
-            this.isBody ? 'snowflakes_body' : '',
+            this.isBody() ? 'snowflakes_body' : '',
         );
 
         setStyle(container, { zIndex: String(this.params.zIndex) });
@@ -239,7 +240,7 @@ export default class Snowflakes {
     private getAnimationStyle() {
         const fromY = '0px';
         const maxSize = Math.ceil(this.params.maxSize * Math.sqrt(2));
-        const toY = this.isBody ? `calc(100vh + ${maxSize}px)` : `${this.height() + maxSize}px`;
+        const toY = this.isBody() ? `calc(100vh + ${maxSize}px)` : `${this.height() + maxSize}px`;
         const gid = this.gid;
 
         const cssText = [`@keyframes snowflake_gid_${gid}_y{from{transform:translateY(${fromY})}to{transform:translateY(${toY})}}`];
@@ -270,11 +271,11 @@ export default class Snowflakes {
 
     private width() {
         return this.params.width ||
-            (this.isBody ? window.innerWidth : this.params.container.offsetWidth);
+            (this.isBody() ? window.innerWidth : this.params.container.offsetWidth);
     }
 
     private height() {
         return this.params.height ||
-            (this.isBody ? window.innerHeight : this.params.container.offsetHeight + this.params.maxSize);
+            (this.isBody() ? window.innerHeight : this.params.container.offsetHeight + this.params.maxSize);
     }
 }
