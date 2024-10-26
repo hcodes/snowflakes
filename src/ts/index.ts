@@ -35,6 +35,8 @@ export default class Snowflakes {
         return Boolean('onanimationend' in document);
     }
 
+    static defaultParams = defaultParams;
+
     constructor(params?: SnowflakesParams) {
         this.params = this.setParams(params);
 
