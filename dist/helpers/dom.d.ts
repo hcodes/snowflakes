@@ -33,9 +33,9 @@ export declare function isBody(node: HTMLElement): boolean;
 /**
  * Add className for a node.
  */
-export declare function addClass(node: HTMLElement, className: string): void;
+export declare function addClass(node: HTMLElement, ...classNames: (string | boolean | null | undefined)[]): void;
 /**
  * Remove className for a node.
  */
-export declare function removeClass(node: HTMLElement, className: string): void;
-export declare const isAnimationEndSupported: boolean;
+export declare function removeClass(node: HTMLElement, ...classNames: (string | boolean | null | undefined)[]): void;
+export declare function reflow(node: HTMLElement): void;

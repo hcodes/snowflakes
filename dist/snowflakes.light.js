@@ -5,25 +5,33 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Snowflakes = factory());
 })(this, (function () { 'use strict';
 
-    var animationPrefix = '';
-    if (typeof window !== 'undefined') {
-        animationPrefix = (Array.prototype.slice
-            .call(window.getComputedStyle(document.documentElement, ''))
-            .join(',')
-            .search(/,animation/) > -1) ? '' : 'webkit';
-    }
+    var defaultParams = {
+        color: '#5ECDEF',
+        container: document.body,
+        count: 50,
+        speed: 1,
+        stop: false,
+        rotation: true,
+        minOpacity: 0.6,
+        maxOpacity: 1,
+        minSize: 10,
+        maxSize: 25,
+        types: 6,
+        width: undefined,
+        height: undefined,
+        wind: true,
+        zIndex: 9999,
+        autoResize: true,
+    };
+
     /**
      * Set inline style.
      */
     function setStyle(dom, props) {
-        Object.keys(props).forEach(function (originalKey) {
-            var key = originalKey;
-            if (animationPrefix && originalKey.search('animation') > -1) {
-                key = animationPrefix + originalKey[0].toUpperCase() + originalKey.substr(1);
-            }
+        Object.keys(props).forEach(function (key) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            dom.style[key] = props[originalKey];
+            dom.style[key] = props[key];
         });
     }
     /**
@@ -80,7 +88,7 @@
     function injectStyle(style, styleNode) {
         if (!styleNode) {
             styleNode = document.createElement('style');
-            document.body.appendChild(styleNode);
+            document.head.appendChild(styleNode);
         }
         styleNode.textContent = style;
         return styleNode;
@@ -99,19 +107,42 @@
     function isBody(node) {
         return node === document.body;
     }
+    function isNotEmptyString(value) {
+        return typeof value === 'string' && value !== '';
+    }
     /**
      * Add className for a node.
      */
-    function addClass(node, className) {
-        node.classList.add(className);
+    function addClass(node) {
+        var _a;
+        var classNames = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            classNames[_i - 1] = arguments[_i];
+        }
+        var buffer = classNames.filter(isNotEmptyString);
+        if (buffer.length) {
+            (_a = node.classList).add.apply(_a, buffer);
+        }
     }
     /**
      * Remove className for a node.
      */
-    function removeClass(node, className) {
-        node.classList.remove(className);
+    function removeClass(node) {
+        var _a;
+        var classNames = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            classNames[_i - 1] = arguments[_i];
+        }
+        var buffer = classNames.filter(isNotEmptyString);
+        if (buffer.length) {
+            (_a = node.classList).remove.apply(_a, buffer);
+        }
     }
-    var isAnimationEndSupported = typeof document !== 'undefined' && 'onanimationend' in document;
+    function reflow(node) {
+        hideElement(node);
+        void node.offsetHeight;
+        showElement(node);
+    }
 
     /**
      * Get random number.
@@ -138,46 +169,27 @@
             var _this = this;
             this.size = 0;
             this.sizeInner = 0;
+            this.handleAnimationEnd = function (e) {
+                var elem = _this.elem;
+                if (!elem) {
+                    return;
+                }
+                if (e.target !== elem) {
+                    return;
+                }
+                setStyle(elem, { left: _this.getLeft() });
+                reflow(elem);
+            };
             var flake = this.elem = document.createElement('div');
             var innerFlake = this.elemInner = document.createElement('div');
             this.update(params);
             addClass(flake, 'snowflake');
-            addClass(innerFlake, 'snowflake__inner');
-            addClass(flake, 'snowflake_animation');
-            if (isAnimationEndSupported) {
-                addClass(flake, 'snowflake_animation-end');
-                flake.onanimationend = function (e) {
-                    if (e.target !== flake) {
-                        return;
-                    }
-                    _this.updateLeft();
-                    _this.reflow();
-                };
-            }
-            else {
-                addClass(flake, 'snowflake_animation-infinity');
-            }
-            if (params.types) {
-                addClass(innerFlake, 'snowflake__inner_type_' + getRandom(0, params.types));
-            }
-            if (params.wind) {
-                addClass(innerFlake, 'snowflake__inner_wind');
-            }
-            if (params.rotation) {
-                addClass(innerFlake, 'snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse'));
-            }
+            addClass(innerFlake, 'snowflake__inner', params.types ? 'snowflake__inner_type_' + getRandom(0, params.types) : '', params.wind ? 'snowflake__inner_wind' : '', params.rotation ? ('snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse')) : '');
             flake.appendChild(innerFlake);
+            flake.onanimationend = this.handleAnimationEnd;
         }
         Flake.prototype.getLeft = function () {
             return (Math.random() * 99) + '%';
-        };
-        Flake.prototype.updateLeft = function () {
-            if (!this.elem) {
-                return;
-            }
-            setStyle(this.elem, {
-                left: this.getLeft(),
-            });
         };
         Flake.prototype.update = function (params) {
             if (!this.elem || !this.elemInner) {
@@ -205,14 +217,6 @@
                 animationName: animationName,
                 animationDelay: (Math.random() * 4) + 's'
             });
-        };
-        Flake.prototype.reflow = function () {
-            if (!this.elem) {
-                return;
-            }
-            hideElement(this.elem);
-            void this.elem.offsetHeight;
-            showElement(this.elem);
         };
         /**
          * Resize a flake.
@@ -260,7 +264,7 @@
         return Flake;
     }());
 
-    var mainStyle = '.snowflake{pointer-events:none;position:absolute;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;will-change:transform}.snowflake_animation{-webkit-animation:snowflake_unknown 10s linear;animation:snowflake_unknown 10s linear}.snowflake_animation-infinity{-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite}.snowflake__inner,.snowflake__inner:before{bottom:0;left:0;position:absolute;right:0;top:0}.snowflake__inner:before{background-size:100% 100%;content:""}.snowflake__inner_wind{-webkit-animation:snowflake_unknown 2s ease-in-out infinite alternate;animation:snowflake_unknown 2s ease-in-out infinite alternate}.snowflake__inner_rotation:before{-webkit-animation:snowflake_rotation 10s linear infinite;animation:snowflake_rotation 10s linear infinite}.snowflake__inner_rotation_reverse:before{-webkit-animation:snowflake_rotation_reverse 10s linear infinite;animation:snowflake_rotation_reverse 10s linear infinite}@-webkit-keyframes snowflake_rotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes snowflake_rotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@-webkit-keyframes snowflake_rotation_reverse{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}@keyframes snowflake_rotation_reverse{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}.snowflakes{pointer-events:none}.snowflakes_paused .snowflake,.snowflakes_paused .snowflake__inner,.snowflakes_paused .snowflake__inner:before{-webkit-animation-play-state:paused;animation-play-state:paused}.snowflakes_hidden{visibility:hidden}.snowflakes_body{height:1px;left:0;position:fixed;top:0;width:100%}';
+    var mainStyle = '.snowflake{animation:snowflake_unknown 10s linear;pointer-events:none;position:absolute;-webkit-user-select:none;-moz-user-select:none;user-select:none;will-change:transform}.snowflake__inner,.snowflake__inner:before{bottom:0;left:0;position:absolute;right:0;top:0}.snowflake__inner:before{background-size:100% 100%;content:""}.snowflake__inner_wind{animation:snowflake_unknown 2s ease-in-out infinite alternate}.snowflake__inner_rotation:before{animation:snowflake_rotation 10s linear infinite}.snowflake__inner_rotation_reverse:before{animation:snowflake_rotation_reverse 10s linear infinite}@keyframes snowflake_rotation{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@keyframes snowflake_rotation_reverse{0%{transform:rotate(0deg)}to{transform:rotate(-1turn)}}.snowflakes{pointer-events:none}.snowflakes_paused .snowflake,.snowflakes_paused .snowflake__inner,.snowflakes_paused .snowflake__inner:before{animation-play-state:paused}.snowflakes_hidden{visibility:hidden}.snowflakes_body{height:1px;left:0;position:fixed;top:0;width:100%}';
     var imagesStyle = '';
     var Snowflakes = /** @class */ (function () {
         function Snowflakes(params) {
@@ -295,6 +299,9 @@
                 screen.orientation.addEventListener('change', this.handleOrientationChange);
             }
         }
+        Snowflakes.hasSupport = function () {
+            return Boolean(document.documentElement.classList);
+        };
         /**
          * Start CSS animation.
          */
@@ -361,11 +368,7 @@
         };
         Snowflakes.prototype.appendContainer = function () {
             var container = document.createElement('div');
-            addClass(container, 'snowflakes');
-            addClass(container, "snowflakes_gid_".concat(this.gid));
-            if (this.isBody) {
-                addClass(container, 'snowflakes_body');
-            }
+            addClass(container, 'snowflakes', "snowflakes_gid_".concat(this.gid), this.isBody ? 'snowflakes_body' : '');
             setStyle(container, { zIndex: String(this.params.zIndex) });
             this.params.container.appendChild(container);
             return container;
@@ -414,24 +417,6 @@
         Snowflakes.prototype.setParams = function (rawParams) {
             var params = rawParams || {};
             var result = {};
-            var defaultParams = {
-                color: '#5ECDEF',
-                container: document.body,
-                count: 50,
-                speed: 1,
-                stop: false,
-                rotation: true,
-                minOpacity: 0.6,
-                maxOpacity: 1,
-                minSize: 10,
-                maxSize: 25,
-                types: 6,
-                width: undefined,
-                height: undefined,
-                wind: true,
-                zIndex: 9999,
-                autoResize: true,
-            };
             Object.keys(defaultParams).forEach(function (name) {
                 result[name] = typeof params[name] === 'undefined' ?
                     defaultParams[name] :
@@ -441,15 +426,15 @@
         };
         Snowflakes.prototype.getAnimationStyle = function () {
             var fromY = '0px';
-            var maxSize = this.params.maxSize * Math.sqrt(2);
+            var maxSize = Math.ceil(this.params.maxSize * Math.sqrt(2));
             var toY = this.isBody ? "calc(100vh + ".concat(maxSize, "px)") : "".concat(this.height() + maxSize, "px");
             var gid = this.gid;
-            var css = "@-webkit-keyframes snowflake_gid_".concat(gid, "_y{from{-webkit-transform:translateY(").concat(fromY, ")}to{-webkit-transform:translateY(").concat(toY, ");}}\n@keyframes snowflake_gid_").concat(gid, "_y{from{transform:translateY(").concat(fromY, ")}to{transform:translateY(").concat(toY, ");}}");
+            var cssText = ["@keyframes snowflake_gid_".concat(gid, "_y{from{transform:translateY(").concat(fromY, ")}to{transform:translateY(").concat(toY, ")}}")];
             for (var i = 0; i <= maxInnerSize; i++) {
                 var left = calcSize(i, this.params.minSize, this.params.maxSize) + 'px';
-                css += "@-webkit-keyframes snowflake_gid_".concat(gid, "_x_").concat(i, "{from{-webkit-transform:translateX(0px)}to{-webkit-transform:translateX(").concat(left, ");}}\n@keyframes snowflake_gid_").concat(gid, "_x_").concat(i, "{from{transform:translateX(0px)}to{transform:translateX(").concat(left, ")}}");
+                cssText.push("@keyframes snowflake_gid_".concat(gid, "_x_").concat(i, "{from{transform:translateX(0px)}to{transform:translateX(").concat(left, ")}}"));
             }
-            return css;
+            return cssText.join('\n');
         };
         Snowflakes.prototype.updateAnimationStyle = function () {
             this.injectStyle(this.getAnimationStyle(), this.animationStyleNode);
@@ -472,8 +457,8 @@
             return this.params.height ||
                 (this.isBody ? getWindowHeight() : this.params.container.offsetHeight + this.params.maxSize);
         };
-        Snowflakes.instanceCounter = 0;
         Snowflakes.gid = 0;
+        Snowflakes.instanceCounter = 0;
         return Snowflakes;
     }());
 

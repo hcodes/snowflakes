@@ -1,36 +1,20 @@
-type SnowflakesRawParams = Partial<SnowflakesParams>;
-export interface SnowflakesParams extends Record<string, boolean | HTMLElement | number | string | undefined> {
-    container: HTMLElement;
-    count: number;
-    color: string;
-    minOpacity: number;
-    maxOpacity: number;
-    minSize: number;
-    maxSize: number;
-    rotation: boolean;
-    speed: number;
-    stop: boolean;
-    types: number;
-    width?: number;
-    height?: number;
-    wind: boolean;
-    zIndex: number;
-    autoResize: boolean;
-}
+import { SnowflakesParams } from './types';
+export { SnowflakesParams } from './types';
 export default class Snowflakes {
     private container;
     private destroyed;
     private flakes;
     private isBody;
-    private gid;
     private params;
     private animationStyleNode?;
     private imagesStyleNode?;
     private mainStyleNode?;
     private containerSize;
-    static instanceCounter: number;
+    private gid;
     static gid: number;
-    constructor(params?: SnowflakesRawParams);
+    static instanceCounter: number;
+    static hasSupport(): boolean;
+    constructor(params?: SnowflakesParams);
     /**
      * Start CSS animation.
      */
@@ -69,4 +53,3 @@ export default class Snowflakes {
     private width;
     private height;
 }
-export {};
