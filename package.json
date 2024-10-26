@@ -70,11 +70,10 @@
     "prepare": "npm run build"
   },
   "browserslist": [
-    "ie >= 11",
     "Firefox >= 60",
     "Chrome >= 60",
-    "iOS >= 8",
-    "Safari >= 8",
-    "Android > 4.0"
+    "iOS >= 9",
+    "Safari >= 9",
+    "Android >= 5.0"
   ]
 }

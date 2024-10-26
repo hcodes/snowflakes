@@ -1,38 +1,11 @@
-export let animationPrefix = '';
-export let transformPrefix = '';
-
-if (typeof window !== 'undefined') {
-    const props = Array.prototype.slice.call(window.getComputedStyle(document.documentElement, ''));
-    if (props.indexOf('animation-name') === -1) {
-        animationPrefix = '-webkit-';
-    }
-
-    if (props.indexOf('transform') === -1) {
-        transformPrefix = '-webkit-';
-    }
-}
-
-function prepareCssProperty(prefix: string, key: string) {
-    return prefix.replace(/-/g, '') + key[0].toUpperCase() + key.substr(1);
-}
-
 /**
  * Set inline style.
  */
 export function setStyle(dom: HTMLElement, props: Partial<CSSStyleDeclaration>) {
-    Object.keys(props).forEach(originalKey =>  {
-        let key = originalKey;
-        if (animationPrefix && originalKey.search('animation') > -1) {
-            key = prepareCssProperty(animationPrefix, originalKey);
-        }
-
-        if (transformPrefix && originalKey.search('transform') > -1) {
-            key = prepareCssProperty(transformPrefix, originalKey);
-        }
-
+    Object.keys(props).forEach(key =>  {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        dom.style[key] = props[originalKey];
+        dom.style[key] = props[key];
     });
 }
 
@@ -149,5 +122,3 @@ export function reflow(node: HTMLElement) {
     void node.offsetHeight;
     showElement(node);
 }
-
-export const isAnimationEndSupported = typeof document !== 'undefined' && 'onanimationend' in document;

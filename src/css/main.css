@@ -6,13 +6,7 @@
 
     will-change: transform;
 
-    &_animation {
-        animation: snowflake_unknown 10s linear;
-    }
-
-    &_animation-infinity {
-        animation-iteration-count: infinite;
-    }
+    animation: snowflake_unknown 10s linear;
 
     &__inner {
         position: absolute;

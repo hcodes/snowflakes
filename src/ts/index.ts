@@ -11,8 +11,6 @@ import {
     addClass,
     removeClass,
     getWindowWidth,
-    animationPrefix,
-    transformPrefix
 } from './helpers/dom';
 import { ContainerSize, SnowflakesInnerParams, SnowflakesParams } from './types';
 export { SnowflakesParams } from './types';
@@ -246,10 +244,10 @@ export default class Snowflakes {
         const toY = this.isBody ? `calc(100vh + ${maxSize}px)` : `${this.height() + maxSize}px`;
         const gid = this.gid;
 
-        const cssText = [`@${animationPrefix}keyframes snowflake_gid_${gid}_y{from{${transformPrefix}transform:translateY(${fromY})}to{${transformPrefix}transform:translateY(${toY})}}`];
+        const cssText = [`@keyframes snowflake_gid_${gid}_y{from{transform:translateY(${fromY})}to{transform:translateY(${toY})}}`];
         for (let i = 0; i <= maxInnerSize; i++) {
             const left = calcSize(i, this.params.minSize, this.params.maxSize) + 'px';
-            cssText.push(`@${animationPrefix}keyframes snowflake_gid_${gid}_x_${i}{from{${transformPrefix}transform:translateX(0px)}to{${transformPrefix}transform:translateX(${left})}}`);
+            cssText.push(`@keyframes snowflake_gid_${gid}_x_${i}{from{transform:translateX(0px)}to{transform:translateX(${left})}}`);
         }
 
         return cssText.join('\n');

@@ -1,4 +1,4 @@
-import { addClass, isAnimationEndSupported, reflow, setStyle } from './helpers/dom';
+import { addClass, reflow, setStyle } from './helpers/dom';
 import { getRandom, interpolation } from './helpers/number';
 
 export const maxInnerSize = 20;
@@ -51,8 +51,6 @@ export class Flake {
         addClass(
             flake,
             'snowflake',
-            'snowflake_animation',
-            isAnimationEndSupported ? 'snowflake_animation-end' : 'snowflake_animation-infinity',
         );
 
         addClass(
@@ -64,10 +62,7 @@ export class Flake {
         );
 
         flake.appendChild(innerFlake);
-
-        if (isAnimationEndSupported) {
-            flake.onanimationend = this.handleAnimationEnd;
-        }
+        flake.onanimationend = this.handleAnimationEnd;
     }
 
     private handleAnimationEnd = (e: AnimationEvent) => {
