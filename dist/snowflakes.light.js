@@ -65,12 +65,6 @@
             node.parentNode.removeChild(node);
         }
     }
-    /**
-     * A DOM node is body.
-     */
-    function isBody(node) {
-        return node === document.body;
-    }
     function isNotEmptyString(value) {
         return typeof value === 'string' && value !== '';
     }
@@ -235,7 +229,6 @@
             var _this = this;
             this.destroyed = false;
             this.flakes = [];
-            this.isBody = false;
             this.handleResize = function () {
                 if (_this.params.autoResize) {
                     _this.resize();
@@ -245,7 +238,6 @@
                 _this.resize();
             };
             this.params = this.setParams(params);
-            this.isBody = isBody(this.params.container);
             Snowflakes.gid++;
             this.gid = Snowflakes.gid;
             this.container = this.appendContainer();
@@ -303,7 +295,7 @@
             this.containerSize.height = newHeight;
             var flakeParams = this.getFlakeParams();
             this.flakes.forEach(function (flake) { return flake.resize(flakeParams); });
-            if (this.isBody) {
+            if (this.isBody()) {
                 return;
             }
             hideElement(this.container);
@@ -330,9 +322,12 @@
                 screen.orientation.removeEventListener('change', this.handleOrientationChange, false);
             }
         };
+        Snowflakes.prototype.isBody = function () {
+            return this.params.container === document.body;
+        };
         Snowflakes.prototype.appendContainer = function () {
             var container = document.createElement('div');
-            addClass(container, 'snowflakes', "snowflakes_gid_".concat(this.gid), this.isBody ? 'snowflakes_body' : '');
+            addClass(container, 'snowflakes', "snowflakes_gid_".concat(this.gid), this.isBody() ? 'snowflakes_body' : '');
             setStyle(container, { zIndex: String(this.params.zIndex) });
             this.params.container.appendChild(container);
             return container;
@@ -391,7 +386,7 @@
         Snowflakes.prototype.getAnimationStyle = function () {
             var fromY = '0px';
             var maxSize = Math.ceil(this.params.maxSize * Math.sqrt(2));
-            var toY = this.isBody ? "calc(100vh + ".concat(maxSize, "px)") : "".concat(this.height() + maxSize, "px");
+            var toY = this.isBody() ? "calc(100vh + ".concat(maxSize, "px)") : "".concat(this.height() + maxSize, "px");
             var gid = this.gid;
             var cssText = ["@keyframes snowflake_gid_".concat(gid, "_y{from{transform:translateY(").concat(fromY, ")}to{transform:translateY(").concat(toY, ")}}")];
             for (var i = 0; i <= maxInnerSize; i++) {
@@ -415,14 +410,15 @@
         };
         Snowflakes.prototype.width = function () {
             return this.params.width ||
-                (this.isBody ? window.innerWidth : this.params.container.offsetWidth);
+                (this.isBody() ? window.innerWidth : this.params.container.offsetWidth);
         };
         Snowflakes.prototype.height = function () {
             return this.params.height ||
-                (this.isBody ? window.innerHeight : this.params.container.offsetHeight + this.params.maxSize);
+                (this.isBody() ? window.innerHeight : this.params.container.offsetHeight + this.params.maxSize);
         };
         Snowflakes.gid = 0;
         Snowflakes.instanceCounter = 0;
+        Snowflakes.defaultParams = defaultParams;
         return Snowflakes;
     }());
 

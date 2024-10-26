@@ -19,10 +19,6 @@ export declare function injectStyle(style: string, styleNode?: HTMLStyleElement)
  */
 export declare function removeNode(node?: HTMLElement): void;
 /**
- * A DOM node is body.
- */
-export declare function isBody(node: HTMLElement): boolean;
-/**
  * Add className for a node.
  */
 export declare function addClass(node: HTMLElement, ...classNames: (string | boolean | null | undefined)[]): void;

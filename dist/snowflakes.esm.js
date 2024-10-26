@@ -59,12 +59,6 @@ function removeNode(node) {
         node.parentNode.removeChild(node);
     }
 }
-/**
- * A DOM node is body.
- */
-function isBody(node) {
-    return node === document.body;
-}
 function isNotEmptyString(value) {
     return typeof value === 'string' && value !== '';
 }
@@ -219,7 +213,6 @@ class Snowflakes {
     constructor(params) {
         this.destroyed = false;
         this.flakes = [];
-        this.isBody = false;
         this.handleResize = () => {
             if (this.params.autoResize) {
                 this.resize();
@@ -229,7 +222,6 @@ class Snowflakes {
             this.resize();
         };
         this.params = this.setParams(params);
-        this.isBody = isBody(this.params.container);
         Snowflakes.gid++;
         this.gid = Snowflakes.gid;
         this.container = this.appendContainer();
@@ -284,7 +276,7 @@ class Snowflakes {
         this.containerSize.height = newHeight;
         const flakeParams = this.getFlakeParams();
         this.flakes.forEach(flake => flake.resize(flakeParams));
-        if (this.isBody) {
+        if (this.isBody()) {
             return;
         }
         hideElement(this.container);
@@ -311,9 +303,12 @@ class Snowflakes {
             screen.orientation.removeEventListener('change', this.handleOrientationChange, false);
         }
     }
+    isBody() {
+        return this.params.container === document.body;
+    }
     appendContainer() {
         const container = document.createElement('div');
-        addClass(container, 'snowflakes', `snowflakes_gid_${this.gid}`, this.isBody ? 'snowflakes_body' : '');
+        addClass(container, 'snowflakes', `snowflakes_gid_${this.gid}`, this.isBody() ? 'snowflakes_body' : '');
         setStyle(container, { zIndex: String(this.params.zIndex) });
         this.params.container.appendChild(container);
         return container;
@@ -371,7 +366,7 @@ class Snowflakes {
     getAnimationStyle() {
         const fromY = '0px';
         const maxSize = Math.ceil(this.params.maxSize * Math.sqrt(2));
-        const toY = this.isBody ? `calc(100vh + ${maxSize}px)` : `${this.height() + maxSize}px`;
+        const toY = this.isBody() ? `calc(100vh + ${maxSize}px)` : `${this.height() + maxSize}px`;
         const gid = this.gid;
         const cssText = [`@keyframes snowflake_gid_${gid}_y{from{transform:translateY(${fromY})}to{transform:translateY(${toY})}}`];
         for (let i = 0; i <= maxInnerSize; i++) {
@@ -395,14 +390,15 @@ class Snowflakes {
     }
     width() {
         return this.params.width ||
-            (this.isBody ? window.innerWidth : this.params.container.offsetWidth);
+            (this.isBody() ? window.innerWidth : this.params.container.offsetWidth);
     }
     height() {
         return this.params.height ||
-            (this.isBody ? window.innerHeight : this.params.container.offsetHeight + this.params.maxSize);
+            (this.isBody() ? window.innerHeight : this.params.container.offsetHeight + this.params.maxSize);
     }
 }
 Snowflakes.gid = 0;
 Snowflakes.instanceCounter = 0;
+Snowflakes.defaultParams = defaultParams;
 
 export { Snowflakes as default };

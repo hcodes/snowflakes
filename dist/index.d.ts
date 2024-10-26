@@ -1,10 +1,9 @@
-import { SnowflakesParams } from './types';
+import { SnowflakesInnerParams, SnowflakesParams } from './types';
 export { SnowflakesParams } from './types';
 export default class Snowflakes {
     private container;
     private destroyed;
     private flakes;
-    private isBody;
     private params;
     private animationStyleNode?;
     private imagesStyleNode?;
@@ -14,6 +13,7 @@ export default class Snowflakes {
     static gid: number;
     static instanceCounter: number;
     static hasSupport(): boolean;
+    static defaultParams: SnowflakesInnerParams;
     constructor(params?: SnowflakesParams);
     /**
      * Start CSS animation.
@@ -39,6 +39,7 @@ export default class Snowflakes {
      * Destroy instance.
      */
     destroy(): void;
+    private isBody;
     private handleResize;
     private handleOrientationChange;
     private appendContainer;
