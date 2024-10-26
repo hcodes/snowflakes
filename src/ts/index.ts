@@ -5,12 +5,10 @@ import {
     setStyle,
     showElement,
     hideElement,
-    getWindowHeight,
     injectStyle,
     removeNode,
     addClass,
     removeClass,
-    getWindowWidth,
 } from './helpers/dom';
 import { ContainerSize, SnowflakesInnerParams, SnowflakesParams } from './types';
 export { SnowflakesParams } from './types';
@@ -272,11 +270,11 @@ export default class Snowflakes {
 
     private width() {
         return this.params.width ||
-            (this.isBody ? getWindowWidth() : this.params.container.offsetWidth);
+            (this.isBody ? window.innerWidth : this.params.container.offsetWidth);
     }
 
     private height() {
         return this.params.height ||
-            (this.isBody ? getWindowHeight() : this.params.container.offsetHeight + this.params.maxSize);
+            (this.isBody ? window.innerHeight : this.params.container.offsetHeight + this.params.maxSize);
     }
 }

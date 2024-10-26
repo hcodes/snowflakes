@@ -24,46 +24,6 @@ export function hideElement(dom: HTMLElement) {
 }
 
 /**
- * Get window height.
- */
-export function getWindowHeight() {
-    const body = document.body;
-    const docElement = document.documentElement;
-
-    let height;
-
-    if (window.innerHeight) {
-        height = window.innerHeight;
-    } else if (docElement && docElement.clientHeight) {
-        height = docElement.clientHeight;
-    } else if (body) {
-        height = body.clientHeight;
-    }
-
-    return height || 0;
-}
-
-/**
- * Get window width.
- */
- export function getWindowWidth() {
-    const body = document.body;
-    const docElement = document.documentElement;
-
-    let width;
-
-    if (window.innerWidth) {
-        width = window.innerWidth;
-    } else if (docElement && docElement.clientWidth) {
-        width = docElement.clientWidth;
-    } else if (body) {
-        width = body.clientWidth;
-    }
-
-    return width || 0;
-}
-
-/**
  * Inject style.
  */
 export function injectStyle(style: string, styleNode?: HTMLStyleElement) {
