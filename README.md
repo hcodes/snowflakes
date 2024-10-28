@@ -21,7 +21,6 @@
 - 🏠 [Some layers](https://hcodes.github.io/snowflakes/examples/some_layers.html)
 - 💛 [Own kind](https://hcodes.github.io/snowflakes/examples/balls.html)
 - 🗻[Own z-index](https://hcodes.github.io/snowflakes/examples/z-index.html)
-html)
 
 [See details](https://github.com/hcodes/snowflakes/tree/master/examples)
 
