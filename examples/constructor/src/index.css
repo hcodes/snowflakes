@@ -1,0 +1,70 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    border: 0;
+
+    transition: .5s background-color ease;
+}
+
+body.debug .snowflake {
+    border: 1px solid red;
+}
+
+.body_bg_black {
+    background: black;
+}
+
+body,
+textarea,
+input {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+input {
+    margin-left: 0;
+}
+
+label {
+    margin-right: 5px;
+}
+
+.github {
+    display: inline-block;
+    text-decoration: none;
+    padding: 3px 5px;
+    border: 1px solid #aaa;
+    color: #aaa;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.header {
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    color: #222;
+    font-weight: normal;
+}
+
+.body_bg_black .header {
+    color: #ddd;
+}
+
+.no-support {
+    position: absolute;
+    display: none;;
+    left: 20px;
+    top: 50px;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 5px;
+    border: 2px dotted red;
+}
+
+.no-support_visible {
+    display: block;
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Constructor for Falling snowflakes</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" href="dist/index.css" />
+</head>
+<body class="demo_bg_white demo_size_fullscreen">
+    <h1 class="header">Falling snowflakes <a href="https://github.com/hcodes/snowflakes" class="github">Back</a></h1>
+
+    <div class="no-support">Falling snowflakes are not supported in this browser.</div>
+
+    <div class="code">
+        <div class="code__label">Code:</div>
+        <textarea class="code__textarea"></textarea>
+        <input class="code__copy" type="button" value="Copy" />
+    </div>
+
+    <div class="form">
+        <div class="form__layer"></div>
+        <form class="form__panel" autocomplete="off">
+            <div class="form__title">Settings</div>
+            <div class="form__body">
+                <div class="form__group">
+                    <label class="form__label">area:</label>
+                    <label class="form__label_radio"><input class="form__area" name="area" type="radio" value="fullscreen" checked /> Fullscreen</label>
+                    <label class="form__label_radio"><input class="form__area" name="area" type="radio" value="layer" /> Layer</label>
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label">background:</label>
+                    <label class="form__label_radio"><input class="form__background-color" name="bg" type="radio" value="white" checked /> White</label>
+                    <label class="form__label_radio"><input class="form__background-color" name="bg" type="radio" value="black" /> Black</label>
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label">color:</label> <input class="form__color" type="color" />
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label">count:</label> <input class="form__count" type="number" min="1" max="300" />
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label">minOpacity:</label> <input class="form__min-opacity" type="number" min="0" max="1" step="0.1" />
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label">maxOpacity:</label> <input class="form__max-opacity" type="number" min="0" max="1" step="0.1" />
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label">minSize:</label> <input class="form__min-size" type="number" min="1" step="1" />
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label">maxSize:</label> <input class="form__max-size" type="number" min="1" step="1" />
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label">speed:</label> <input class="form__speed" type="number" min="0.1" max="3" step="0.1" />
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label_checkbox"><input class="form__rotation" type="checkbox" /> rotation</label>
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label_checkbox"><input class="form__wind" type="checkbox" /> wind</label>
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label_checkbox"><input class="form__debug" type="checkbox" /> debug</label>
+                </div>
+            </div>
+
+            <div class="form__bottom">
+                <input type="button" class="form__button form__toggle-hide" value="Hide" />
+                <input type="button" class="form__button form__stop" value="Stop" />
+                <input type="button" class="form__button form__default" value="Default" />
+                <input type="button" class="form__button form__load-fps" value="Show FPS"/>
+            </div>
+        </form>
+    </div>
+
+    <script src="dist/index.js"></script>
+</body>
+</html>

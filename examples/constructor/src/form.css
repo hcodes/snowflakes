@@ -1,0 +1,86 @@
+.form__panel {
+    position: absolute;
+    z-index: 20;
+    right: 15px;
+    top: 15px;
+    background: rgba(255, 255, 255, .8);
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    line-height: 1.6;
+    white-space: nowrap;
+
+    transition: .5s border-color ease;
+    border-radius: 10px;
+}
+
+.form__field {
+    margin-left: 10px;
+}
+
+.form__label {
+    display: inline-block;
+    width: 80px;
+}
+
+.form__label_radio {
+    margin-right: 1em;
+}
+
+.form__group {
+    padding: 3px;
+}
+
+.form__group input[type="number"] {
+    width: 60px;
+}
+
+.form__color {
+    height: 20px;
+    width: 60px;
+}
+
+.form__group:hover {
+    background-color: #f0f0f0;
+}
+
+.form__title {
+    font-weight: bold;
+    text-align: center;
+    padding: 3px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.form__body {
+    padding: 5px;
+}
+
+.form__bottom {
+    padding: 5px;
+    text-align: center;
+    background: #eee;
+    border-radius: 0 0 10px 10px;
+}
+
+.form__layer {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+    width: 50%;
+    height: 50%;
+
+    overflow: hidden;
+    border: 1px solid rgba(200, 200, 200, .5);
+    border-radius: 10px;
+}
+
+.form__layer_visible {
+    display: block;
+}
+
+.form__button {
+    margin-left: 5px;
+}

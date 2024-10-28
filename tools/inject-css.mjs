@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 const copyright = `/*! Snowflakes | © ${new Date().getFullYear()} Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */\n`;
 
@@ -21,3 +21,4 @@ const injectCSS = (source, dest, isLight) => {
 injectCSS('./dist/snowflakes.js', './dist/snowflakes.light.js', true);
 injectCSS('./dist/snowflakes.js', './dist/snowflakes.js', false);
 injectCSS('./dist/snowflakes.esm.js', './dist/snowflakes.esm.js', false);
+injectCSS('./examples/constructor/dist/index.js', './examples/constructor/dist/index.js', false);

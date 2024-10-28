@@ -1,0 +1,6 @@
+{
+ "extends": "./tsconfig.common.json",
+ "compilerOptions": {
+   "outDir": "examples/constructor/dist"
+ }
+}

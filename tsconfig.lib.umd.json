@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.common.json",
+  "exclude": ["dist", "examples"],
+  "compilerOptions": {
+    "target": "es5",
+    "declaration": true,
+    "declarationDir": "dist"
+  }
+ }
