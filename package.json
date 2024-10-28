@@ -58,7 +58,7 @@
   },
   "scripts": {
     "test": "eslint . & npm run typecheck",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit -p tsconfig.lib.umd.json",
     "build": "npm-run-all clean make inject:css minify",
     "clean": "del-cli dist/*",
     "minify": "run-p minify:*",
