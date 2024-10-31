@@ -71,6 +71,10 @@ export class Form {
         bindRadioClick(this.elems.backgroundColor, this.handleBackgroundColor);
 
         this.handleDefault();
+
+        setTimeout(() => {
+            document.body.classList.add('animation');
+        }, 10);
     }
 
     private updateSnowflakes() {
@@ -148,7 +152,7 @@ export class Form {
         setRadioValue(this.elems.area, 'fullscreen');
         this.handleArea();
 
-        setRadioValue(this.elems.backgroundColor, 'white');
+        setRadioValue(this.elems.backgroundColor, 'black');
         this.handleBackgroundColor();
 
         this.elems.debug.checked = false;

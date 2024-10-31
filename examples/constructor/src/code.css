@@ -4,6 +4,7 @@
     right: 15px;
     bottom: 0;
     height: 180px;
+    backdrop-filter: blur(10px);
 }
 
 .code__label {
@@ -13,7 +14,6 @@
 
 .code__copy {
     margin-top: 4px;
-    font-size: 16px;
 }
 
 .code__textarea {
@@ -23,6 +23,7 @@
     height: 120px;
     font-size: 12px;
     padding: 5px;
+    max-width: 270px;
 }
 
 .code__copy,
@@ -31,8 +32,9 @@
 }
 
 .body_bg_black .code__textarea {
-    background: black;
+    background: #333;
     color: white;
+    border: 1px solid #555;
 }
 
 .body_bg_black .code__label {

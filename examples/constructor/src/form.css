@@ -1,16 +1,22 @@
 .form__panel {
     position: absolute;
     z-index: 20;
-    right: 15px;
-    top: 15px;
-    background: rgba(255, 255, 255, .8);
+    left: 15px;
+    top: 70px;
+    background: white;
     border: 1px solid #f0f0f0;
     border-radius: 4px;
     line-height: 1.6;
     white-space: nowrap;
-
+    color: black;
     transition: .5s border-color ease;
     border-radius: 10px;
+}
+
+.body_bg_black .form__panel {
+    color: white;
+    background: #333;
+    border-color: #555;
 }
 
 .form__field {
@@ -43,11 +49,15 @@
     background-color: #f0f0f0;
 }
 
+.body_bg_black .form__group:hover {
+    background-color: #555;
+}
+
 .form__title {
     font-weight: bold;
     text-align: center;
     padding: 3px;
-    border-bottom: 1px solid #f0f0f0;
+    background: #5ECDEF50;
 }
 
 .form__body {
@@ -59,6 +69,10 @@
     text-align: center;
     background: #eee;
     border-radius: 0 0 10px 10px;
+}
+
+.body_bg_black .form__bottom {
+    background: #555;
 }
 
 .form__layer {

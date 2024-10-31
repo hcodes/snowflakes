@@ -2,7 +2,9 @@ html, body {
     padding: 0;
     margin: 0;
     border: 0;
+}
 
+body.animation {
     transition: .5s background-color ease;
 }
 
@@ -37,21 +39,24 @@ label {
     color: #aaa;
     font-size: 12px;
     border-radius: 5px;
+    vertical-align: middle;
 }
 
 .header {
-    font-size: 18px;
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    font-size: 30px;
+    font-weight: bold;
     margin: 0;
     padding: 0;
-    position: absolute;
-    left: 15px;
-    top: 15px;
     color: #222;
-    font-weight: normal;
-}
-
-.body_bg_black .header {
-    color: #ddd;
+    background-color: white;
+    background-image: linear-gradient(to right, #3980DB, #B69EE2);
+    color: transparent;
+    background-clip: text;
+    transform: translateX(-50%);
+    white-space: nowrap;
 }
 
 .no-support {

@@ -605,7 +605,7 @@
             this.handleDefault = function () {
                 setRadioValue(_this.elems.area, 'fullscreen');
                 _this.handleArea();
-                setRadioValue(_this.elems.backgroundColor, 'white');
+                setRadioValue(_this.elems.backgroundColor, 'black');
                 _this.handleBackgroundColor();
                 _this.elems.debug.checked = false;
                 _this.handleDebug();
@@ -686,6 +686,9 @@
             bindRadioClick(this.elems.area, this.handleArea);
             bindRadioClick(this.elems.backgroundColor, this.handleBackgroundColor);
             this.handleDefault();
+            setTimeout(function () {
+                document.body.classList.add('animation');
+            }, 10);
         }
         Form.prototype.updateSnowflakes = function () {
             var params = __assign({}, this.params);
