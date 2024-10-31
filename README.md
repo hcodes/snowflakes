@@ -128,15 +128,15 @@ Destroy the instance of snowflakes.
 ## Different Builds
 In the `dist/` directory of [the NPM package](https://unpkg.com/magic-snowflakes/dist/) you will find many different builds of snowflakes.js.
 
-|Type                   |Filename                 |Description       |
-|-----------------------|-------------------------|------------------|
-|Full (UMD)             |`snowflakes.js`          |                  |
-|Full (UMD, production) |`snowflakes.min.js`      |                  |
-|Full auto              |`snowflakes.autojs`      | Without API      |
-|Full auto (production) |`snowflakes.auto.min.js` | Without API      |
-|ES6 or Typescript      |`snowflakes.esm.js`      |                  |
-|Light (UMD)            |`snowflakes.light.js`    |Without SVG images|
-|Light (UMD, production)|`snowflakes.light.min.js`|Without SVG images|
+|Type                   |Filename                 |Description         |
+|-----------------------|-------------------------|--------------------|
+|Full (UMD)             |`snowflakes.js`          |                    |
+|Full (UMD, production) |`snowflakes.min.js`      |                    |
+|Full auto              |`snowflakes.auto.js`     | Without API        |
+|Full auto (production) |`snowflakes.auto.min.js` | Without API        |
+|ES6 or Typescript      |`snowflakes.esm.js`      |                    |
+|Light (UMD)            |`snowflakes.light.js`    | Without SVG images |
+|Light (UMD, production)|`snowflakes.light.min.js`| Without SVG images |
 
 
 ## Development

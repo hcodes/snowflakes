@@ -1,3 +1,8 @@
+## v7.0.0
++ Removed `-webkit-` prefix for animation and transform CSS properties.
++ Added `hasSupport()` static method.
++ Simplified installation in HTML page, only one line is needed.
+
 ## v6.3.0
 + Improved positioning of snowflakes when resizing the window.
 

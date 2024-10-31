@@ -1,7 +1,7 @@
 {
   "name": "magic-snowflakes",
   "description": "Falling snowflakes",
-  "version": "6.3.0",
+  "version": "7.0.0",
   "author": {
     "name": "Denis Seleznev",
     "email": "hcodes@yandex.ru",
@@ -23,7 +23,15 @@
     "flake",
     "newyear",
     "christmas",
-    "falling"
+    "falling",
+    "снежинки",
+    "снежинка",
+    "flocons de neige",
+    "schneeflocken",
+    "fiocchi di neve",
+    "copos de nieve",
+    "雪花",
+    "雪の結晶"
   ],
   "engines": {
     "node": ">=10"
