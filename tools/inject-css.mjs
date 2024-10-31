@@ -20,5 +20,6 @@ const injectCSS = (source, dest, isLight) => {
 
 injectCSS('./dist/snowflakes.js', './dist/snowflakes.light.js', true);
 injectCSS('./dist/snowflakes.js', './dist/snowflakes.js', false);
+injectCSS('./dist/snowflakes.auto.js', './dist/snowflakes.auto.js', false);
 injectCSS('./dist/snowflakes.esm.js', './dist/snowflakes.esm.js', false);
 injectCSS('./examples/constructor/dist/index.js', './examples/constructor/dist/index.js', false);

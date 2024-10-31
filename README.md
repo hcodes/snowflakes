@@ -31,30 +31,24 @@ npm i magic-snowflakes --save-dev
 ```
 
 ### Without settings
+Paste anywhere in your page's HTML:
 ```html
+<script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.auto.min.js"></script>
+```
+
+### With settings
 <html>
 <body>
     ...
     <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script>
-        new Snowflakes();
+        new Snowflakes({
+            wind: false,
+            rotation: false
+        });
     </script>
 </body>
 </html>
-```
-
-or
-
-```js
-import Snowflakes from 'magic-snowflakes';
-const snowflakes = new Snowflakes();
-// ...
-snowflakes.stop();
-// ...
-snowflakes.start();
-// ...
-snowflakes.destroy();
-```
 
 ### Advanced settings
 ```html
@@ -94,6 +88,18 @@ snowflakes.destroy();
 </html>
 ```
 
+### Typescript or ES6
+```js
+import Snowflakes from 'magic-snowflakes';
+const snowflakes = new Snowflakes();
+// ...
+snowflakes.stop();
+// ...
+snowflakes.start();
+// ...
+snowflakes.destroy();
+```
+
 ## API
 
 ```js
@@ -126,7 +132,9 @@ In the `dist/` directory of [the NPM package](https://unpkg.com/magic-snowflakes
 |-----------------------|-------------------------|------------------|
 |Full (UMD)             |`snowflakes.js`          |                  |
 |Full (UMD, production) |`snowflakes.min.js`      |                  |
-|ES6                    |`snowflakes.esm.js`      |                  |
+|Full auto              |`snowflakes.autojs`      | Without API      |
+|Full auto (production) |`snowflakes.auto.min.js` | Without API      |
+|ES6 or Typescript      |`snowflakes.esm.js`      |                  |
 |Light (UMD)            |`snowflakes.light.js`    |Without SVG images|
 |Light (UMD, production)|`snowflakes.light.min.js`|Without SVG images|
 

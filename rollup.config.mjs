@@ -13,6 +13,14 @@ export default [
     plugins: [typescript({ tsconfig: './tsconfig.lib.umd.json' })]
   },
   {
+    input: './src/ts/index.auto.ts',
+    output: {
+      format: 'iife',
+      file: './dist/snowflakes.auto.js'
+    },
+    plugins: [typescript({ tsconfig: './tsconfig.auto.json' })]
+  },
+  {
     input: './src/ts/index.ts',
     output: {
       format: 'es',
