@@ -1,3 +1,6 @@
+## v7.0.1
++ Updated README.
+
 ## v7.0.0
 + Removed `-webkit-` prefix for animation and transform CSS properties.
 + Added `hasSupport()` static method.
