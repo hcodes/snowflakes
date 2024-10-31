@@ -658,7 +658,6 @@
                 _this.elems.loadFps.disabled = true;
                 loadScript('https://rawgit.com/mrdoob/stats.js/master/build/stats.min.js', function () {
                     var stats = new window.Stats();
-                    stats.dom.style.right = '0';
                     document.body.appendChild(stats.dom);
                     requestAnimationFrame(function loop() {
                         stats.update();
