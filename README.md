@@ -37,6 +37,7 @@ Paste anywhere in your page's HTML:
 ```
 
 ### With settings
+```html
 <html>
 <body>
     ...
@@ -49,6 +50,7 @@ Paste anywhere in your page's HTML:
     </script>
 </body>
 </html>
+```
 
 ### Advanced settings
 ```html
