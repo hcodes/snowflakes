@@ -14,9 +14,11 @@
 
 ## [Examples](https://hcodes.github.io/demo-snowflakes/)
 - 🔍 [Constructor](https://hcodes.github.io/snowflakes/examples/constructor): change settings and copy code for your site
+- 🎲 [3D Cube](https://hcodes.github.io/snowflakes/examples/3d_cube.html)
 - ❄ [Simple](https://hcodes.github.io/snowflakes/examples/simple.html)
 - 🎨 [Multicolor](https://hcodes.github.io/snowflakes/examples/multicolor.html)
 - 🐘 [Big](https://hcodes.github.io/snowflakes/examples/big.html)
+- 🍋 [Blend mode](https://hcodes.github.io/snowflakes/examples/blend_mode.html)
 - 🪟 [Layer](https://hcodes.github.io/snowflakes/examples/layer.html)
 - 🏠 [Some layers](https://hcodes.github.io/snowflakes/examples/some_layers.html)
 - 💛 [Own kind](https://hcodes.github.io/snowflakes/examples/balls.html)

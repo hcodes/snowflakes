@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title>3D cube with snowflakes</title>
+    <style>
+        html, body {
+            background-color: black;
+        }
+
+        .cube-3d {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .cube-3d__side,
+        .cube-3d__container {
+            width: 400px;
+            height: 400px;
+        }
+
+        .cube-3d__container {
+            transform-style: preserve-3d;
+            animation: cube-3d-rotate 10s infinite linear;
+        }
+
+        .cube-3d__side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border: 2px solid black;
+            opacity: .7;
+        }
+
+        .cube-3d__side_back {
+            transform: translateZ(-200px);
+            background: orange;
+        }
+
+        .cube-3d__side_left {
+            transform: translateX(-200px) rotateY(90deg);
+            background: violet;
+        }
+
+        .cube-3d__side_right {
+            transform: translateX(200px) rotateY(90deg);
+            background: green;
+        }
+
+        .cube-3d__side_top {
+            transform: translateY(-200px) rotateX(90deg);
+            background: blue;
+        }
+
+        .cube-3d__side_bottom {
+            transform: translateY(200px) rotateX(90deg);
+            background: red;
+        }
+
+        .cube-3d__side_front {
+            transform: translateZ(200px);
+            background: gold;
+        }
+
+        @keyframes cube-3d-rotate {
+            100% {
+                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cube-3d">
+        <div class="cube-3d__container">
+            <div class="cube-3d__side cube-3d__side_back"></div>
+            <div class="cube-3d__side cube-3d__side_left"></div>
+            <div class="cube-3d__side cube-3d__side_right"></div>
+            <div class="cube-3d__side cube-3d__side_top"></div>
+            <div class="cube-3d__side cube-3d__side_bottom"></div>
+            <div class="cube-3d__side cube-3d__side_front"></div>
+        </div>
+    </div>
+
+    <script src="../dist/snowflakes.js"></script>
+    <script>
+        [
+            ['.cube-3d__side_back', 'black'],
+            ['.cube-3d__side_left', 'white'],
+            ['.cube-3d__side_right', 'yellow'],
+            ['.cube-3d__side_top', 'white'],
+            ['.cube-3d__side_bottom', 'pink'],
+            ['.cube-3d__side_front', 'green']
+        ].forEach((item) => {
+            new Snowflakes({
+                container: document.querySelector(item[0]),
+                minSize: 20,
+                maxSize: 100,
+                count: 25,
+                color: item[1],
+                wind: false
+            });
+        });
+    </script>
+</body>
+</html>
