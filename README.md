@@ -157,3 +157,7 @@ open ./examples/
 
 ## [License](LICENSE)
 MIT License
+
+
+## Friends
+- [Check device online](https://checkdevice.online/?from=github-snowflakes)
