@@ -1,4 +1,4 @@
-import { defaultParams } from './defaultParams';
+import { getDefaultParams } from './getDefaultParams';
 import { Flake, maxInnerSize, calcSize, FlakeParams }  from './flake';
 import {
     setStyle,
@@ -35,7 +35,9 @@ export default class Snowflakes {
         return Boolean('onanimationend' in document);
     }
 
-    static defaultParams = defaultParams;
+    static get defaultParams() {
+        return getDefaultParams();
+    }
 
     constructor(params?: SnowflakesParams) {
         this.params = this.setParams(params);
@@ -229,6 +231,7 @@ export default class Snowflakes {
         const params = rawParams || {};
 
         const result = {} as SnowflakesInnerParams;
+        const defaultParams = getDefaultParams();
 
         Object.keys(defaultParams).forEach(name => {
             result[name] = typeof params[name] === 'undefined' ?

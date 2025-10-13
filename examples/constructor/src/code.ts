@@ -1,4 +1,4 @@
-import { defaultParams } from '../../../src/ts/defaultParams';
+import Snowflakes from '../../../src/ts';
 import { SnowflakesInnerParams } from '../../../src/ts/types';
 
 import './code.css';
@@ -24,6 +24,7 @@ export function updateCode(props: SnowflakesInnerParams) {
     let result = '// Paste the code inside the <body> tag\n<script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>\n<script>\n    var sf = new Snowflakes(';
     let count = 0;
 
+    const defaultParams = Snowflakes.defaultParams;
     Object.keys(defaultParams).forEach((key) => {
         if (typeof defaultParams[key] !== 'undefined' && props[key] !== defaultParams[key]) {
             if (count) {
