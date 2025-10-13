@@ -13,7 +13,7 @@ export default class Snowflakes {
     static gid: number;
     static instanceCounter: number;
     static hasSupport(): boolean;
-    static defaultParams: SnowflakesInnerParams;
+    static get defaultParams(): SnowflakesInnerParams;
     constructor(params?: SnowflakesParams);
     /**
      * Start CSS animation.

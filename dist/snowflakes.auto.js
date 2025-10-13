@@ -1,25 +1,27 @@
-/*! Snowflakes | © 2024 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
+/*! Snowflakes | © 2025 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
 (function () {
     'use strict';
 
-    var defaultParams = {
-        color: '#5ECDEF',
-        container: document.body,
-        count: 50,
-        speed: 1,
-        stop: false,
-        rotation: true,
-        minOpacity: 0.6,
-        maxOpacity: 1,
-        minSize: 10,
-        maxSize: 25,
-        types: 6,
-        width: undefined,
-        height: undefined,
-        wind: true,
-        zIndex: 9999,
-        autoResize: true,
-    };
+    function getDefaultParams() {
+        return {
+            color: '#5ECDEF',
+            container: document.body,
+            count: 50,
+            speed: 1,
+            stop: false,
+            rotation: true,
+            minOpacity: 0.6,
+            maxOpacity: 1,
+            minSize: 10,
+            maxSize: 25,
+            types: 6,
+            width: undefined,
+            height: undefined,
+            wind: true,
+            zIndex: 9999,
+            autoResize: true,
+        };
+    }
 
     /**
      * Set inline style.
@@ -255,6 +257,13 @@
         Snowflakes.hasSupport = function () {
             return Boolean('onanimationend' in document);
         };
+        Object.defineProperty(Snowflakes, "defaultParams", {
+            get: function () {
+                return getDefaultParams();
+            },
+            enumerable: false,
+            configurable: true
+        });
         /**
          * Start CSS animation.
          */
@@ -373,6 +382,7 @@
         Snowflakes.prototype.setParams = function (rawParams) {
             var params = rawParams || {};
             var result = {};
+            var defaultParams = getDefaultParams();
             Object.keys(defaultParams).forEach(function (name) {
                 result[name] = typeof params[name] === 'undefined' ?
                     defaultParams[name] :
@@ -415,7 +425,6 @@
         };
         Snowflakes.gid = 0;
         Snowflakes.instanceCounter = 0;
-        Snowflakes.defaultParams = defaultParams;
         return Snowflakes;
     }());
 

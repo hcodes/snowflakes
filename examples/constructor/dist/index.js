@@ -1,4 +1,4 @@
-/*! Snowflakes | © 2024 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
+/*! Snowflakes | © 2025 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
 (function () {
     'use strict';
 
@@ -35,24 +35,26 @@
         return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
     };
 
-    var defaultParams = {
-        color: '#5ECDEF',
-        container: document.body,
-        count: 50,
-        speed: 1,
-        stop: false,
-        rotation: true,
-        minOpacity: 0.6,
-        maxOpacity: 1,
-        minSize: 10,
-        maxSize: 25,
-        types: 6,
-        width: undefined,
-        height: undefined,
-        wind: true,
-        zIndex: 9999,
-        autoResize: true,
-    };
+    function getDefaultParams() {
+        return {
+            color: '#5ECDEF',
+            container: document.body,
+            count: 50,
+            speed: 1,
+            stop: false,
+            rotation: true,
+            minOpacity: 0.6,
+            maxOpacity: 1,
+            minSize: 10,
+            maxSize: 25,
+            types: 6,
+            width: undefined,
+            height: undefined,
+            wind: true,
+            zIndex: 9999,
+            autoResize: true,
+        };
+    }
 
     /**
      * Set inline style.
@@ -288,6 +290,13 @@
         Snowflakes.hasSupport = function () {
             return Boolean('onanimationend' in document);
         };
+        Object.defineProperty(Snowflakes, "defaultParams", {
+            get: function () {
+                return getDefaultParams();
+            },
+            enumerable: false,
+            configurable: true
+        });
         /**
          * Start CSS animation.
          */
@@ -406,6 +415,7 @@
         Snowflakes.prototype.setParams = function (rawParams) {
             var params = rawParams || {};
             var result = {};
+            var defaultParams = getDefaultParams();
             Object.keys(defaultParams).forEach(function (name) {
                 result[name] = typeof params[name] === 'undefined' ?
                     defaultParams[name] :
@@ -448,7 +458,6 @@
         };
         Snowflakes.gid = 0;
         Snowflakes.instanceCounter = 0;
-        Snowflakes.defaultParams = defaultParams;
         return Snowflakes;
     }());
 
@@ -470,6 +479,7 @@
     function updateCode(props) {
         var result = '// Paste the code inside the <body> tag\n<script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>\n<script>\n    var sf = new Snowflakes(';
         var count = 0;
+        var defaultParams = Snowflakes.defaultParams;
         Object.keys(defaultParams).forEach(function (key) {
             if (typeof defaultParams[key] !== 'undefined' && props[key] !== defaultParams[key]) {
                 if (count) {
@@ -537,7 +547,7 @@
             var _this = this;
             this.stop = false;
             this.hidden = false;
-            this.params = __assign({}, defaultParams);
+            this.params = __assign({}, Snowflakes.defaultParams);
             this.elems = {
                 loadFps: document.querySelector('.form__load-fps'),
                 area: document.querySelectorAll('.form__area'),
@@ -609,6 +619,7 @@
                 _this.handleBackgroundColor();
                 _this.elems.debug.checked = false;
                 _this.handleDebug();
+                var defaultParams = Snowflakes.defaultParams;
                 _this.elems.minOpacity.value = String(defaultParams.minOpacity);
                 _this.elems.maxOpacity.value = String(defaultParams.maxOpacity);
                 _this.elems.minSize.value = String(defaultParams.minSize);
