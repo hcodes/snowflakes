@@ -1,4 +1,7 @@
 ## v7.0.1
++ Small fix for Next.js 15.
+
+## v7.0.1
 + Updated README.
 
 ## v7.0.0

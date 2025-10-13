@@ -1,22 +1,24 @@
-/*! Snowflakes | © 2024 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
-const defaultParams = {
-    color: '#5ECDEF',
-    container: document.body,
-    count: 50,
-    speed: 1,
-    stop: false,
-    rotation: true,
-    minOpacity: 0.6,
-    maxOpacity: 1,
-    minSize: 10,
-    maxSize: 25,
-    types: 6,
-    width: undefined,
-    height: undefined,
-    wind: true,
-    zIndex: 9999,
-    autoResize: true,
-};
+/*! Snowflakes | © 2025 Denis Seleznev | MIT License | https://github.com/hcodes/snowflakes/ */
+function getDefaultParams() {
+    return {
+        color: '#5ECDEF',
+        container: document.body,
+        count: 50,
+        speed: 1,
+        stop: false,
+        rotation: true,
+        minOpacity: 0.6,
+        maxOpacity: 1,
+        minSize: 10,
+        maxSize: 25,
+        types: 6,
+        width: undefined,
+        height: undefined,
+        wind: true,
+        zIndex: 9999,
+        autoResize: true,
+    };
+}
 
 /**
  * Set inline style.
@@ -210,6 +212,9 @@ class Snowflakes {
     static hasSupport() {
         return Boolean('onanimationend' in document);
     }
+    static get defaultParams() {
+        return getDefaultParams();
+    }
     constructor(params) {
         this.destroyed = false;
         this.flakes = [];
@@ -356,6 +361,7 @@ class Snowflakes {
     setParams(rawParams) {
         const params = rawParams || {};
         const result = {};
+        const defaultParams = getDefaultParams();
         Object.keys(defaultParams).forEach(name => {
             result[name] = typeof params[name] === 'undefined' ?
                 defaultParams[name] :
@@ -399,6 +405,5 @@ class Snowflakes {
 }
 Snowflakes.gid = 0;
 Snowflakes.instanceCounter = 0;
-Snowflakes.defaultParams = defaultParams;
 
 export { Snowflakes as default };

@@ -1,5 +1,4 @@
 import Snowflakes from '../../../src/ts';
-import { defaultParams } from '../../../src/ts/defaultParams';
 
 import { updateCode } from './code';
 
@@ -20,7 +19,7 @@ export class Form {
     private hidden = false;
     private snowflakes?: Snowflakes;
     private params = {
-        ...defaultParams,
+        ...Snowflakes.defaultParams,
     };
 
     private elems = {
@@ -157,6 +156,8 @@ export class Form {
 
         this.elems.debug.checked = false;
         this.handleDebug();
+
+        const defaultParams = Snowflakes.defaultParams;
 
         this.elems.minOpacity.value = String(defaultParams.minOpacity);
         this.elems.maxOpacity.value = String(defaultParams.maxOpacity);
