@@ -1,7 +1,4 @@
-import path from 'path';
 import typescript from '@rollup/plugin-typescript';
-import postcss from 'rollup-plugin-postcss';
-import postcssConfig from './postcss.config.mjs';
 
 // Keep declaration imports from previously published packages working after source moves.
 const legacyDeclarations = {
@@ -24,7 +21,8 @@ export default [
       file: './dist/snowflakes.js'
     },
     plugins: [typescript({
-      include: [path.resolve('src/**/*.ts')],
+      tsconfig: './tsconfig.json',
+      noEmitOnError: true,
       declaration: true,
       declarationDir: 'dist',
       rootDir: 'src',
@@ -43,7 +41,7 @@ export default [
       format: 'iife',
       file: './dist/snowflakes.auto.js'
     },
-    plugins: [typescript({ include: [path.resolve('src/**/*.ts')] })]
+    plugins: [typescript({ tsconfig: './tsconfig.json', noEmitOnError: true })]
   },
   {
     input: './src/index.ts',
@@ -51,21 +49,10 @@ export default [
       format: 'es',
       file: './dist/snowflakes.esm.js'
     },
-    plugins: [typescript({ include: [path.resolve('src/**/*.ts')], target: 'ES2015' })]
-  },
-  {
-    input: './examples/constructor/src/main.ts',
-    output: {
-      format: 'iife',
-      file: './examples/constructor/dist/index.js'
-    },
-    plugins: [
-        typescript(),
-        postcss({
-            config: false,
-            plugins: postcssConfig.plugins,
-            extract: path.resolve('./examples/constructor/dist/index.css')
-        }),
-    ]
+    plugins: [typescript({
+      tsconfig: './tsconfig.json',
+      noEmitOnError: true,
+      target: 'ES2015',
+    })]
   }
 ];

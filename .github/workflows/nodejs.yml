@@ -21,9 +21,11 @@ jobs:
         with:
           node-version: 'lts/*'
           cache: npm
-      # The prepare lifecycle builds the library and constructor.
+      # The prepare lifecycle builds only the library.
       - run: npm ci
       - run: npm test
+      - run: npm run build:examples
+      - run: npm run test:build
       - name: Pack built library
         run: npm pack
       - uses: actions/upload-artifact@v7

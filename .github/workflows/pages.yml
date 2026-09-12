@@ -23,6 +23,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      - run: npm run build:examples
       - name: Stage public files
         run: |
           mkdir -p _site/examples/constructor
