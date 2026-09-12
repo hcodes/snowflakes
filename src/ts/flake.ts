@@ -1,14 +1,6 @@
 import { addClass, reflow, setStyle } from './helpers/dom';
-import { getRandom, interpolation } from './helpers/number';
-
-export const maxInnerSize = 20;
-
-/**
- * Calc size.
- */
-export function calcSize(innerSize: number, minSize: number, maxSize: number) {
-    return Math.floor(interpolation(innerSize, 0, maxInnerSize, minSize, maxSize));
-}
+import { getRandom } from './helpers/number';
+import { maxInnerSize, calcSize, calcOpacity, calcDuration, calcDelay } from './calculations';
 
 interface StyleProps extends Record<string, string | undefined> {
     animationName: string;
@@ -104,7 +96,7 @@ export class Flake {
             height: this.size + 'px'
         };
 
-        styleProps.opacity = String(interpolation(
+        styleProps.opacity = String(calcOpacity(
             this.size,
             params.minSize,
             params.maxSize,
@@ -164,18 +156,11 @@ export class Flake {
      * Get animation properties.
      */
     private getAnimationProps(params: FlakeParams) {
-        const speedMax = params.containerHeight / 50 / params.speed;
-        const speedMin = speedMax / 3;
-
         return {
-            animationDelay: (Math.random() * speedMax) + 's',
-            animationDuration: String(interpolation(
-                this.size,
-                params.minSize,
-                params.maxSize,
-                speedMax,
-                speedMin
-            ) + 's')
+            animationDelay: calcDelay(Math.random(), params.containerHeight, params.speed) + 's',
+            animationDuration: calcDuration(
+                this.size, params.minSize, params.maxSize, params.containerHeight, params.speed
+            ) + 's',
         };
     }
 }

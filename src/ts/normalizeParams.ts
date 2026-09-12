@@ -10,11 +10,22 @@ export function normalizeParams(
     defaults: SnowflakesInnerParams,
 ): SnowflakesInnerParams {
     const params = rawParams || {};
-    const result = {} as SnowflakesInnerParams;
-
-    Object.keys(defaults).forEach(name => {
-        result[name] = params[name] === undefined ? defaults[name] : params[name];
-    });
+    const result: SnowflakesInnerParams = {
+        container: params.container === undefined ? defaults.container : params.container,
+        color: params.color === undefined ? defaults.color : params.color,
+        stop: params.stop === undefined ? defaults.stop : params.stop,
+        rotation: params.rotation === undefined ? defaults.rotation : params.rotation,
+        wind: params.wind === undefined ? defaults.wind : params.wind,
+        autoResize: params.autoResize === undefined ? defaults.autoResize : params.autoResize,
+        count: defaults.count,
+        types: defaults.types,
+        speed: defaults.speed,
+        minOpacity: defaults.minOpacity,
+        maxOpacity: defaults.maxOpacity,
+        minSize: defaults.minSize,
+        maxSize: defaults.maxSize,
+        zIndex: defaults.zIndex,
+    };
 
     result.count = Math.max(0, Math.floor(finiteNumber(params.count, defaults.count)));
     result.types = Math.max(0, Math.floor(finiteNumber(params.types, defaults.types)));

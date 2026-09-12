@@ -1,11 +1,12 @@
 import { getDefaultParams } from './getDefaultParams';
 import { normalizeParams } from './normalizeParams';
-import { Flake, maxInnerSize, calcSize, FlakeParams }  from './flake';
+import { getAnimationStyle } from './calculations';
+import { SnowflakesStyles } from './styles';
+import { Flake, FlakeParams }  from './flake';
 import {
     setStyle,
     showElement,
     hideElement,
-    injectStyle,
     removeNode,
     addClass,
     removeClass,
@@ -13,18 +14,13 @@ import {
 import { ContainerSize, SnowflakesInnerParams, SnowflakesParams } from './types';
 export { SnowflakesParams } from './types';
 
-const mainStyle = '{MAIN_STYLE}';
-const imagesStyle = '{IMAGES_STYLE}';
-
 export default class Snowflakes {
     private container: HTMLElement;
     private destroyed = false;
     private flakes: Flake[] = [];
     private params: SnowflakesInnerParams;
 
-    private animationStyleNode?: HTMLStyleElement;
-    private imagesStyleNode?: HTMLStyleElement;
-    private static mainStyleNode?: HTMLStyleElement;
+    private styles: SnowflakesStyles;
 
     private containerSize: ContainerSize;
     private gid: number;
@@ -52,7 +48,8 @@ export default class Snowflakes {
             this.stop();
         }
 
-        this.appendStyles();
+        this.styles = new SnowflakesStyles(this.gid, this.params.color, this.getAnimationStyle());
+        Snowflakes.instanceCounter++;
         this.appendFlakes();
 
         this.containerSize = {
@@ -121,7 +118,7 @@ export default class Snowflakes {
         }
 
         hideElement(this.container);
-        this.updateAnimationStyle();
+        this.styles.updateAnimation(this.getAnimationStyle());
         showElement(this.container);
     }
 
@@ -137,9 +134,9 @@ export default class Snowflakes {
 
         if (Snowflakes.instanceCounter) {
             Snowflakes.instanceCounter--;
-         }
+        }
 
-        this.removeStyles();
+        this.styles.destroy();
 
         removeNode(this.container);
 
@@ -184,20 +181,6 @@ export default class Snowflakes {
         return container;
     }
 
-    private appendStyles() {
-        if (!Snowflakes.instanceCounter) {
-            Snowflakes.mainStyleNode = this.injectStyle(mainStyle);
-        }
-        Snowflakes.instanceCounter++;
-
-        this.imagesStyleNode = this.injectStyle(imagesStyle.replace(/:color:/g, encodeURIComponent(this.params.color)));
-        this.animationStyleNode = this.injectStyle(this.getAnimationStyle());
-    }
-
-    private injectStyle(style: string, container?: HTMLStyleElement) {
-        return injectStyle(style.replace(/_gid_value/g, `_gid_${this.gid}`), container);
-    }
-
     private getFlakeParams(): FlakeParams {
         const height = this.height();
         const params = this.params;
@@ -229,39 +212,11 @@ export default class Snowflakes {
             .sort((a, b) => a.size - b.size) // For correct z-index
             .forEach(flake => {
                 flake.appendTo(this.container);
-            });
+           });
     }
 
     private getAnimationStyle() {
-        const fromY = '0px';
-        const maxSize = Math.ceil(this.params.maxSize * Math.sqrt(2));
-        const toY = this.isBody() ? `calc(100vh + ${maxSize}px)` : `${this.height() + maxSize}px`;
-        const gid = this.gid;
-
-        const cssText = [`@keyframes snowflake_gid_${gid}_y{from{transform:translateY(${fromY})}to{transform:translateY(${toY})}}`];
-        for (let i = 0; i <= maxInnerSize; i++) {
-            const left = calcSize(i, this.params.minSize, this.params.maxSize) + 'px';
-            cssText.push(`@keyframes snowflake_gid_${gid}_x_${i}{from{transform:translateX(0px)}to{transform:translateX(${left})}}`);
-        }
-
-        return cssText.join('\n');
-    }
-
-    private updateAnimationStyle() {
-        this.injectStyle(this.getAnimationStyle(), this.animationStyleNode);
-    }
-
-    private removeStyles() {
-        if (!Snowflakes.instanceCounter) {
-            removeNode(Snowflakes.mainStyleNode);
-            delete Snowflakes.mainStyleNode;
-        }
-
-        removeNode(this.imagesStyleNode);
-        delete this.imagesStyleNode;
-
-        removeNode(this.animationStyleNode);
-        delete this.animationStyleNode;
+        return getAnimationStyle(this.gid, this.isBody(), this.height(), this.params.minSize, this.params.maxSize);
     }
 
     private width() {

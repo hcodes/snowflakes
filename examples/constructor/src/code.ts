@@ -26,14 +26,15 @@ export function updateCode(props: SnowflakesInnerParams) {
 
     const defaultParams = Snowflakes.defaultParams;
     Object.keys(defaultParams).forEach((key) => {
-        if (typeof defaultParams[key] !== 'undefined' && props[key] !== defaultParams[key]) {
+        const defaultValue = defaultParams[key as keyof SnowflakesInnerParams];
+        if (typeof defaultValue !== 'undefined' && key in props && props[key as keyof SnowflakesInnerParams] !== defaultValue) {
             if (count) {
                 result += ',\n';
             } else {
                 result += '{\n';
             }
 
-            let value = props[key];
+            let value = props[key as keyof SnowflakesInnerParams];
             if (typeof value === 'string') {
                 value = '"' + value + '"';
             }

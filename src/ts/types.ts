@@ -17,7 +17,6 @@ export interface SnowflakesInnerParams {
     wind: boolean; // Default: true
     zIndex: number; // Default: 9999
     autoResize: boolean; // Default: true
-    [key: string]: unknown;
 }
 
 export interface ContainerSize {

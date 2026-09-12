@@ -1,4 +1,6 @@
 ## 7.1.0
++ Separated stylesheet ownership and pure animation calculations from DOM operations.
++ Tightened public option types to reject misspelled properties and removed the unsafe cast when assembling normalized settings.
 + Extracted pure settings normalization: invalid numbers fall back to defaults, numeric ranges are clamped, and reversed minimum/maximum bounds are reordered.
 + Fixed animation duration and opacity when `minSize` equals `maxSize`.
 + Fixed shared styles leaking when the first instance is destroyed before the last remaining instance.
