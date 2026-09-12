@@ -24,11 +24,12 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build:examples
+      - run: node --test tests/build/pages-assets.test.mjs
       - name: Stage public files
         run: |
           mkdir -p _site/examples/constructor
           cp -R dist _site/dist
-          cp examples/*.html _site/examples/
+          cp examples/*.html examples/*.js examples/*.css _site/examples/
           cp examples/constructor/index.html _site/examples/constructor/
           cp -R examples/constructor/dist _site/examples/constructor/dist
           mkdir -p _site/docs/assets _site/img
