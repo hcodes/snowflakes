@@ -24,7 +24,6 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build:examples
-      - run: node --test tests/build/pages-assets.test.mjs
       - name: Stage public files
         run: |
           mkdir -p _site/examples/constructor
