@@ -3,16 +3,8 @@ import Snowflakes from '../../../src';
 import { updateCode } from './code-preview';
 
 import { bindRadioClick, getRadioValue, setRadioValue } from './utils/radio';
-import { loadScript } from './utils/load-script';
 
 import './playground.css';
-
-declare global {
-    interface Window {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        Stats: any;
-    }
-}
 
 export class Playground {
     private stop = false;
@@ -23,7 +15,6 @@ export class Playground {
     };
 
     private elems = {
-        loadFps: document.querySelector('.form__load-fps') as HTMLButtonElement,
         area: document.querySelectorAll<HTMLInputElement>('.form__area'),
         backgroundColor: document.querySelectorAll<HTMLInputElement>('.form__background-color'),
         color: document.querySelector('.form__color') as HTMLInputElement,
@@ -64,7 +55,6 @@ export class Playground {
         this.elems.default.onclick = this.handleDefault;
         this.elems.stop.onclick = this.handleStop;
         this.elems.toggleHide.onclick = this.handleToggleHide;
-        this.elems.loadFps.onclick = this.handleLoadFps;
 
         bindRadioClick(this.elems.area, this.handleArea);
         bindRadioClick(this.elems.backgroundColor, this.handleBackgroundColor);
@@ -219,17 +209,5 @@ export class Playground {
             this.snowflakes.show();
             this.elems.toggleHide.value = 'Hide';
         }
-    }
-
-    private handleLoadFps = () => {
-        this.elems.loadFps.disabled = true;
-        loadScript('https://rawgit.com/mrdoob/stats.js/master/build/stats.min.js', () => {
-            const stats = new window.Stats();
-            document.body.appendChild(stats.dom);
-            requestAnimationFrame(function loop() {
-                stats.update();
-                requestAnimationFrame(loop);
-            });
-        })
     }
 };
