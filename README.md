@@ -96,6 +96,37 @@ Paste anywhere in your page's HTML:
 </html>
 ```
 
+### Color with CSS
+
+Snowflakes use SVG masks filled with `currentColor`. The `color` option sets
+the container's CSS color (default: `#5ECDEF`). Override individual snowflakes
+in your stylesheet:
+
+```css
+.snowflake {
+    color: white;
+}
+
+.snowflake:nth-child(3n) {
+    color: #ff69b4;
+}
+```
+
+You can also pass a CSS variable as the color. Updating the variable recolors
+existing snowflakes without recreating the instance:
+
+```css
+:root {
+    --snow-color: #5ECDEF;
+}
+```
+
+```js
+new Snowflakes({ color: 'var(--snow-color)' });
+```
+
+Use `color: 'inherit'` to inherit the color of your custom container.
+
 ### TypeScript or ES modules
 
 ```js

@@ -11,14 +11,13 @@ export class SnowflakesStyles {
     private imagesStyleNode?: HTMLStyleElement;
     private destroyed = false;
 
-    constructor(gid: number, color: string, animation: string) {
+    constructor(gid: number, animation: string) {
         if (!SnowflakesStyles.owners) {
             SnowflakesStyles.mainStyleNode = injectStyle(mainStyle);
         }
         SnowflakesStyles.owners++;
         try {
             this.imagesStyleNode = injectStyle(imagesStyle
-                .replace(/:color:/g, encodeURIComponent(color))
                 .replace(/_gid_value/g, `_gid_${gid}`));
             this.animationStyleNode = injectStyle(animation);
         } catch (error) {

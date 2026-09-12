@@ -24,7 +24,9 @@
 
             content: '';
 
-            background-size: 100% 100%;
+            background-color: currentColor;
+            mask-size: 100% 100%;
+            mask-repeat: no-repeat;
         }
 
         &_wind {

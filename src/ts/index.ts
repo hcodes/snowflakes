@@ -48,7 +48,7 @@ export default class Snowflakes {
             this.stop();
         }
 
-        this.styles = new SnowflakesStyles(this.gid, this.params.color, this.getAnimationStyle());
+        this.styles = new SnowflakesStyles(this.gid, this.getAnimationStyle());
         Snowflakes.instanceCounter++;
         this.appendFlakes();
 
@@ -174,7 +174,10 @@ export default class Snowflakes {
             this.isBody() ? 'snowflakes_body' : '',
         );
 
-        setStyle(container, { zIndex: String(this.params.zIndex) });
+        setStyle(container, {
+            zIndex: String(this.params.zIndex),
+            color: this.params.color,
+        });
 
         this.params.container.appendChild(container);
 

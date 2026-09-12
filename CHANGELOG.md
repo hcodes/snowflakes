@@ -1,4 +1,5 @@
 ## 7.1.0
++ Switched snowflakes to SVG masks with `mask-image` and `currentColor`, allowing CSS color overrides and live CSS variable updates while preserving the `color` option.
 + Switched PostCSS configuration to ES modules and shared plugins explicitly with Rollup.
 + Migrated unit tests to Jest and TypeScript, using jsdom for stylesheet lifecycle tests.
 + Updated development dependencies and fixed PostCSS plugin loading and CSS import declarations for TypeScript 6; retained ES5 output with the deprecation compatibility setting.

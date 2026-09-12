@@ -5,7 +5,7 @@ import { SnowflakesStyles } from '../src/ts/styles';
 const owners: SnowflakesStyles[] = [];
 
 function createStyles(id: number) {
-    const styles = new SnowflakesStyles(id, 'red', `animation ${id}`);
+    const styles = new SnowflakesStyles(id, `animation ${id}`);
     owners.push(styles);
     return styles;
 }
