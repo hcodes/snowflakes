@@ -1,4 +1,6 @@
 ## 7.1.0
++ Migrated unit tests to Jest and TypeScript, using jsdom for stylesheet lifecycle tests.
++ Updated development dependencies and fixed PostCSS plugin loading and CSS import declarations for TypeScript 6; retained ES5 output with the deprecation compatibility setting.
 + Consolidated TypeScript build configurations and moved output-specific settings into Rollup.
 + Separated stylesheet ownership and pure animation calculations from DOM operations.
 + Tightened public option types to reject misspelled properties and removed the unsafe cast when assembling normalized settings.
