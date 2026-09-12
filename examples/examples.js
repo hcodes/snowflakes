@@ -2,14 +2,14 @@
 (function () {
     var examples = [
         ['constructor', 'Snowfall constructor', 'Explore the full set of settings, preview your snowfall and copy the code to use it on your own page.'],
+        ['3d_cube', 'Snow on a 3D cube', 'Six snowfalls live on the faces of a rotating CSS cube. Each face clips its own flakes as it turns.'],
         ['simple', 'Default snowfall', 'A full-window snowfall with the default settings. A single instance is all you need to get started.'],
-        ['big', 'Large snowflakes', 'A wider size range, from 10 to 100 pixels, makes the white flakes stand out against a dark background.'],
         ['multicolor', 'Multicolor snowfall', 'Seven independent snowfalls share the same space, each with its own color.'],
-        ['balls', 'Custom shapes', 'The light build leaves the shape to your CSS. Here, rounded flakes become falling snowballs with rotation disabled.'],
+        ['big', 'Large snowflakes', 'A wider size range, from 10 to 100 pixels, makes the white flakes stand out against a dark background.'],
+        ['blend_mode', 'Blend mode', 'A difference blend mode on the lettering changes the appearance of the flakes as they pass behind it.'],
         ['layer', 'Snow in a container', 'Snowfall stays inside a 300-pixel container. Use this approach to add snow to one section of a page.'],
         ['some_layers', 'Four independent layers', 'Each quadrant has its own snowfall. Compare different colors, speeds, sizes and wind settings side by side.'],
-        ['3d_cube', 'Snow on a 3D cube', 'Six snowfalls live on the faces of a rotating CSS cube. Each face clips its own flakes as it turns.'],
-        ['blend_mode', 'Blend mode', 'A difference blend mode on the lettering changes the appearance of the flakes as they pass behind it.'],
+        ['balls', 'Custom shapes', 'The light build leaves the shape to your CSS. Here, rounded flakes become falling snowballs with rotation disabled.'],
         ['z-index', 'Stacking order', 'Snow starts between the two panels at z-index 90000. Change its position to see how stacking order affects the scene.'],
         ['scroll_page', 'Snow on a scrolling page', 'Scroll down to see the background change. The snowfall stays attached to the viewport as the document moves.'],
         ['without_resize', 'Manual resizing', 'Automatic resizing is disabled. Resize the browser, then update the snowfall area manually to see the difference.'],
