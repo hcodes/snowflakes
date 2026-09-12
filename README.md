@@ -185,7 +185,8 @@ Hidden and paused states are preserved unless `stop` is explicitly provided.
 Color, opacity, speed, wind, rotation, shapes, `zIndex`, `autoResize` and `stop`
 updates preserve existing flakes. Dimension and parent container changes reuse
 the flakes and update the animation geometry. Changing `count` adds or removes
-only the difference, leaving retained flakes in place.
+only the difference, leaving retained flakes in place. Removal selects flakes
+randomly regardless of size; newly added flakes are inserted in size order.
 Speed and height changes recalculate falling duration and delay using each
 flake's original random delay factor.
 

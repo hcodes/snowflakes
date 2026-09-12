@@ -2,6 +2,7 @@
 
 ### Code fixes
 
++ Fixed decreasing `count` through `setParams()` retaining only the smallest flakes; removal now samples flakes randomly while preserving size order.
 + Fixed animation duration and opacity when `minSize` equals `maxSize`.
 + Fixed shared styles leaking when the first instance is destroyed before the last remaining instance.
 + Fixed SVG mask selectors to match containers when shape styles are shared across instances.

@@ -2,6 +2,7 @@ import { getDefaultOptions, normalizeOptions, normalizeUpdatedOptions } from './
 import { getAnimationStyle } from '../animation/keyframes';
 import { SnowflakesStyles } from '../styles/stylesheet-manager';
 import { Flake, FlakeParams }  from './flake';
+import { randomInt } from '../utils/math';
 import {
     setStyle,
     showElement,
@@ -138,7 +139,7 @@ export default class Snowflakes {
             this.flakes.forEach(flake => flake.destroy());
             this.flakes = [];
         } else {
-            this.flakes.splice(next.count).forEach(flake => flake.destroy());
+            this.removeExcessFlakes();
             this.flakes.forEach(flake => flake.setParams(flakeParams, previousFlakeParams));
         }
         if (this.flakes.length < next.count) {
@@ -258,6 +259,24 @@ export default class Snowflakes {
             types: params.types,
             wind: params.wind,
         };
+    }
+
+    private removeExcessFlakes() {
+        const total = this.flakes.length;
+        let remaining = total - this.params.count;
+        if (remaining <= 0) {
+            return;
+        }
+
+        // Sample without replacement, preserving the size order of retained flakes.
+        this.flakes = this.flakes.filter((flake, index) => {
+            if (randomInt(0, total - index) < remaining) {
+                remaining--;
+                flake.destroy();
+                return false;
+            }
+            return true;
+        });
     }
 
     private appendFlakes(flakeParams = this.getFlakeParams()) {

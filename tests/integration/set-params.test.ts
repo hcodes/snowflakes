@@ -174,13 +174,45 @@ test('count changes add or remove only the difference and keep size order', () =
     const sizes = expanded.map(flake => parseFloat(flake.style.width));
     expect(sizes).toEqual([...sizes].sort((a, b) => a - b));
     instance.setParams({ count: 3 });
-    expect(Array.from(container.children)).toEqual(expanded.slice(0, 3));
-    expanded.slice(3).forEach(flake => {
+    const retained = Array.from(container.children) as HTMLElement[];
+    expect(retained).toHaveLength(3);
+    expect(retained).toEqual(expanded.filter(flake => flake.isConnected));
+    expanded.filter(flake => !flake.isConnected).forEach(flake => {
         expect(flake.isConnected).toBe(false);
         expect(flake.onanimationend).toBeNull();
     });
     instance.setParams({ count: 0 });
     expect(container.children).toHaveLength(0);
+});
+
+test('decreasing count samples flakes instead of always discarding the largest', () => {
+    let seed = 42;
+    const random = jest.spyOn(Math, 'random').mockImplementation(() => {
+        seed = (seed * 1664525 + 1013904223) >>> 0;
+        return seed / 4294967296;
+    });
+    const instance = create({ count: 20, minSize: 10, maxSize: 100 });
+    const container = document.querySelector('.snowflakes')!;
+    const original = Array.from(container.children) as HTMLElement[];
+    const largest = original[original.length - 1];
+    expect(parseFloat(largest.style.width)).toBeGreaterThan(parseFloat(original[0].style.width));
+    const originalStyle = largest.style.cssText;
+    const handler = largest.onanimationend;
+
+    // Selecting from the start must allow larger flakes to survive a reduction.
+    random.mockReturnValue(0);
+    instance.setParams({ count: 10 });
+    expect(container.children).toHaveLength(10);
+    expect(largest.isConnected).toBe(true);
+    expect(largest.style.cssText).toBe(originalStyle);
+    expect(largest.onanimationend).toBe(handler);
+
+    instance.setParams({ count: 15 });
+    const sizes = Array.from(container.children).map(flake => parseFloat((flake as HTMLElement).style.width));
+    expect(sizes).toEqual([...sizes].sort((a, b) => a - b));
+    instance.setParams({ count: 3 });
+    expect(container.children).toHaveLength(3);
+    expect(largest.isConnected).toBe(true);
 });
 
 test('new flakes use simultaneously updated settings while existing ones are retained', () => {
