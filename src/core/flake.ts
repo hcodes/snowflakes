@@ -1,4 +1,4 @@
-import { addClass, reflow, setStyle } from '../utils/dom';
+import { addClass, removeClass, removeNode, reflow, setStyle } from '../utils/dom';
 import { randomInt } from '../utils/math';
 import { SIZE_STEPS, calcSize, calcOpacity, calcDuration, calcDelay } from '../animation/calculations';
 
@@ -30,6 +30,8 @@ export interface FlakeParams {
 export class Flake {
     public size = 0;
     private sizeInner = 0;
+    private typeClass = '';
+    private delayRandom = Math.random();
 
     private elem?: HTMLElement;
     private elemInner?: HTMLElement;
@@ -39,6 +41,7 @@ export class Flake {
         const innerFlake = this.elemInner = document.createElement('div');
 
         this.update(params);
+        this.typeClass = params.types ? 'snowflake__inner_type_' + randomInt(0, params.types) : '';
 
         addClass(
             flake,
@@ -48,7 +51,7 @@ export class Flake {
         addClass(
             innerFlake,
             'snowflake__inner',
-            params.types ? 'snowflake__inner_type_' + randomInt(0, params.types) : '',
+            this.typeClass,
             params.wind ? 'snowflake__inner_wind' : '',
             params.rotation ? ('snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse')) : '',
         );
@@ -114,6 +117,42 @@ export class Flake {
     }
 
     /**
+     * Apply settings that do not change the flake's size or position.
+     */
+    public setParams(params: FlakeParams, previous: FlakeParams) {
+        if (!this.elem || !this.elemInner) {
+            return;
+        }
+
+        if (params.speed !== previous.speed || params.containerHeight !== previous.containerHeight) {
+            this.resize(params);
+            setStyle(this.elem, {
+                animationDelay: calcDelay(this.delayRandom, params.containerHeight, params.speed) + 's',
+            });
+        }
+        if (params.minOpacity !== previous.minOpacity || params.maxOpacity !== previous.maxOpacity) {
+            setStyle(this.elem, {
+                opacity: String(calcOpacity(this.size, params.minSize, params.maxSize,
+                    params.minOpacity, params.maxOpacity)),
+            });
+        }
+        if (params.wind !== previous.wind) {
+            this.elemInner.classList.toggle('snowflake__inner_wind', params.wind);
+        }
+        if (params.rotation !== previous.rotation) {
+            removeClass(this.elemInner, 'snowflake__inner_rotation', 'snowflake__inner_rotation_reverse');
+            if (params.rotation) {
+                addClass(this.elemInner, 'snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse'));
+            }
+        }
+        if (params.types !== previous.types) {
+            removeClass(this.elemInner, this.typeClass);
+            this.typeClass = params.types ? 'snowflake__inner_type_' + randomInt(0, params.types) : '';
+            addClass(this.elemInner, this.typeClass);
+        }
+    }
+
+    /**
      * Resize a flake.
      */
     public resize(params: FlakeParams) {
@@ -121,21 +160,21 @@ export class Flake {
             return;
         }
 
-        const props = this.getAnimationProps(params);
         setStyle(this.elem, {
-            animationDuration: props.animationDuration,
+            animationDuration: calcDuration(this.size, params.minSize, params.maxSize,
+                params.containerHeight, params.speed) + 's',
         });
     }
 
     /**
      * Append flake to container.
      */
-    public appendTo(container: HTMLElement) {
+    public appendTo(container: HTMLElement, before?: Flake) {
         if (!this.elem) {
             return;
         }
 
-        container.appendChild(this.elem);
+        container.insertBefore(this.elem, before?.elem || null);
     }
 
     /**
@@ -147,6 +186,7 @@ export class Flake {
         }
 
         this.elem.onanimationend = null;
+        removeNode(this.elem);
 
         delete this.elem;
         delete this.elemInner;
@@ -157,7 +197,7 @@ export class Flake {
      */
     private getAnimationProps(params: FlakeParams) {
         return {
-            animationDelay: calcDelay(Math.random(), params.containerHeight, params.speed) + 's',
+            animationDelay: calcDelay(this.delayRandom, params.containerHeight, params.speed) + 's',
             animationDuration: calcDuration(
                 this.size, params.minSize, params.maxSize, params.containerHeight, params.speed
             ) + 's',

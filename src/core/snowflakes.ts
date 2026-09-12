@@ -1,4 +1,4 @@
-import { getDefaultOptions, normalizeOptions } from './options';
+import { getDefaultOptions, normalizeOptions, normalizeUpdatedOptions } from './options';
 import { getAnimationStyle } from '../animation/keyframes';
 import { SnowflakesStyles } from '../styles/stylesheet-manager';
 import { Flake, FlakeParams }  from './flake';
@@ -96,6 +96,61 @@ export default class Snowflakes {
     }
 
     /**
+     * Apply partial settings to the existing instance.
+     */
+    public setParams(params: SnowflakesParams) {
+        if (this.destroyed) {
+            return;
+        }
+
+        const previous = this.params;
+        const next = normalizeUpdatedOptions(params, previous);
+        const previousFlakeParams = this.getFlakeParams(this.containerSize.height);
+        const rebuildFlakes = next.minSize !== previous.minSize || next.maxSize !== previous.maxSize;
+        this.params = next;
+
+        if (next.container !== previous.container) {
+            next.container.appendChild(this.container);
+            this.container.classList.toggle('snowflakes_body', this.isBody());
+        }
+        if (next.color !== previous.color) {
+            setStyle(this.container, { color: next.color });
+        }
+        if (next.zIndex !== previous.zIndex) {
+            setStyle(this.container, { zIndex: String(next.zIndex) });
+        }
+        if (params.stop !== undefined) {
+            if (next.stop) {
+                this.stop();
+            } else {
+                this.start();
+            }
+        }
+
+        const updateGeometry = rebuildFlakes || next.container !== previous.container || next.height !== previous.height;
+        const height = updateGeometry ? this.height() : this.containerSize.height;
+        const flakeParams = this.getFlakeParams(height);
+        if (updateGeometry) {
+            this.styles.updateAnimation(this.getAnimationStyle(height));
+        }
+
+        if (rebuildFlakes) {
+            this.flakes.forEach(flake => flake.destroy());
+            this.flakes = [];
+        } else {
+            this.flakes.splice(next.count).forEach(flake => flake.destroy());
+            this.flakes.forEach(flake => flake.setParams(flakeParams, previousFlakeParams));
+        }
+        if (this.flakes.length < next.count) {
+            this.appendFlakes(flakeParams);
+        }
+        if (next.container !== previous.container || next.width !== previous.width) {
+            this.containerSize.width = this.width();
+        }
+        this.containerSize.height = height;
+    }
+
+    /**
      * Resize snowflakes.
      */
     public resize() {
@@ -187,8 +242,7 @@ export default class Snowflakes {
         return container;
     }
 
-    private getFlakeParams(): FlakeParams {
-        const height = this.height();
+    private getFlakeParams(height = this.height()): FlakeParams {
         const params = this.params;
 
         return {
@@ -206,23 +260,27 @@ export default class Snowflakes {
         };
     }
 
-    private appendFlakes() {
-        const flakeParams = this.getFlakeParams();
+    private appendFlakes(flakeParams = this.getFlakeParams()) {
+        const newFlakes = new Set<Flake>();
 
-        this.flakes = [];
-        for (let i = 0; i < this.params.count; i++) {
-            this.flakes.push(new Flake(flakeParams));
+        for (let i = this.flakes.length; i < this.params.count; i++) {
+            const flake = new Flake(flakeParams);
+            newFlakes.add(flake);
+            this.flakes.push(flake);
         }
 
-        this.flakes
-            .sort((a, b) => a.size - b.size) // For correct z-index
-            .forEach(flake => {
-                flake.appendTo(this.container);
-           });
+        this.flakes.sort((a, b) => a.size - b.size); // For correct z-index
+        // Insert only new nodes so existing animations are not restarted by reparenting.
+        for (let i = this.flakes.length - 1; i >= 0; i--) {
+            const flake = this.flakes[i];
+            if (newFlakes.has(flake)) {
+                flake.appendTo(this.container, this.flakes[i + 1]);
+            }
+        }
     }
 
-    private getAnimationStyle() {
-        return getAnimationStyle(this.gid, this.isBody(), this.height(), this.params.minSize, this.params.maxSize);
+    private getAnimationStyle(height = this.height()) {
+        return getAnimationStyle(this.gid, this.isBody(), height, this.params.minSize, this.params.maxSize);
     }
 
     private width() {

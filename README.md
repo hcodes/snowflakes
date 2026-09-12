@@ -167,6 +167,33 @@ Hide snowflakes.
 
 Update the animation for the current container size.
 
+### .setParams(params)
+
+Apply any subset of the constructor options to the existing instance:
+
+```js
+snowflakes.setParams({ color: '#fff', speed: 2, count: 100 });
+```
+
+Omitted options and `undefined` values keep their current settings; they are not
+reset to constructor defaults. Values such as `0` and `false` are applied normally.
+Invalid numbers fall back to current settings. If only one size or opacity bound
+is supplied, it is clamped against the unchanged opposite bound. If both bounds
+are supplied, an inverted pair is swapped as in the constructor.
+Hidden and paused states are preserved unless `stop` is explicitly provided.
+
+Color, opacity, speed, wind, rotation, shapes, `zIndex`, `autoResize` and `stop`
+updates preserve existing flakes. Dimension and parent container changes reuse
+the flakes and update the animation geometry. Changing `count` adds or removes
+only the difference, leaving retained flakes in place.
+Speed and height changes recalculate falling duration and delay using each
+flake's original random delay factor.
+
+Only changes to `minSize` or `maxSize` recreate all flakes, redistributing their
+sizes and stacking order and restarting their animation. The instance and its
+container element are reused. Unchanged settings do not recreate flakes.
+Calls after `destroy()` have no effect.
+
 ### .destroy()
 
 Remove the snowflakes and release the instance's resources.

@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals';
-import { normalizeOptions } from '../../src/core/options';
+import { normalizeOptions, normalizeUpdatedOptions } from '../../src/core/options';
 
 const defaults = Object.freeze({
     container: {} as HTMLElement, color: '#5ECDEF', count: 50, speed: 1,
@@ -65,4 +65,22 @@ test('orders bounds after applying defaults and is idempotent', () => {
     expect(result.minOpacity).toBe(0.2);
     expect(result.maxOpacity).toBe(0.6);
     expect(normalizeOptions(result, defaults)).toEqual(result);
+});
+
+test('partial updates preserve every omitted setting and accept false and zero', () => {
+    const current = Object.freeze({ ...defaults, color: 'red', count: 100, speed: 3, width: 400, stop: true });
+    const input = Object.freeze({ color: undefined, count: 0, stop: false });
+    expect(normalizeUpdatedOptions({}, current)).toEqual(current);
+    expect(normalizeUpdatedOptions(input, current)).toEqual({ ...current, count: 0, stop: false });
+});
+
+test('partial range updates preserve missing or invalid bounds but normalize supplied pairs', () => {
+    expect(normalizeUpdatedOptions({ minSize: 40, maxOpacity: 0.2 }, defaults))
+        .toEqual({ ...defaults, minSize: 25, maxOpacity: 0.6 });
+    expect(normalizeUpdatedOptions({ minSize: NaN, maxSize: 5 }, defaults))
+        .toEqual({ ...defaults, maxSize: 10 });
+    expect(normalizeUpdatedOptions({ minSize: 40, maxSize: Infinity }, defaults))
+        .toEqual({ ...defaults, minSize: 25 });
+    const pair = { minSize: 40, maxSize: 5, minOpacity: 0.9, maxOpacity: 0.1 };
+    expect(normalizeUpdatedOptions(pair, defaults)).toEqual(normalizeOptions(pair, defaults));
 });

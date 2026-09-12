@@ -46,6 +46,26 @@ function finiteNumber<T extends number | undefined>(value: unknown, fallback: T)
     return typeof value === 'number' && isFinite(value) ? value : fallback;
 }
 
+/** Normalize a partial update without changing omitted range bounds. */
+export function normalizeUpdatedOptions(
+    params: SnowflakesParams,
+    current: NormalizedSnowflakesOptions,
+): NormalizedSnowflakesOptions {
+    const update = { ...params };
+    const ranges = [['minSize', 'maxSize'], ['minOpacity', 'maxOpacity']] as const;
+    for (const [minKey, maxKey] of ranges) {
+        const min = finiteNumber(params[minKey], undefined);
+        const max = finiteNumber(params[maxKey], undefined);
+        if (min !== undefined && max === undefined) {
+            update[minKey] = Math.min(min, current[maxKey]);
+        }
+        if (max !== undefined && min === undefined) {
+            update[maxKey] = Math.max(max, current[minKey]);
+        }
+    }
+    return normalizeOptions(update, current);
+}
+
 /** Normalize numeric options without reading the DOM or changing the inputs. */
 export function normalizeOptions(
     rawParams: SnowflakesParams | undefined,

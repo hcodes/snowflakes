@@ -74,10 +74,10 @@ export class Playground {
         params.container = getRadioValue(this.elems.area) === 'fullscreen' ? document.body : this.elems.layer;
 
         if (this.snowflakes) {
-            this.snowflakes.destroy();
+            this.snowflakes.setParams(params);
+        } else {
+            this.snowflakes = new Snowflakes(params);
         }
-
-        this.snowflakes = new Snowflakes(params);
 
         if (this.stop) {
             this.snowflakes.stop();

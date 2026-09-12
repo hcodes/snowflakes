@@ -13,6 +13,8 @@
 
 ### Added features
 
++ Added `setParams(params)` for partial runtime settings updates, preserving omitted options and paused/hidden states unless `stop` is explicitly supplied. Existing flakes are updated in place, count changes add or remove only the difference, and only size range changes recreate all flakes.
++ Updated the constructor playground to apply settings through `setParams()` without recreating the instance.
 + Switched snowflakes to SVG masks with `mask-image` and `currentColor`, allowing CSS color overrides and live CSS variable updates while preserving the `color` option.
 
 ### Infrastructure changes
