@@ -23,7 +23,7 @@ export default class Snowflakes {
 
     private animationStyleNode?: HTMLStyleElement;
     private imagesStyleNode?: HTMLStyleElement;
-    private mainStyleNode?: HTMLStyleElement;
+    private static mainStyleNode?: HTMLStyleElement;
 
     private containerSize: ContainerSize;
     private gid: number;
@@ -185,7 +185,7 @@ export default class Snowflakes {
 
     private appendStyles() {
         if (!Snowflakes.instanceCounter) {
-            this.mainStyleNode = this.injectStyle(mainStyle);
+            Snowflakes.mainStyleNode = this.injectStyle(mainStyle);
         }
         Snowflakes.instanceCounter++;
 
@@ -267,8 +267,8 @@ export default class Snowflakes {
 
     private removeStyles() {
         if (!Snowflakes.instanceCounter) {
-            removeNode(this.mainStyleNode);
-            delete this.mainStyleNode;
+            removeNode(Snowflakes.mainStyleNode);
+            delete Snowflakes.mainStyleNode;
         }
 
         removeNode(this.imagesStyleNode);

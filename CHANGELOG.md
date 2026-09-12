@@ -1,4 +1,6 @@
 ## 7.1.0
++ Fixed animation duration and opacity when `minSize` equals `maxSize`.
++ Fixed shared styles leaking when the first instance is destroyed before the last remaining instance.
 + Fixed auto initialization when the script is loaded in `<head>` before the document body exists.
 + Removed generated library and constructor bundles from Git; build outputs are now ignored.
 + Updated GitHub Actions and configured workflows to use the current Node.js LTS release.

@@ -104,15 +104,13 @@ export class Flake {
             height: this.size + 'px'
         };
 
-        if (!isEqual) {
-            styleProps.opacity = String(interpolation(
-                this.size,
-                params.minSize,
-                params.maxSize,
-                params.minOpacity,
-                params.maxOpacity
-            ));
-        }
+        styleProps.opacity = String(interpolation(
+            this.size,
+            params.minSize,
+            params.maxSize,
+            params.minOpacity,
+            params.maxOpacity
+        ));
 
         setStyle(this.elem, styleProps);
 
