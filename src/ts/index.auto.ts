@@ -1,3 +1,12 @@
 import Snowflakes from '.';
 
-new Snowflakes();
+function init() {
+    document.removeEventListener('DOMContentLoaded', init);
+    new Snowflakes();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
