@@ -1,4 +1,4 @@
-## Unreleased
+## 7.1.0
 + Removed generated library and constructor bundles from Git; build outputs are now ignored.
 + Updated GitHub Actions and configured workflows to use the current Node.js LTS release.
 + Added GitHub Pages deployment and npm package artifacts; removed the CodeQL workflow.
