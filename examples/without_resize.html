@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="format-detection" content="telephone=no"/>
     <title>Without window resize example of falling snowflakes</title>
+    <link rel="stylesheet" href="examples.css" />
 </head>
-<body>
+<body data-example="without_resize">
+    <div data-example-controls><button type="button" id="resize-snow">Update area</button></div>
     <script src="../dist/snowflakes.js"></script>
+    <script src="examples.js"></script>
     <script>
-        new Snowflakes({
+        var snowfall = new Snowflakes({
             autoResize: false
         });
+        ExamplePage.setInstances([snowfall]);
+        document.getElementById('resize-snow').addEventListener('click', function () { snowfall.resize(); });
     </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="format-detection" content="telephone=no"/>
     <title>Layer</title>
     <style>
@@ -18,12 +18,15 @@
             overflow: hidden;
         }
     </style>
+    <link rel="stylesheet" href="examples.css" />
 </head>
-<body>
+<body data-example="layer">
     <script src="../dist/snowflakes.js"></script>
+    <script src="examples.js"></script>
     <div id="layer"></div>
     <script>
-        new Snowflakes({ container: document.querySelector('#layer') });
+        var snowfall = new Snowflakes({ container: document.querySelector('#layer') });
+        ExamplePage.setInstances([snowfall]);
     </script>
 </body>
 </html>

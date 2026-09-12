@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="format-detection" content="telephone=no"/>
     <title>Simple example of falling snowflakes with scroll page</title>
     <style>
@@ -17,11 +17,14 @@
             background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,56,121,1) 100%);
         }
     </style>
+    <link rel="stylesheet" href="examples.css" />
 </head>
-<body>
+<body data-example="scroll_page">
     <script src="../dist/snowflakes.js"></script>
+    <script src="examples.js"></script>
     <script>
-        new Snowflakes();
+        var snowfall = new Snowflakes();
+        ExamplePage.setInstances([snowfall]);
     </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="format-detection" content="telephone=no"/>
     <title>Multicolor</title>
     <style>
@@ -20,11 +20,13 @@
             overflow: hidden;
         }
     </style>
+    <link rel="stylesheet" href="examples.css" />
 </head>
-<body>
+<body data-example="multicolor">
     <script src="../dist/snowflakes.js"></script>
+    <script src="examples.js"></script>
     <script>
-        [
+        var snowfalls = [
             '#FF69B4',
             '#DC143C',
             '#9ACD32',
@@ -32,13 +34,14 @@
             '#7FFFD4',
             '#9370DB',
             '#FFD700'
-        ].forEach(function(item) {
-            new Snowflakes({
+        ].map(function(item) {
+            return new Snowflakes({
                 count: 15,
                 maxSize: 60,
                 color: item
             });
         });
+        ExamplePage.setInstances(snowfalls);
     </script>
 </body>
 </html>

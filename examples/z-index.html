@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="format-detection" content="telephone=no"/>
     <title>Own z-index</title>
     <style>
@@ -31,14 +31,27 @@
             margin-left: -300px;
         }
     </style>
+    <link rel="stylesheet" href="examples.css" />
 </head>
-<body>
-    z-index for snowflakes: 90000
+<body data-example="z-index">
+    <div data-example-controls>
+        <label for="snow-position">Snow position</label>
+        <select id="snow-position">
+            <option value="5">Behind both panels</option>
+            <option value="90000" selected>Between panels</option>
+            <option value="100001">In front of both panels</option>
+        </select>
+    </div>
     <div id="top-layer">z-index: 100000</div>
     <div id="bottom-layer">z-index: 10</div>
     <script src="../dist/snowflakes.js"></script>
+    <script src="examples.js"></script>
     <script>
-        new Snowflakes({ zIndex: 90000 });
+        var snowfall = new Snowflakes({ zIndex: 90000 });
+        ExamplePage.setInstances([snowfall]);
+        document.getElementById('snow-position').addEventListener('change', function (event) {
+            snowfall.setParams({ zIndex: Number(event.target.value) });
+        });
     </script>
 </body>
 </html>

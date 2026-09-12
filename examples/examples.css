@@ -1,0 +1,297 @@
+:root {
+    --example-header-height: 64px;
+}
+
+body {
+    margin: 0;
+    padding-bottom: var(--example-header-height);
+}
+
+.example-header {
+    --header-bg: rgb(248 250 252 / 35%);
+    --header-text: #172b3a;
+    --header-muted: #526778;
+    --header-border: #dbe4ec;
+    --control-bg: #fff;
+    --control-border: #ccd9e3;
+    --control-hover: #edf3f7;
+    --accent: #16739b;
+    --accent-bg: #e5f3fa;
+    --accent-border: #b7dce9;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    z-index: 2147483647;
+    box-sizing: border-box;
+    padding: 6px 16px max(6px, env(safe-area-inset-bottom));
+    color: var(--header-text);
+    background: var(--header-bg);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    border-top: 1px solid var(--header-border);
+    font: 13px/1.4 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    text-align: left;
+    color-scheme: light;
+}
+
+body[data-example="big"] .example-header,
+body[data-example="multicolor"] .example-header,
+body[data-example="balls"] .example-header,
+body[data-example="some_layers"] .example-header,
+body[data-example="3d_cube"] .example-header,
+body[data-example="scroll_page"] .example-header,
+body[data-example="constructor"].body_bg_black .example-header {
+    --header-bg: rgb(16 18 20 / 20%);
+    --header-text: #e5e9ed;
+    --header-muted: #a4adb6;
+    --header-border: #282d32;
+    --control-bg: #1a1e22;
+    --control-border: #343c44;
+    --control-hover: #262d34;
+    --accent: #8dcde8;
+    --accent-bg: #19313d;
+    --accent-border: #2d5365;
+    color-scheme: dark;
+}
+
+/* Keep labels readable over both the white and black quadrants. */
+body[data-example="some_layers"] .example-header {
+    --header-bg: rgb(16 18 20 / 65%);
+    --header-muted: #e5e9ed;
+}
+
+/* The difference layer renders over a white canvas with large black flakes. */
+body[data-example="blend_mode"] .example-header {
+    --header-bg: rgb(248 250 252 / 75%);
+    --header-muted: #344656;
+}
+
+.example-heading,
+.example-tools,
+.example-navigation,
+.example-controls,
+.example-playback,
+[data-example-controls] {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.example-heading {
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    margin-bottom: 2px;
+}
+
+.example-tools {
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-self: flex-end;
+    max-width: 55%;
+}
+
+.example-navigation {
+    order: 2;
+    flex-shrink: 0;
+    align-self: flex-end;
+}
+
+#example-picker {
+    width: 216px;
+}
+
+.example-brand {
+    color: var(--header-text);
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: 11px;
+}
+
+.example-brand a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.example-brand a:hover {
+    text-decoration: underline;
+}
+
+.example-brand__icon {
+    color: var(--accent);
+    font-size: 15px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.example-brand .example-brand__label {
+    color: var(--header-muted);
+    font-weight: 400;
+}
+
+.example-intro {
+    max-width: 720px;
+    min-width: 0;
+}
+
+.example-header h1 {
+    margin: 0;
+    color: var(--header-text);
+    font-size: 15px;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+}
+
+.example-header p {
+    margin: 0;
+    color: var(--header-muted);
+    font-size: 12px;
+}
+
+.example-controls {
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: 390px;
+}
+
+.example-header button,
+.example-header select,
+.example-step {
+    box-sizing: border-box;
+    min-height: 30px;
+    padding: 4px 8px;
+    border: 1px solid var(--control-border);
+    border-radius: 6px;
+    background: var(--control-bg);
+    color: var(--header-text);
+    font: inherit;
+    cursor: pointer;
+}
+
+.example-header label {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.example-header input[type="checkbox"] {
+    accent-color: var(--accent);
+}
+
+.example-header #example-pause {
+    min-width: 70px;
+    background: var(--accent-bg);
+    border-color: var(--accent-border);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.example-step {
+    min-width: 32px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.example-header button:hover,
+.example-step:hover {
+    background: var(--control-hover);
+}
+
+.example-header :focus-visible {
+    outline: 3px solid #1786b5;
+    outline-offset: 3px;
+}
+
+.example-playback[hidden] {
+    display: none;
+}
+
+.example-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* Center contained scenes in the space above the bottom panel. */
+body[data-example="layer"] #layer {
+    top: calc((100vh - var(--example-header-height)) / 2);
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - var(--example-header-height) - 32px);
+    margin: 0;
+    transform: translate(-50%, -50%);
+    border-color: #a2c2d5;
+    border-radius: 12px;
+}
+
+body[data-example="z-index"] #top-layer,
+body[data-example="z-index"] #bottom-layer {
+    top: calc((100vh - var(--example-header-height)) / 2);
+    width: min(300px, 44vw);
+    height: min(300px, 45vh);
+    margin: 0;
+    line-height: normal;
+    display: grid;
+    place-items: center;
+    transform: translateY(-50%);
+    font: 14px system-ui, sans-serif;
+}
+
+body[data-example="z-index"] #bottom-layer {
+    transform: translate(-100%, -50%);
+}
+
+body[data-example="3d_cube"] .cube-3d {
+    --cube-size: min(36vw, calc((100vh - var(--example-header-height)) * .48), 400px);
+    top: calc((100vh - var(--example-header-height)) / 2);
+}
+
+body[data-example="3d_cube"] .cube-3d__container {
+    width: var(--cube-size);
+    height: var(--cube-size);
+}
+
+body[data-example="3d_cube"] .cube-3d__side_back { transform: translateZ(calc(var(--cube-size) / -2)); }
+body[data-example="3d_cube"] .cube-3d__side_front { transform: translateZ(calc(var(--cube-size) / 2)); }
+body[data-example="3d_cube"] .cube-3d__side_left { transform: translateX(calc(var(--cube-size) / -2)) rotateY(90deg); }
+body[data-example="3d_cube"] .cube-3d__side_right { transform: translateX(calc(var(--cube-size) / 2)) rotateY(90deg); }
+body[data-example="3d_cube"] .cube-3d__side_top { transform: translateY(calc(var(--cube-size) / -2)) rotateX(90deg); }
+body[data-example="3d_cube"] .cube-3d__side_bottom { transform: translateY(calc(var(--cube-size) / 2)) rotateX(90deg); }
+.example-paused .cube-3d__container { animation-play-state: paused; }
+
+
+body[data-example="constructor"] { min-height: calc(440px + var(--example-header-height)); }
+body[data-example="constructor"] .form__panel { top: 20px; }
+body[data-example="constructor"] .no-support { top: 5px; }
+body[data-example="constructor"] .code { left: 320px; right: 24px; bottom: calc(var(--example-header-height) + 12px); height: 210px; }
+body[data-example="constructor"] .code__textarea { max-width: 520px; height: 150px; }
+
+@media (max-width: 760px) {
+    .example-header { flex-direction: column; align-items: stretch; gap: 6px; padding: 6px 12px max(6px, env(safe-area-inset-bottom)); }
+    .example-brand { display: none; }
+    .example-tools { max-width: none; align-self: stretch; justify-content: flex-start; }
+    .example-navigation { flex: 1 1 160px; min-width: 0; }
+    .example-playback label { display: none; }
+    .example-header button,
+    .example-header select,
+    .example-step { min-height: 32px; }
+    .example-step { min-width: 32px; }
+    #example-picker { flex: 1; width: 0; min-width: 0; }
+    .example-controls { max-width: 100%; justify-content: flex-start; }
+    body[data-example="constructor"] .form__layer { position: relative; inset: auto; width: calc(100% - 32px); height: 260px; margin: 20px 16px; }
+    body[data-example="constructor"] .form__panel { position: relative; top: auto; left: auto; width: fit-content; max-width: calc(100% - 32px); margin: 20px 16px; }
+    body[data-example="constructor"] .code { position: relative; left: auto; right: auto; bottom: auto; margin: 20px 16px; }
+    body[data-example="constructor"] .code__textarea { max-width: 100%; }
+}
+
+@media (max-height: 400px) {
+    .example-header { max-height: 50vh; overflow-y: auto; }
+}

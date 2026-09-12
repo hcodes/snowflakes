@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="format-detection" content="telephone=no"/>
     <title>Blend mode for snowflakes</title>
     <style>
@@ -38,8 +38,9 @@
             text-shadow: 1px 1px 2px white;
         }
     </style>
+    <link rel="stylesheet" href="examples.css" />
 </head>
-<body>
+<body data-example="blend_mode">
     <div class="snow">
         SNOW!
     </div>
@@ -49,14 +50,16 @@
     </div>
 
     <script src="../dist/snowflakes.js"></script>
+    <script src="examples.js"></script>
     <script>
-        new Snowflakes({
+        var snowfall = new Snowflakes({
             minSize: 50,
             maxSize: 200,
             count: 100,
             color: 'black',
             wind: false
         });
+        ExamplePage.setInstances([snowfall]);
     </script>
 </body>
 </html>

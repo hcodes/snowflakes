@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="format-detection" content="telephone=no"/>
     <title>Big snowflakes</title>
     <style>
@@ -10,16 +10,19 @@
             background-color: black;
         }
     </style>
+    <link rel="stylesheet" href="examples.css" />
 </head>
-<body>
+<body data-example="big">
     <script src="../dist/snowflakes.js"></script>
+    <script src="examples.js"></script>
     <script>
-        new Snowflakes({
+        var snowfall = new Snowflakes({
             minSize: 10,
             maxSize: 100,
             color: 'white',
             wind: true
         });
+        ExamplePage.setInstances([snowfall]);
     </script>
 </body>
 </html>

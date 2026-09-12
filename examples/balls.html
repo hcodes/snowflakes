@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="format-detection" content="telephone=no"/>
     <title>Your own kind of snowflakes</title>
     <style>
@@ -18,11 +18,14 @@
             border-radius: 100%;
         }
     </style>
+    <link rel="stylesheet" href="examples.css" />
 </head>
-<body>
+<body data-example="balls">
     <script src="../dist/snowflakes.light.js"></script>
+    <script src="examples.js"></script>
     <script>
-        new Snowflakes({ rotation: false });
+        var snowfall = new Snowflakes({ rotation: false });
+        ExamplePage.setInstances([snowfall]);
     </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="format-detection" content="telephone=no"/>
     <title>3D cube with snowflakes</title>
     <style>
@@ -73,8 +73,9 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="examples.css" />
 </head>
-<body>
+<body data-example="3d_cube">
     <div class="cube-3d">
         <div class="cube-3d__container">
             <div class="cube-3d__side cube-3d__side_back"></div>
@@ -87,16 +88,17 @@
     </div>
 
     <script src="../dist/snowflakes.js"></script>
+    <script src="examples.js"></script>
     <script>
-        [
+        var snowfalls = [
             ['.cube-3d__side_back', 'black'],
             ['.cube-3d__side_left', 'white'],
             ['.cube-3d__side_right', 'yellow'],
             ['.cube-3d__side_top', 'white'],
             ['.cube-3d__side_bottom', 'pink'],
             ['.cube-3d__side_front', 'green']
-        ].forEach((item) => {
-            new Snowflakes({
+        ].map(function (item) {
+            return new Snowflakes({
                 container: document.querySelector(item[0]),
                 minSize: 20,
                 maxSize: 100,
@@ -105,6 +107,7 @@
                 wind: false
             });
         });
+        ExamplePage.setInstances(snowfalls);
     </script>
 </body>
 </html>
