@@ -1,4 +1,5 @@
 ## 7.1.0
++ Extracted pure settings normalization: invalid numbers fall back to defaults, numeric ranges are clamped, and reversed minimum/maximum bounds are reordered.
 + Fixed animation duration and opacity when `minSize` equals `maxSize`.
 + Fixed shared styles leaking when the first instance is destroyed before the last remaining instance.
 + Fixed auto initialization when the script is loaded in `<head>` before the document body exists.

@@ -1,4 +1,5 @@
 import { getDefaultParams } from './getDefaultParams';
+import { normalizeParams } from './normalizeParams';
 import { Flake, maxInnerSize, calcSize, FlakeParams }  from './flake';
 import {
     setStyle,
@@ -40,7 +41,7 @@ export default class Snowflakes {
     }
 
     constructor(params?: SnowflakesParams) {
-        this.params = this.setParams(params);
+        this.params = normalizeParams(params, getDefaultParams());
 
         Snowflakes.gid++;
         this.gid = Snowflakes.gid;
@@ -229,21 +230,6 @@ export default class Snowflakes {
             .forEach(flake => {
                 flake.appendTo(this.container);
             });
-    }
-
-    private setParams(rawParams?: SnowflakesParams) {
-        const params = rawParams || {};
-
-        const result = {} as SnowflakesInnerParams;
-        const defaultParams = getDefaultParams();
-
-        Object.keys(defaultParams).forEach(name => {
-            result[name] = typeof params[name] === 'undefined' ?
-                defaultParams[name] :
-                params[name];
-        });
-
-        return result;
     }
 
     private getAnimationStyle() {
