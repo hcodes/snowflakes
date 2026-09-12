@@ -10,7 +10,12 @@ export default [
       name: 'Snowflakes',
       file: './dist/snowflakes.js'
     },
-    plugins: [typescript({ tsconfig: './tsconfig.lib.umd.json' })]
+    plugins: [typescript({
+      include: [path.resolve('src/ts/**/*.ts')],
+      declaration: true,
+      declarationDir: 'dist',
+      rootDir: 'src/ts',
+    })]
   },
   {
     input: './src/ts/index.auto.ts',
@@ -18,7 +23,7 @@ export default [
       format: 'iife',
       file: './dist/snowflakes.auto.js'
     },
-    plugins: [typescript({ tsconfig: './tsconfig.auto.json' })]
+    plugins: [typescript({ include: [path.resolve('src/ts/**/*.ts')] })]
   },
   {
     input: './src/ts/index.ts',
@@ -26,7 +31,7 @@ export default [
       format: 'es',
       file: './dist/snowflakes.esm.js'
     },
-    plugins: [typescript({ tsconfig: './tsconfig.lib.esm.json' })]
+    plugins: [typescript({ include: [path.resolve('src/ts/**/*.ts')], target: 'ES2015' })]
   },
   {
     input: './examples/constructor/src/index.ts',
@@ -35,7 +40,7 @@ export default [
       file: './examples/constructor/dist/index.js'
     },
     plugins: [
-        typescript({ tsconfig: './tsconfig.constructor.json' }),
+        typescript(),
         postcss({
             config: true,
             extract: path.resolve('./examples/constructor/dist/index.css')

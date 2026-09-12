@@ -66,7 +66,7 @@
   "scripts": {
     "test": "eslint . && npm run typecheck && npm run test:unit",
     "test:unit": "node --test tests/*.test.mjs",
-    "typecheck": "tsc --noEmit -p tsconfig.lib.umd.json && tsc --noEmit -p tsconfig.constructor.json",
+    "typecheck": "tsc --noEmit",
     "build": "npm run clean && npm run make && npm run inject:css && npm run minify",
     "clean": "del-cli dist/*",
     "minify": "npm run minify:js && npm run minify:js-auto && npm run minify:js-light",

@@ -1,7 +1,0 @@
-{
- "extends": "./tsconfig.common.json",
- "exclude": ["dist", "examples"],
- "compilerOptions": {
-   "target": "ES2015"
- }
-}
