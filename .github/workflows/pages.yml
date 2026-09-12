@@ -1,0 +1,53 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 'lts/*'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Stage public files
+        run: |
+          mkdir -p _site/examples/constructor
+          cp -R dist _site/dist
+          cp examples/*.html _site/examples/
+          cp examples/constructor/index.html _site/examples/constructor/
+          cp -R examples/constructor/dist _site/examples/constructor/dist
+          cp -R img _site/img
+          printf '%s\n' '<!doctype html><html lang="en"><meta charset="utf-8"><title>Snowflakes</title><meta http-equiv="refresh" content="0;url=examples/constructor/"><a href="examples/constructor/">Snowflakes constructor</a></html>' > _site/index.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5

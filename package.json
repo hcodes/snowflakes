@@ -64,8 +64,8 @@
     "typescript-eslint": "^8.46.0"
   },
   "scripts": {
-    "test": "eslint . & npm run typecheck",
-    "typecheck": "tsc --noEmit -p tsconfig.lib.umd.json",
+    "test": "eslint . && npm run typecheck",
+    "typecheck": "tsc --noEmit -p tsconfig.lib.umd.json && tsc --noEmit -p tsconfig.constructor.json",
     "build": "npm run clean && npm run make && npm run inject:css && npm run minify",
     "clean": "del-cli dist/*",
     "minify": "npm run minify:js && npm run minify:js-auto && npm run minify:js-light",

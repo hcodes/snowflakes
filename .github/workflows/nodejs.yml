@@ -1,23 +1,33 @@
 name: Node CI
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [24.x]
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
-      run: |
-        npm ci
-        npm run build
-        npm test
-      env:
-        CI: true
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 'lts/*'
+          cache: npm
+      # The prepare lifecycle builds the library and constructor.
+      - run: npm ci
+      - run: npm test
+      - name: Pack built library
+        run: npm pack
+      - uses: actions/upload-artifact@v7
+        with:
+          name: npm-package
+          path: magic-snowflakes-*.tgz
+          if-no-files-found: error

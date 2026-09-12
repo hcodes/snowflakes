@@ -1,5 +1,8 @@
 ## Unreleased
 + Removed generated library and constructor bundles from Git; build outputs are now ignored.
++ Updated GitHub Actions and configured workflows to use the current Node.js LTS release.
++ Added GitHub Pages deployment and npm package artifacts; removed the CodeQL workflow.
++ Fixed lint failure reporting in `npm test` and included constructor type checking.
 
 ## v7.0.1
 + Small fix for Next.js 15.
