@@ -98,6 +98,10 @@ export default class Snowflakes {
      * Resize snowflakes.
      */
     public resize() {
+        if (this.destroyed) {
+            return;
+        }
+
         const newWidth = this.width();
         const newHeight = this.height();
 
@@ -159,7 +163,7 @@ export default class Snowflakes {
     }
 
     private handleOrientationChange = () => {
-        this.resize();
+        this.handleResize();
     }
 
     private appendContainer() {

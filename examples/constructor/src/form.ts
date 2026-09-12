@@ -89,6 +89,13 @@ export class Form {
 
         this.snowflakes = new Snowflakes(params);
 
+        if (this.stop) {
+            this.snowflakes.stop();
+        }
+        if (this.hidden) {
+            this.snowflakes.hide();
+        }
+
         updateCode(params);
     }
 

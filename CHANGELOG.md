@@ -3,6 +3,8 @@
 + Updated GitHub Actions and configured workflows to use the current Node.js LTS release.
 + Added GitHub Pages deployment and npm package artifacts; removed the CodeQL workflow.
 + Fixed lint failure reporting in `npm test` and included constructor type checking.
++ Preserved Stop and Hide states when changing constructor settings.
++ Fixed orientation changes ignoring `autoResize: false` and made `resize()` a no-op after `destroy()`.
 
 ## v7.0.1
 + Small fix for Next.js 15.
