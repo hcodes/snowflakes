@@ -1,16 +1,58 @@
-import type { SnowflakesInnerParams, SnowflakesParams } from './types';
+export type SnowflakesParams = Partial<NormalizedSnowflakesOptions>;
+
+export interface NormalizedSnowflakesOptions {
+    container: HTMLElement; // Default: document.body
+    count: number; // Default: 50
+    color: string; // Default: "#5ECDEF"
+    minOpacity: number; // Default: 0.6
+    maxOpacity: number; // Default: 1
+    minSize: number; // Default: 10
+    maxSize: number; // Default: 25
+    rotation: boolean; // Default: true
+    speed: number; // Default: 1
+    stop: boolean; // Default: false
+    types: number; // Default: 6
+    width?: number; // Default: width of container
+    height?: number; // Default: height of container
+    wind: boolean; // Default: true
+    zIndex: number; // Default: 9999
+    autoResize: boolean; // Default: true
+}
+
+
+export function getDefaultOptions(): NormalizedSnowflakesOptions {
+    return {
+        color: '#5ECDEF',
+        container: document.body,
+        count: 50,
+        speed: 1,
+        stop: false,
+        rotation: true,
+        minOpacity: 0.6,
+        maxOpacity: 1,
+        minSize: 10,
+        maxSize: 25,
+        types: 6,
+        width: undefined,
+        height: undefined,
+        wind: true,
+        zIndex: 9999,
+        autoResize: true,
+    };
+}
+
 
 function finiteNumber<T extends number | undefined>(value: unknown, fallback: T): number | T {
     return typeof value === 'number' && isFinite(value) ? value : fallback;
 }
 
 /** Normalize numeric options without reading the DOM or changing the inputs. */
-export function normalizeParams(
+export function normalizeOptions(
     rawParams: SnowflakesParams | undefined,
-    defaults: SnowflakesInnerParams,
-): SnowflakesInnerParams {
+    defaults: NormalizedSnowflakesOptions,
+): NormalizedSnowflakesOptions {
     const params = rawParams || {};
-    const result: SnowflakesInnerParams = {
+    const result: NormalizedSnowflakesOptions = {
         container: params.container === undefined ? defaults.container : params.container,
         color: params.color === undefined ? defaults.color : params.color,
         stop: params.stop === undefined ? defaults.stop : params.stop,

@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 import { afterEach, expect, jest, test } from '@jest/globals';
-import { SnowflakesStyles } from '../src/ts/styles';
+import { SnowflakesStyles } from '../../src/styles/stylesheet-manager';
 
 const owners: SnowflakesStyles[] = [];
 

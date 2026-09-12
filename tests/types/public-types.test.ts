@@ -3,8 +3,8 @@ import ts from 'typescript';
 import { resolve } from 'node:path';
 
 test('public options reject misspelled properties', () => {
-    const fileName = resolve('tests/public-types-fixture.ts');
-    const source = `import type { SnowflakesParams } from '../src/ts/types';
+    const fileName = resolve('tests/types/public-types-fixture.ts');
+    const source = `import type { SnowflakesParams } from '../../src/index';
 const valid: SnowflakesParams = { minSize: 10, width: 0 };
 const invalid: SnowflakesParams = { minSzie: 10 };
 void valid; void invalid;`;

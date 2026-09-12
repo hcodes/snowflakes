@@ -1,7 +1,8 @@
 import { expect, test } from '@jest/globals';
-import { calcSize, calcOpacity, calcDuration, calcDelay, calcTrajectory, getAnimationStyle } from '../src/ts/calculations';
+import { calcSize, calcOpacity, calcDuration, calcDelay, calcTrajectory } from '../../src/animation/calculations';
+import { getAnimationStyle } from '../../src/animation/keyframes';
 
-test('size and opacity preserve endpoints, interpolation and equal bounds', () => {
+test('size and opacity preserve endpoints, interpolate and equal bounds', () => {
     expect(calcSize(0, 10, 25)).toBe(10);
     expect(calcSize(20, 10, 25)).toBe(25);
     expect(calcSize(10, 10, 25)).toBe(17);

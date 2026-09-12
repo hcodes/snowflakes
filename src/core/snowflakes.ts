@@ -1,7 +1,6 @@
-import { getDefaultParams } from './getDefaultParams';
-import { normalizeParams } from './normalizeParams';
-import { getAnimationStyle } from './calculations';
-import { SnowflakesStyles } from './styles';
+import { getDefaultOptions, normalizeOptions } from './options';
+import { getAnimationStyle } from '../animation/keyframes';
+import { SnowflakesStyles } from '../styles/stylesheet-manager';
 import { Flake, FlakeParams }  from './flake';
 import {
     setStyle,
@@ -10,15 +9,19 @@ import {
     removeNode,
     addClass,
     removeClass,
-} from './helpers/dom';
-import { ContainerSize, SnowflakesInnerParams, SnowflakesParams } from './types';
-export { SnowflakesParams } from './types';
+} from '../utils/dom';
+import type { NormalizedSnowflakesOptions, SnowflakesParams } from './options';
+
+export interface ContainerSize {
+    width: number;
+    height: number;
+}
 
 export default class Snowflakes {
     private container: HTMLElement;
     private destroyed = false;
     private flakes: Flake[] = [];
-    private params: SnowflakesInnerParams;
+    private params: NormalizedSnowflakesOptions;
 
     private styles: SnowflakesStyles;
 
@@ -33,11 +36,11 @@ export default class Snowflakes {
     }
 
     static get defaultParams() {
-        return getDefaultParams();
+        return getDefaultOptions();
     }
 
     constructor(params?: SnowflakesParams) {
-        this.params = normalizeParams(params, getDefaultParams());
+        this.params = normalizeOptions(params, getDefaultOptions());
 
         Snowflakes.gid++;
         this.gid = Snowflakes.gid;

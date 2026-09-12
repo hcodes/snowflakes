@@ -4,7 +4,7 @@
 [![NPM Downloads](https://img.shields.io/npm/dm/magic-snowflakes.svg?style=flat)](https://www.npmjs.org/package/magic-snowflakes)
 [![install size](https://packagephobia.com/badge?p=magic-snowflakes)](https://packagephobia.com/result?p=magic-snowflakes)
 
-<img width="600" src="./img/flakes.png" alt="Falling snowflakes" />
+<img width="600" src="https://hcodes.github.io/snowflakes/docs/assets/flakes.png" alt="Falling snowflakes" />
 
 ## Details
 
@@ -187,6 +187,22 @@ The `dist/` directory of [the npm package](https://unpkg.com/magic-snowflakes/di
 
 
 ## Development
+
+Source files are grouped by responsibility:
+
+- `src/index.ts` exposes the public API; `src/index.auto.ts` is the automatic startup entry point.
+- `src/core/` contains the main class, individual flakes, options, defaults and normalization.
+- `src/animation/` contains calculations and keyframes.
+- `src/utils/` contains shared DOM and math helpers.
+- `src/styles/` contains stylesheet management and CSS; `src/assets/snowflakes/` contains SVG masks.
+- `examples/constructor/src/` contains the playground and code preview.
+- `tests/unit/`, `tests/integration/` and `tests/types/` contain the existing test suites.
+- `scripts/inject-styles.mjs` injects the built CSS; `docs/assets/` contains documentation images.
+
+Build output keeps its existing paths: `dist/snowflakes*.js`, `dist/index.d.ts`,
+`dist/main.css`, `dist/types.css` and `examples/constructor/dist/index.{js,css}`.
+Previously published declaration paths remain available through compatibility re-exports.
+Example URLs, including `examples/constructor/`, remain unchanged.
 
 ```sh
 git clone git@github.com:hcodes/snowflakes.git ./snowflakes

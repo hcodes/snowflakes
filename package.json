@@ -77,10 +77,10 @@
     "minify:js": "terser ./dist/snowflakes.js -o ./dist/snowflakes.min.js -c -m",
     "minify:js-auto": "terser ./dist/snowflakes.auto.js -o ./dist/snowflakes.auto.min.js -c -m",
     "minify:js-light": "terser ./dist/snowflakes.light.js -o ./dist/snowflakes.light.min.js -c -m",
-    "inject:css": "node tools/inject-css.mjs",
+    "inject:css": "node scripts/inject-styles.mjs",
     "make": "npm run make:ts && npm run make:css",
     "make:ts": "rollup --config rollup.config.mjs",
-    "make:css": "postcss --no-map src/css/*.css --dir dist",
+    "make:css": "postcss --no-map src/styles/base.css -o dist/main.css && postcss --no-map src/styles/shapes.css -o dist/types.css",
     "prepare": "npm run build"
   },
   "browserslist": [

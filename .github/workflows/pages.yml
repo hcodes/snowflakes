@@ -30,7 +30,10 @@ jobs:
           cp examples/*.html _site/examples/
           cp examples/constructor/index.html _site/examples/constructor/
           cp -R examples/constructor/dist _site/examples/constructor/dist
-          cp -R img _site/img
+          mkdir -p _site/docs/assets _site/img
+          cp docs/assets/flakes.png _site/docs/assets/flakes.png
+          # Preserve the existing public image URL.
+          cp docs/assets/flakes.png _site/img/flakes.png
           printf '%s\n' '<!doctype html><html lang="en"><meta charset="utf-8"><title>Snowflakes</title><meta http-equiv="refresh" content="0;url=examples/constructor/"><a href="examples/constructor/">Snowflakes constructor</a></html>' > _site/index.html
       - uses: actions/upload-pages-artifact@v3
         with:

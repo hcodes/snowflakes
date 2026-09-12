@@ -1,7 +1,7 @@
 /** @jest-environment jsdom */
 import { afterEach, beforeEach, expect, jest, test } from '@jest/globals';
-import Snowflakes from '../src/ts/index';
-import * as dom from '../src/ts/helpers/dom';
+import Snowflakes from '../../src/index';
+import * as dom from '../../src/utils/dom';
 
 const instances: Snowflakes[] = [];
 const injectStyle = dom.injectStyle;

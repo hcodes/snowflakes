@@ -1,6 +1,6 @@
-import { addClass, reflow, setStyle } from './helpers/dom';
-import { getRandom } from './helpers/number';
-import { maxInnerSize, calcSize, calcOpacity, calcDuration, calcDelay } from './calculations';
+import { addClass, reflow, setStyle } from '../utils/dom';
+import { randomInt } from '../utils/math';
+import { SIZE_STEPS, calcSize, calcOpacity, calcDuration, calcDelay } from '../animation/calculations';
 
 interface StyleProps extends Record<string, string | undefined> {
     animationName: string;
@@ -48,7 +48,7 @@ export class Flake {
         addClass(
             innerFlake,
             'snowflake__inner',
-            params.types ? 'snowflake__inner_type_' + getRandom(0, params.types) : '',
+            params.types ? 'snowflake__inner_type_' + randomInt(0, params.types) : '',
             params.wind ? 'snowflake__inner_wind' : '',
             params.rotation ? ('snowflake__inner_rotation' + (Math.random() > 0.5 ? '' : '_reverse')) : '',
         );
@@ -82,7 +82,7 @@ export class Flake {
 
         const isEqual = params.minSize === params.maxSize;
 
-        this.sizeInner = isEqual ? 0 : getRandom(0, maxInnerSize);
+        this.sizeInner = isEqual ? 0 : randomInt(0, SIZE_STEPS);
         this.size = calcSize(this.sizeInner, params.minSize, params.maxSize);
 
         const animationProps = this.getAnimationProps(params);

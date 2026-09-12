@@ -1,11 +1,11 @@
-import Snowflakes from '../../../src/ts';
+import Snowflakes from '../../../src';
 
-import { updateCode } from './code';
+import { updateCode } from './code-preview';
 
 import { bindRadioClick, getRadioValue, setRadioValue } from './utils/radio';
-import { loadScript } from './utils/loadScript';
+import { loadScript } from './utils/load-script';
 
-import './form.css';
+import './playground.css';
 
 declare global {
     interface Window {
@@ -14,7 +14,7 @@ declare global {
     }
 }
 
-export class Form {
+export class Playground {
     private stop = false;
     private hidden = false;
     private snowflakes?: Snowflakes;

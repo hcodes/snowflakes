@@ -7,9 +7,10 @@ export default [
     ignores: [
       '.*',
       'dist/**',
+      '_site/**',
       'examples/constructor/dist/**',
       'node_modules/**',
-      'tools/**',
+      'scripts/**',
       '*.config.js'
     ]
   },

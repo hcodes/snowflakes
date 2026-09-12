@@ -1,7 +1,7 @@
-import Snowflakes from '../../../src/ts';
-import { SnowflakesInnerParams } from '../../../src/ts/types';
+import Snowflakes from '../../../src';
+import { NormalizedSnowflakesOptions } from '../../../src/core/options';
 
-import './code.css';
+import './code-preview.css';
 
 const textareaElement = document.querySelector('.code__textarea') as HTMLTextAreaElement;
 textareaElement.onclick = () => {
@@ -20,21 +20,21 @@ copyElement.onclick = () => {
 
 const TAB = '    ';
 
-export function updateCode(props: SnowflakesInnerParams) {
+export function updateCode(props: NormalizedSnowflakesOptions) {
     let result = '// Paste the code inside the <body> tag\n<script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>\n<script>\n    var sf = new Snowflakes(';
     let count = 0;
 
     const defaultParams = Snowflakes.defaultParams;
     Object.keys(defaultParams).forEach((key) => {
-        const defaultValue = defaultParams[key as keyof SnowflakesInnerParams];
-        if (typeof defaultValue !== 'undefined' && key in props && props[key as keyof SnowflakesInnerParams] !== defaultValue) {
+        const defaultValue = defaultParams[key as keyof NormalizedSnowflakesOptions];
+        if (typeof defaultValue !== 'undefined' && key in props && props[key as keyof NormalizedSnowflakesOptions] !== defaultValue) {
             if (count) {
                 result += ',\n';
             } else {
                 result += '{\n';
             }
 
-            let value = props[key as keyof SnowflakesInnerParams];
+            let value = props[key as keyof NormalizedSnowflakesOptions];
             if (typeof value === 'string') {
                 value = '"' + value + '"';
             }

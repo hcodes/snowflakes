@@ -1,4 +1,4 @@
-import { injectStyle, removeNode } from './helpers/dom';
+import { injectStyle, removeNode } from '../utils/dom';
 
 const mainStyle = '{MAIN_STYLE}';
 const imagesStyle = '{IMAGES_STYLE}';
