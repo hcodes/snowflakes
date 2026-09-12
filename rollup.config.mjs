@@ -1,6 +1,7 @@
 import path from 'path';
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
+import postcssConfig from './postcss.config.mjs';
 
 export default [
   {
@@ -42,7 +43,8 @@ export default [
     plugins: [
         typescript(),
         postcss({
-            config: true,
+            config: false,
+            plugins: postcssConfig.plugins,
             extract: path.resolve('./examples/constructor/dist/index.css')
         }),
     ]
