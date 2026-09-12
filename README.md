@@ -11,7 +11,7 @@
 - Only one JavaScript file
 - CSS animations
 - Responsive layout
-- Flexible settings
+- Flexible settings with dynamic updates via [`setParams()`](#setparamsparams)
 
 ## [Examples](https://hcodes.github.io/snowflakes/examples/constructor)
 
