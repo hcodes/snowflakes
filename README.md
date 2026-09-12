@@ -1,4 +1,4 @@
-❄️☃️🎄 [Falling snowflakes](https://hcodes.github.io/demo-snowflakes/)
+❄️☃️🎄 [Falling snowflakes](https://hcodes.github.io/snowflakes/examples/constructor)
 ==================
 [![NPM version](https://img.shields.io/npm/v/magic-snowflakes.svg)](https://www.npmjs.com/package/magic-snowflakes)
 [![NPM Downloads](https://img.shields.io/npm/dm/magic-snowflakes.svg?style=flat)](https://www.npmjs.org/package/magic-snowflakes)
@@ -13,7 +13,7 @@
 - Responsive layout
 - Flexible settings
 
-## [Examples](https://hcodes.github.io/demo-snowflakes/)
+## [Examples](https://hcodes.github.io/snowflakes/examples/constructor)
 
 - 🔍 [Constructor](https://hcodes.github.io/snowflakes/examples/constructor): change settings and copy code for your site
 - 🎲 [3D Cube](https://hcodes.github.io/snowflakes/examples/3d_cube.html)
