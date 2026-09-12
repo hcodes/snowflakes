@@ -1,3 +1,6 @@
+## Unreleased
++ Removed generated library and constructor bundles from Git; build outputs are now ignored.
+
 ## v7.0.1
 + Small fix for Next.js 15.
 
