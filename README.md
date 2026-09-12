@@ -204,6 +204,27 @@ Build output keeps its existing paths: `dist/snowflakes*.js`, `dist/index.d.ts`,
 Previously published declaration paths remain available through compatibility re-exports.
 Example URLs, including `examples/constructor/`, remain unchanged.
 
+| Command | Purpose |
+| --- | --- |
+| `npm run build:lib` | Clean and build the library, declarations, CSS and minified bundles in `dist/` |
+| `npm run build:examples` | Clean and build the constructor in `examples/constructor/dist/` |
+| `npm run build` | Build the library, then the examples |
+| `npm run typecheck:lib` | Check library types independently of the constructor |
+| `npm run typecheck:examples` | Check constructor types and its imported library sources |
+| `npm test` | Run ESLint, all type checks and the existing Jest suites |
+| `npm run test:build` | Verify independent builds and packaging in temporary project copies |
+
+Both builds work from a clean checkout with dependencies installed. The library
+build does not read constructor sources or output. The examples build processes
+library CSS from source and does not require or modify `dist/`.
+
+`tsconfig.base.json` contains shared compiler settings. `tsconfig.json` and
+`rollup.config.mjs` cover the library; `examples/constructor/tsconfig.json` and
+`rollup.examples.config.mjs` cover the constructor. The `prepare` lifecycle used
+by installation and packaging runs `build:lib`; CI and Pages build examples
+explicitly. The lower-level `make`, `make:ts`, `make:css` and `inject:css` commands
+operate on the library.
+
 ```sh
 git clone git@github.com:hcodes/snowflakes.git ./snowflakes
 cd ./snowflakes

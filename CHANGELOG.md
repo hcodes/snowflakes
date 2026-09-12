@@ -1,21 +1,35 @@
 ## 7.1.0
+
+### Code fixes
+
++ Fixed animation duration and opacity when `minSize` equals `maxSize`.
++ Fixed shared styles leaking when the first instance is destroyed before the last remaining instance.
++ Fixed SVG mask selectors to match containers when shape styles are shared across instances.
++ Fixed auto initialization when the script is loaded in `<head>` before the document body exists.
++ Preserved Stop and Hide states when changing constructor settings.
++ Fixed orientation changes ignoring `autoResize: false` and made `resize()` a no-op after `destroy()`.
++ Tightened public option types to reject misspelled properties and removed the unsafe cast when assembling normalized settings.
++ Normalized invalid numeric options using defaults, clamped numeric ranges, and reordered reversed minimum/maximum bounds.
+
+### Added features
+
 + Switched snowflakes to SVG masks with `mask-image` and `currentColor`, allowing CSS color overrides and live CSS variable updates while preserving the `color` option.
+
+### Infrastructure changes
+
++ Reorganized library sources into entry points, core modules, animation, styles, assets and utilities; moved existing tests and constructor sources while preserving package paths and public example URLs.
++ Separated stylesheet ownership and pure animation calculations from DOM operations.
++ Added independent `build:lib` and `build:examples` commands, with `build` running both in sequence. Library packaging no longer depends on the constructor.
++ Split library and constructor Rollup and TypeScript configurations, sharing compiler defaults through `tsconfig.base.json` and retaining output-specific settings in Rollup.
++ Separated CSS injection targets so the constructor can build directly from source without prebuilt library artifacts.
++ Added build isolation tests for missing or broken constructor sources, clean packaging and independent example output.
 + Switched PostCSS configuration to ES modules and shared plugins explicitly with Rollup.
 + Migrated unit tests to Jest and TypeScript, using jsdom for stylesheet lifecycle tests.
 + Updated development dependencies and fixed PostCSS plugin loading and CSS import declarations for TypeScript 6; retained ES5 output with the deprecation compatibility setting.
-+ Consolidated TypeScript build configurations and moved output-specific settings into Rollup.
-+ Separated stylesheet ownership and pure animation calculations from DOM operations.
-+ Tightened public option types to reject misspelled properties and removed the unsafe cast when assembling normalized settings.
-+ Extracted pure settings normalization: invalid numbers fall back to defaults, numeric ranges are clamped, and reversed minimum/maximum bounds are reordered.
-+ Fixed animation duration and opacity when `minSize` equals `maxSize`.
-+ Fixed shared styles leaking when the first instance is destroyed before the last remaining instance.
-+ Fixed auto initialization when the script is loaded in `<head>` before the document body exists.
 + Removed generated library and constructor bundles from Git; build outputs are now ignored.
 + Updated GitHub Actions and configured workflows to use the current Node.js LTS release.
 + Added GitHub Pages deployment and npm package artifacts; removed the CodeQL workflow.
-+ Fixed lint failure reporting in `npm test` and included constructor type checking.
-+ Preserved Stop and Hide states when changing constructor settings.
-+ Fixed orientation changes ignoring `autoResize: false` and made `resize()` a no-op after `destroy()`.
++ Fixed lint failure reporting in `npm test` and included separate library and constructor type checks.
 
 ## v7.0.1
 + Small fix for Next.js 15.
