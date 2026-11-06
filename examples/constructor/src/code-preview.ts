@@ -21,10 +21,16 @@ copyElement.onclick = () => {
 const TAB = '    ';
 
 export function updateCode(props: NormalizedSnowflakesOptions) {
-    let result = '// Paste the code inside the <body> tag\n<script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>\n<script>\n    var sf = new Snowflakes(';
+    const defaultParams = Snowflakes.defaultParams;
+    const layerClass = 'snowflakes-container';
+    let result = '// Paste the code inside the <body> tag\n';
+    if (props.container !== defaultParams.container) {
+        result += `<style>.${layerClass} { position: relative; height: 300px; overflow: hidden; }</style>\n`
+            + `<div class="${layerClass}"></div>\n`;
+    }
+    result += '<script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>\n<script>\n    var sf = new Snowflakes(';
     let count = 0;
 
-    const defaultParams = Snowflakes.defaultParams;
     Object.keys(defaultParams).forEach((key) => {
         const defaultValue = defaultParams[key as keyof NormalizedSnowflakesOptions];
         if (typeof defaultValue !== 'undefined' && key in props && props[key as keyof NormalizedSnowflakesOptions] !== defaultValue) {
@@ -35,22 +41,13 @@ export function updateCode(props: NormalizedSnowflakesOptions) {
             }
 
             let value = props[key as keyof NormalizedSnowflakesOptions];
-            if (typeof value === 'string') {
+            if (key === 'container') {
+                value = `document.querySelector(".${layerClass}")`;
+            } else if (typeof value === 'string') {
                 value = '"' + value + '"';
             }
 
-            if (key === 'container') {
-                if (value === document.body) {
-                    key = '';
-                } else {
-                    value = 'document.querySelector(".snowflakes-container")';
-                }
-            }
-
-            if (key) {
-                result += `${TAB}${TAB}${key}: ${value}`;
-            }
-
+            result += `${TAB}${TAB}${key}: ${value}`;
             count++;
         }
     });

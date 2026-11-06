@@ -83,7 +83,7 @@
         }
     }
     measureHeader();
-    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measureHeader).observe(header);
+    window.addEventListener('load', measureHeader);
     window.addEventListener('resize', measureHeader);
 
     window.ExamplePage = {
@@ -102,6 +102,7 @@
                 if (paused) document.body.classList.add('example-paused');
                 else document.body.classList.remove('example-paused');
                 pause.textContent = paused ? 'Resume' : 'Pause';
+                measureHeader();
             }
             header.querySelector('.example-playback').hidden = false;
             pause.addEventListener('click', function () {
@@ -116,7 +117,6 @@
                 if (id === '3d_cube') document.querySelector('.cube-3d__container').style.animationDuration = 10 / multiplier + 's';
             });
             updatePause();
-            measureHeader();
             instances.forEach(function (instance) { instance.resize(); });
             if (id !== 'without_resize') {
                 resizeInstances = function () {

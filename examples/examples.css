@@ -274,6 +274,22 @@ body[data-example="constructor"] .no-support { top: 5px; }
 body[data-example="constructor"] .code { left: 320px; right: 24px; bottom: calc(var(--example-header-height) + 12px); height: 210px; }
 body[data-example="constructor"] .code__textarea { max-width: 520px; height: 150px; }
 
+@media (min-width: 761px) and (min-height: 740px) {
+    body[data-example="constructor"] .form__panel {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: fit-content;
+        margin: 20px 15px 0;
+    }
+
+    body[data-example="constructor"] .code {
+        position: static;
+        width: 520px;
+        margin: 12px 15px 0;
+    }
+}
+
 @media (max-width: 760px) {
     .example-header { flex-direction: column; align-items: stretch; gap: 6px; padding: 6px 12px max(6px, env(safe-area-inset-bottom)); }
     .example-brand { display: none; }
